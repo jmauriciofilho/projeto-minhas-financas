@@ -12,9 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contas', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('nome');
             $table->double('saldo');
+            $table->foreignUuid('user_id')
+              ->constrained()
+              ->cascadeOnDelete();
             $table->timestamps();
         });
     }

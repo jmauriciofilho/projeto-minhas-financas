@@ -118,15 +118,40 @@ http://localhost:8000
 
 - [x] Cadastro de usuários
 - [x] Autenticação e controle de sessão
+- [x] Listagem de contas
+- [x] Adicionar contas
+- [x] Editar contas
+- [x] Excluir contas
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] Gestão de contas
+- [] Adicionar receitas
+- [] Listar receitas
+- [] Editar receitas
+- [] Excluir receitas
+- [] Adicionar despesas
+- [] Listar despesas
+- [] Editar despesas
+- [] Pagar despesa
+- [] Excluir despesas
+- [] Adicionar cartoes
+- [] Listar cartoes
+- [] Editar cartoes
+- [] Excluir cartoes
+- [] Adicionar faturas
+- [] Listar faturas
+- [] Editar faturas
+- [] Fechar e pagar faturas
+- [] Excluir faturas
+- [] Adicionar compra cartao
+- [] Listar compras cartao
+- [] Editar compra cartao
+- [] Excluir compra cartao
 
-## 📄 Licença
+<!-- ## 📄 Licença
 
 Este projeto está licenciado sob a MIT License.
-Você é livre para usar, modificar e distribuir.
+Você é livre para usar, modificar e distribuir. -->
 
 ## 👤 Autor
 

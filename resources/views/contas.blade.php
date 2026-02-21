@@ -14,7 +14,7 @@
 
         {{-- Grid de cards --}}
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-            @for ($i = 0; $i < 5; $i++)
+            @foreach ($contas as $conta)
                 <div
                     class="relative flex flex-col gap-4 rounded-xl border border-neutral-200
                            bg-white p-4 shadow-sm dark:border-neutral-700 dark:bg-neutral-900"
@@ -23,7 +23,8 @@
                     {{-- Ações --}}
                     <div class="absolute right-3 top-3 flex gap-2">
                         {{-- Editar --}}
-                        <button
+                        <a
+                            href="{{ route('editar.conta', $conta) }}"
                             title="Editar conta"
                             class="rounded-md p-1 text-neutral-500
                                    hover:bg-neutral-100 hover:text-neutral-800
@@ -34,24 +35,34 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M11 5h2m-1-1v2m-7.121 7.121l9-9a2 2 0 112.828 2.828l-9 9L4 20l1.879-5.879z"/>
                             </svg>
-                        </button>
+                        </a>
 
                         {{-- Excluir --}}
-                        <button
-                            title="Excluir conta"
-                            class="rounded-md p-1 text-red-500
-                                   hover:bg-red-100 hover:text-red-700
-                                   dark:hover:bg-red-900/40"
+                        <form 
+                            action="{{ route('excluir.conta', $conta) }}" 
+                            method="POST"
+                            onsubmit="return confirm('Tem certeza que deseja excluir esta conta?')"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                 viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862
-                                         a2 2 0 01-1.995-1.858L5 7m5-4h4m-4
-                                         0a1 1 0 00-1 1v1h6V4a1 1 0
-                                         00-1-1m-4 0h4"/>
-                            </svg>
-                        </button>
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="submit"
+                                title="Excluir conta"
+                                class="rounded-md p-1 text-red-500
+                                    hover:bg-red-100 hover:text-red-700
+                                    dark:hover:bg-red-900/40"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862
+                                            a2 2 0 01-1.995-1.858L5 7m5-4h4m-4
+                                            0a1 1 0 00-1 1v1h6V4a1 1 0
+                                            00-1-1m-4 0h4"/>
+                                </svg>
+                            </button>
+                        </form>
                     </div>
 
                     {{-- Cabeçalho --}}
@@ -76,7 +87,7 @@
                                 Conta
                             </span>
                             <div class="font-medium text-neutral-800 dark:text-neutral-100">
-                                Carteira Principal
+                                {{$conta->nome}}
                             </div>
                         </div>
                     </div>
@@ -87,12 +98,12 @@
                             Saldo atual
                         </span>
                         <div class="text-2xl font-semibold text-neutral-900 dark:text-white">
-                            R$ 2.450,00
+                            R$ {{$conta->saldo}}
                         </div>
                     </div>
 
                 </div>
-            @endfor
+            @endforeach
         </div>
 
     </div>

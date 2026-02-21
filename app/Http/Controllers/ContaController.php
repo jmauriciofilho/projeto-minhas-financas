@@ -13,7 +13,8 @@ class ContaController extends Controller
      */
     public function index()
     {
-        //
+        $contas = auth()->user()->contas;
+        return view('contas', ['contas' => $contas]);
     }
 
     /**
@@ -33,6 +34,7 @@ class ContaController extends Controller
 
         $conta->nome = $request->nome;
         $conta->saldo = $request->saldo;
+        $conta->user_id = auth()->user()->id;
 
         $conta->save();
 
@@ -52,7 +54,7 @@ class ContaController extends Controller
      */
     public function edit(Conta $conta)
     {
-        //
+        return view('editarContas', ['conta' => $conta]);
     }
 
     /**
@@ -60,7 +62,11 @@ class ContaController extends Controller
      */
     public function update(UpdateContaRequest $request, Conta $conta)
     {
-        //
+        $conta->nome = $request->nome;
+
+        $conta->save();
+
+        return redirect('/contas');
     }
 
     /**
@@ -68,6 +74,8 @@ class ContaController extends Controller
      */
     public function destroy(Conta $conta)
     {
-        //
+        $conta->delete();
+
+        return redirect('/contas');
     }
 }
