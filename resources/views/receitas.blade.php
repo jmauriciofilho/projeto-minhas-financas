@@ -11,11 +11,16 @@
             <div class="flex items-center gap-3">
 
                 {{-- FILTRO POR MÊS --}}
-                <form class="flex items-center gap-2">
+                <form 
+                    action="{{ route('receitas.index') }}" 
+                    method="GET"
+                    class="flex items-center gap-2"
+                >
 
                     <input 
                         type="month"
-                        value="2026-02"
+                        name="mes"
+                        value="{{$mes}}"
                         class="rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                     >
 
@@ -39,27 +44,52 @@
 
         </div>
 
+        @if (session('success'))
+            <div 
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 4000)"
+                x-transition
+                class="fixed top-6 right-6 z-50"
+            >
+                <div class="bg-green-600 text-white px-6 py-4 rounded-xl shadow-lg flex items-center gap-4">
+                    
+                    <span class="font-medium">
+                        {{ session('success') }}
+                    </span>
+
+                    <button 
+                        @click="show = false"
+                        class="text-white/80 hover:text-white text-lg leading-none"
+                    >
+                        &times;
+                    </button>
+
+                </div>
+            </div>
+        @endif
+
         {{-- CARDS DE RESUMO --}}
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
 
             <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6 bg-white dark:bg-neutral-900">
-                <p class="text-sm text-neutral-500">Total em Fevereiro</p>
+                <p class="text-sm text-neutral-500">Total Recebido</p>
                 <h2 class="text-2xl font-bold text-green-600 mt-2">
-                    R$ 5.350,00
+                    R$ {{ number_format($totalRecebidoNoMes, 2, ',', '.') }}
+                </h2>
+            </div>
+
+            <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6 bg-white dark:bg-neutral-900">
+                <p class="text-sm text-neutral-500">Total Para Receber</p>
+                <h2 class="text-2xl font-bold mt-2">
+                    R$ {{ number_format($totalParaReceberNoMes, 2, ',', '.') }}
                 </h2>
             </div>
 
             <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6 bg-white dark:bg-neutral-900">
                 <p class="text-sm text-neutral-500">Quantidade</p>
-                <h2 class="text-2xl font-bold mt-2">
-                    3 receitas
-                </h2>
-            </div>
-
-            <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6 bg-white dark:bg-neutral-900">
-                <p class="text-sm text-neutral-500">Maior Receita</p>
                 <h2 class="text-lg font-semibold mt-2">
-                    Salário - R$ 3.500,00
+                    {{$quantidadeReceitasNoMes}} - Receitas
                 </h2>
             </div>
 
@@ -76,6 +106,7 @@
                             <th class="px-6 py-4">Conta</th>
                             <th class="px-6 py-4">Data de Recebimento</th>
                             <th class="px-6 py-4 text-right">Valor</th>
+                            <th class="px-6 py-4 text-center">Status</th>
                             <th class="px-6 py-4 text-right">Ações</th>
                         </tr>
                     </thead>
@@ -92,14 +123,53 @@
                                     {{ $receita->conta->nome }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ \Carbon\Carbon::parse($receita->data_recebimento)->format('d/m/Y') }}
+                                    {{ $receita->data_recebimento ? \Carbon\Carbon::parse($receita->data_recebimento)->format('d/m/Y') : '-' }}
                                 </td>
                                 <td class="px-6 py-4 text-right text-green-600 font-semibold">
                                     R$ {{ number_format($receita->valor, 2, ',', '.') }}
                                 </td>
+                                <td class="px-6 py-4 text-center">
+
+                                    @if(!$receita->ja_recebido)
+                                        <form 
+                                            action="{{ route('receitas.updateStatus', $receita) }}"
+                                            method="POST"
+                                        >
+                                            @csrf
+                                            @method('PATCH')
+
+                                            <button 
+                                                type="submit"
+                                                class="px-3 py-1 text-xs bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+                                            >
+                                                Marcar como Recebido
+                                            </button>
+                                        </form>
+                                    @else
+                                        <span class="px-3 py-1 text-xs bg-green-600 text-white rounded-lg opacity-70 cursor-not-allowed">
+                                            Recebido
+                                        </span>
+                                    @endif
+
+                                </td>
                                 <td class="px-6 py-4 text-right space-x-2">
-                                    <button class="text-blue-600 hover:underline">Editar</button>
-                                    <button class="text-red-600 hover:underline">Excluir</button>
+                                    <!-- <button class="text-blue-600 hover:underline">Editar</button> -->
+                                    <form 
+                                        action="{{ route('receitas.destroy', $receita) }}" 
+                                        method="POST"
+                                        onsubmit="return confirm('Tem certeza que deseja excluir esta receita?')"
+                                    >
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button
+                                            type="submit"
+                                            title="Excluir"
+                                            class="text-red-600 hover:underline"
+                                        >
+                                            Excluir
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty

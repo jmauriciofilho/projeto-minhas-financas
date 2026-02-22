@@ -1,6 +1,31 @@
 <x-layouts::app :title="__('Contas')">
     <div class="flex h-full w-full flex-1 flex-col gap-6 rounded-xl">
 
+        @if (session('success'))
+            <div 
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 4000)"
+                x-transition
+                class="fixed top-6 right-6 z-50"
+            >
+                <div class="bg-green-600 text-white px-6 py-4 rounded-xl shadow-lg flex items-center gap-4">
+                    
+                    <span class="font-medium">
+                        {{ session('success') }}
+                    </span>
+
+                    <button 
+                        @click="show = false"
+                        class="text-white/80 hover:text-white text-lg leading-none"
+                    >
+                        &times;
+                    </button>
+
+                </div>
+            </div>
+        @endif
+
         {{-- Topo da página --}}
         <div class="flex justify-start">
             <a

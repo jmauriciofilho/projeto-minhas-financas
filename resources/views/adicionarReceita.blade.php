@@ -149,22 +149,54 @@
                     required
                 >
                     @php
-                        $mesAtual = old('mes', now()->format('Y-m'));
+                        $mesAtual = old('mes', now()->month);
                     @endphp
 
                     @for ($i = -6; $i <= 6; $i++)
                         @php
                             $data = now()->addMonths($i);
-                            $valor = $data->format('Y-m');
+                            $numeroMes = $data->format('Y-m'); // 2026-02
+                            $label = $data->format('m/Y'); // 02/2026
                         @endphp
 
                         <option 
-                            value="{{ $valor }}"
-                            {{ $mesAtual == $valor ? 'selected' : '' }}
+                            value="{{ $numeroMes }}"
+                            {{ $mesAtual == $numeroMes ? 'selected' : '' }}
                         >
-                            {{ $data->translatedFormat('F \d\e Y') }}
+                            {{ $label }}
                         </option>
                     @endfor
+                </select>
+            </div>
+
+            {{-- Status da Receita --}}
+            <div class="flex flex-col gap-1">
+                <label
+                    for="status"
+                    class="text-sm font-medium text-neutral-700 dark:text-neutral-300"
+                >
+                    Status
+                </label>
+
+                <select
+                    id="status"
+                    name="status"
+                    class="rounded-lg border border-neutral-300 bg-white px-3 py-2
+                        text-neutral-900
+                        focus:border-green-600 focus:ring-green-600
+                        dark:border-neutral-700 dark:bg-neutral-800
+                        dark:text-white"
+                    required
+                >
+                    <option value="pendente"
+                        {{ old('status') == 'pendente' ? 'selected' : '' }}>
+                        Pendente (Ainda não recebido)
+                    </option>
+
+                    <option value="recebido"
+                        {{ old('status') == 'recebido' ? 'selected' : '' }}>
+                        Recebido
+                    </option>
                 </select>
             </div>
 

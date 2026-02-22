@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nome');
             $table->double('valor');
             $table->boolean('ja_recebido');
-            $table->integer('mes');
-            $table->date('data_recebimento');
+            $table->char('mes', 7)->index();
+            $table->date('data_recebimento')->nullable();
             $table->foreignUuid('user_id')
               ->constrained()
               ->cascadeOnDelete();

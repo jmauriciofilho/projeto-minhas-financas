@@ -22,7 +22,12 @@ class UpdateContaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required',
+            'nome' => [
+                'required',
+                'string',
+                'min:3',
+                'max:120'
+            ]
         ];
     }
 }

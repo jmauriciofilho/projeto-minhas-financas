@@ -122,14 +122,13 @@ http://localhost:8000
 - [x] Adicionar contas
 - [x] Editar contas
 - [x] Excluir contas
+- [x] Adicionar receitas
+- [x] Listar receitas
+- [x] Receber receitas
+- [x] Excluir receitas
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] Adicionar receitas
-- [] Listar receitas
-- [] Editar receitas
-- [] Receber receitas
-- [] Excluir receitas
 - [] Adicionar despesas
 - [] Listar despesas
 - [] Editar despesas
@@ -148,6 +147,10 @@ http://localhost:8000
 - [] Listar compras cartao
 - [] Editar compra cartao
 - [] Excluir compra cartao
+- [] Adicionar investimentos
+- [] Listar investimentos
+- [] Editar investimentos
+- [] excluir investimentos
 
 <!-- ## 📄 Licença
 

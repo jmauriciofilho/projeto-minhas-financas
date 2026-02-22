@@ -54,6 +54,10 @@ class ContaController extends Controller
      */
     public function edit(Conta $conta)
     {
+        if ($conta->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         return view('editarContas', ['conta' => $conta]);
     }
 
@@ -62,11 +66,16 @@ class ContaController extends Controller
      */
     public function update(UpdateContaRequest $request, Conta $conta)
     {
+        if ($conta->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         $conta->nome = $request->nome;
 
         $conta->save();
 
-        return redirect('/contas');
+        return redirect('/contas')
+            ->with('success', 'Conta editada com sucesso.');
     }
 
     /**
@@ -74,8 +83,13 @@ class ContaController extends Controller
      */
     public function destroy(Conta $conta)
     {
+        if ($conta->user_id !== auth()->id()) {
+            abort(403);
+        }
+    
         $conta->delete();
 
-        return redirect('/contas');
+        return redirect('/contas')
+            ->with('success', 'Conta removida com sucesso.');
     }
 }

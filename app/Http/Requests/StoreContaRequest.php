@@ -22,8 +22,19 @@ class StoreContaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required',
-            'saldo' => 'required'
+            'nome' => [
+                'required',
+                'string',
+                'min:3',
+                'max:120'
+            ],
+
+            'saldo' => [
+                'required',
+                'numeric',
+                'min:0.01'
+            ],
         ];
+        
     }
 }
