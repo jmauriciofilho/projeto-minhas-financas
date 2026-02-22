@@ -5,22 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Conta extends Model
+class Receita extends Model
 {
-    /** @use HasFactory<\Database\Factories\ContaFactory> */
+    /** @use HasFactory<\Database\Factories\ReceitaFactory> */
     use HasFactory;
 
     use HasUuids;
 
     protected $fillable = [
         "nome",
-        "saldo"
+        "valor",
+        "mes",
+        "conta_id"
     ];
 
-    public function receitas(): HasMany
+    public function conta(): BelongsTo
     {
-        return $this->hasMany(Receita::class);
+        return $this->belongsTo(Conta::class);
     }
 }

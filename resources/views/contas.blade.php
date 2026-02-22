@@ -98,7 +98,7 @@
                             Saldo atual
                         </span>
                         <div class="text-2xl font-semibold text-neutral-900 dark:text-white">
-                            R$ {{$conta->saldo}}
+                            R$ {{ number_format($conta->saldo, 2, ',', '.') }}
                         </div>
                     </div>
 

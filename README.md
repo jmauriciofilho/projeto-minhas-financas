@@ -128,6 +128,7 @@ http://localhost:8000
 - [] Adicionar receitas
 - [] Listar receitas
 - [] Editar receitas
+- [] Receber receitas
 - [] Excluir receitas
 - [] Adicionar despesas
 - [] Listar despesas

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContaController;
+use App\Http\Controllers\ReceitaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,5 +35,8 @@ Route::put('/contas/{conta}/atualizar', [ContaController::class, 'update'])
 Route::delete('/contas/{conta}/excluir', [ContaController::class, 'destroy'])
     ->middleware(['auth', 'verified'])
     -> name('excluir.conta');
+
+Route::resource('receitas', ReceitaController::class)
+    ->middleware(['auth', 'verified']);
 
 require __DIR__.'/settings.php';
