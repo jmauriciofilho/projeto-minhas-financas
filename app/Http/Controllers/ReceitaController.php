@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Receita;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreReceitaRequest;
 use App\Http\Requests\UpdateReceitaRequest;
-use App\Models\Receita;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 
 class ReceitaController extends Controller
 {
@@ -18,7 +19,7 @@ class ReceitaController extends Controller
         $mes = $request->get('mes');
 
         $queryBase =  Receita::query()
-            ->where('user_id', auth()->id());
+            ->where('user_id', Auth::id());
 
         if ($mes) {
             $queryBase->where('mes', $mes);
@@ -58,7 +59,7 @@ class ReceitaController extends Controller
      */
     public function create()
     {
-        $contas = auth()->user()->contas;
+        $contas = Auth::user()->contas;
         return view('adicionarReceita', ['contas' => $contas]);
     }
 
@@ -75,7 +76,7 @@ class ReceitaController extends Controller
                 'valor' => $request->valor,
                 'mes' => $request->mes,
                 'ja_recebido' => $request->status === 'recebido',
-                'user_id' => auth()->user()->id
+                'user_id' => Auth::user()->id
             ]);
 
             if ($request->status === 'recebido') {
@@ -113,7 +114,7 @@ class ReceitaController extends Controller
 
     public function updateStatus(Receita $receita)
     {
-        if ($receita->user_id !== auth()->id()) {
+        if ($receita->user_id !== Auth::user()->id) {
             abort(403);
         }
 
@@ -141,7 +142,7 @@ class ReceitaController extends Controller
      */
     public function destroy(Receita $receita)
     {
-        if ($receita->user_id !== auth()->id()) {
+        if ($receita->user_id !== Auth::user()->id) {
             abort(403);
         }
 

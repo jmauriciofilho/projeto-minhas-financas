@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conta;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreContaRequest;
 use App\Http\Requests\UpdateContaRequest;
-use App\Models\Conta;
 
 class ContaController extends Controller
 {
@@ -13,7 +14,7 @@ class ContaController extends Controller
      */
     public function index()
     {
-        $contas = auth()->user()->contas;
+        $contas = Auth::user()->contas;
         return view('contas', ['contas' => $contas]);
     }
 
@@ -34,7 +35,7 @@ class ContaController extends Controller
 
         $conta->nome = $request->nome;
         $conta->saldo = $request->saldo;
-        $conta->user_id = auth()->user()->id;
+        $conta->user_id = Auth::user()->id;
 
         $conta->save();
 
@@ -54,7 +55,7 @@ class ContaController extends Controller
      */
     public function edit(Conta $conta)
     {
-        if ($conta->user_id !== auth()->id()) {
+        if ($conta->user_id !== Auth::user()->id) {
             abort(403);
         }
 
@@ -66,7 +67,7 @@ class ContaController extends Controller
      */
     public function update(UpdateContaRequest $request, Conta $conta)
     {
-        if ($conta->user_id !== auth()->id()) {
+        if ($conta->user_id !== Auth::user()->id) {
             abort(403);
         }
 
@@ -83,7 +84,7 @@ class ContaController extends Controller
      */
     public function destroy(Conta $conta)
     {
-        if ($conta->user_id !== auth()->id()) {
+        if ($conta->user_id !== Auth::user()->id) {
             abort(403);
         }
     
