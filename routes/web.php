@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartaoController;
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\DespesaController;
 use App\Http\Controllers\ReceitaController;
@@ -50,5 +51,8 @@ Route::resource('despesas', DespesaController::class)
 Route::patch('/despesas/{despesa}/paga', [DespesaController::class, 'updateStatus'])
     ->middleware(['auth', 'verified'])
     ->name('despesas.updateStatus');
+
+Route::resource('cartoes', CartaoController::class)
+    ->middleware(['auth', 'verified']);
 
 require __DIR__.'/settings.php';

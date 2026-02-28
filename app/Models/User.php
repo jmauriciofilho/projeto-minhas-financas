@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Despesa::class);
     }
+
+    public function cartaos(): HasMany
+    {
+        return $this->hasMany(Cartao::class);
+    }
 }
