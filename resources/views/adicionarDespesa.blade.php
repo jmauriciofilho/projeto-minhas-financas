@@ -1,13 +1,13 @@
-<x-layouts::app :title="__('Adicionar Receita')">
+<x-layouts::app :title="__('Adicionar Despesa')">
     <div class="flex h-full w-full flex-1 flex-col gap-6 rounded-xl max-w-xl">
 
         {{-- Cabeçalho --}}
         <div>
             <h1 class="text-xl font-semibold text-neutral-900 dark:text-white">
-                Adicionar Receita
+                Adicionar Despesa
             </h1>
             <p class="text-sm text-neutral-500 dark:text-neutral-400">
-                Informe os dados da nova receita
+                Informe os dados da nova despesa
             </p>
         </div>
 
@@ -26,7 +26,7 @@
                                9 9 0 0118 0z"/>
                     </svg>
 
-                    <span>Não foi possível salvar a receita</span>
+                    <span>Não foi possível salvar a despesa</span>
                 </div>
 
                 <ul class="ml-6 list-disc text-sm">
@@ -40,7 +40,7 @@
         {{-- Formulário --}}
         <form
             method="POST"
-            action="{{ route('receitas.store') }}"
+            action="{{ route('despesas.store') }}"
             class="flex flex-col gap-5 rounded-xl border border-neutral-200
                    bg-white p-6 shadow-sm dark:border-neutral-700 dark:bg-neutral-900"
         >
@@ -59,7 +59,7 @@
                     id="descricao"
                     name="nome"
                     type="text"
-                    placeholder="Ex: Salário, Freelancer, Venda..."
+                    placeholder="Ex: Luz, Aluguel, Supermercado..."
                     value="{{ old('nome') }}"
                     class="rounded-lg border border-neutral-300 bg-white px-3 py-2
                            text-neutral-900 placeholder:text-neutral-400
@@ -129,13 +129,13 @@
                 />
             </div>
 
-            {{-- Mês da Receita --}}
+            {{-- Mês da Despesa --}}
             <div class="flex flex-col gap-1">
                 <label
                     for="mes"
                     class="text-sm font-medium text-neutral-700 dark:text-neutral-300"
                 >
-                    Mês da Receita
+                    Mês da Despesa
                 </label>
 
                 <select
@@ -190,12 +190,12 @@
                 >
                     <option value="pendente"
                         {{ old('status') == 'pendente' ? 'selected' : '' }}>
-                        Pendente (Ainda não recebido)
+                        Pendente (Ainda não pago)
                     </option>
 
-                    <option value="recebido"
-                        {{ old('status') == 'recebido' ? 'selected' : '' }}>
-                        Recebido
+                    <option value="pago"
+                        {{ old('status') == 'pago' ? 'selected' : '' }}>
+                        Pago
                     </option>
                 </select>
             </div>
@@ -203,7 +203,7 @@
             {{-- Ações --}}
             <div class="mt-4 flex justify-end gap-3">
                 <a
-                    href="{{ route('receitas.index') }}"
+                    href="{{ route('despesas.index') }}"
                     class="rounded-lg border border-neutral-300 px-4 py-2
                            text-neutral-700 hover:bg-neutral-100
                            dark:border-neutral-700 dark:text-neutral-300
@@ -217,7 +217,7 @@
                     class="rounded-lg bg-green-600 px-4 py-2
                            font-medium text-white hover:bg-green-700"
                 >
-                    Salvar Receita
+                    Salvar Despesa
                 </button>
             </div>
 

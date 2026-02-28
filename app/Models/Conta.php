@@ -23,4 +23,9 @@ class Conta extends Model
     {
         return $this->hasMany(Receita::class);
     }
+
+    public function despesas(): HasMany
+    {
+        return $this->hasMany(Despesa::class);
+    }
 }

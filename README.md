@@ -126,14 +126,13 @@ http://localhost:8000
 - [x] Listar receitas
 - [x] Receber receitas
 - [x] Excluir receitas
+- [x] Adicionar despesas
+- [x] Listar despesas
+- [x] Pagar despesa
+- [x] Excluir despesas
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] Adicionar despesas
-- [] Listar despesas
-- [] Editar despesas
-- [] Pagar despesa
-- [] Excluir despesas
 - [] Adicionar cartoes
 - [] Listar cartoes
 - [] Editar cartoes
@@ -151,6 +150,9 @@ http://localhost:8000
 - [] Listar investimentos
 - [] Editar investimentos
 - [] excluir investimentos
+- [] realizar aplicacao
+- [] realizar resgate
+- [] registrar rendimento
 
 <!-- ## 📄 Licença
 

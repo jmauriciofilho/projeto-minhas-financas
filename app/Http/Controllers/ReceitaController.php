@@ -80,6 +80,10 @@ class ReceitaController extends Controller
             ]);
 
             if ($request->status === 'recebido') {
+                $data = now()->format('Y-m-d');
+                $receita->data_recebimento = $data;
+                $receita->save();
+
                 $receita->conta->increment('saldo', $receita->valor);
             }
 

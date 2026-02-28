@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContaController;
+use App\Http\Controllers\DespesaController;
 use App\Http\Controllers\ReceitaController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,5 +43,12 @@ Route::resource('receitas', ReceitaController::class)
 Route::patch('/receitas/{receita}/recebida', [ReceitaController::class, 'updateStatus'])
     ->middleware(['auth', 'verified'])
     ->name('receitas.updateStatus');
+
+Route::resource('despesas', DespesaController::class)
+    ->middleware(['auth', 'verified']);
+
+Route::patch('/despesas/{despesa}/paga', [DespesaController::class, 'updateStatus'])
+    ->middleware(['auth', 'verified'])
+    ->name('despesas.updateStatus');
 
 require __DIR__.'/settings.php';
