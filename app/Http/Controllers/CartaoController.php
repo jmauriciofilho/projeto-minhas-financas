@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCartaoRequest;
 use App\Http\Requests\UpdateCartaoRequest;
 use App\Models\Cartao;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CartaoController extends Controller
 {
@@ -53,7 +54,9 @@ class CartaoController extends Controller
      */
     public function edit(Cartao $cartao)
     {
-        //
+        Gate::authorize('view', $cartao);
+
+        return view('cartao', compact('cartao'));
     }
 
     /**
@@ -61,7 +64,14 @@ class CartaoController extends Controller
      */
     public function update(UpdateCartaoRequest $request, Cartao $cartao)
     {
-        //
+        Gate::authorize('update', $cartao);
+
+        $cartao->update([
+            'nome' => $request->nome,
+            'final_cartao' => $request->final_cartao
+        ]);
+
+        return redirect('/cartoes');
     }
 
     /**
@@ -69,6 +79,10 @@ class CartaoController extends Controller
      */
     public function destroy(Cartao $cartao)
     {
-        //
+        Gate::authorize('delete', $cartao);
+
+        $cartao->delete();
+
+        return redirect('/cartoes');
     }
 }

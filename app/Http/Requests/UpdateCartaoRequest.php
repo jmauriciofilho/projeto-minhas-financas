@@ -11,7 +11,7 @@ class UpdateCartaoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,19 @@ class UpdateCartaoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nome' => [
+                'required',
+                'string',
+                'min:3',
+                'max:120'
+            ],
+
+            'final_cartao' => [
+                'required',
+                'string',
+                'min:4',
+                'max:4'
+            ],
         ];
     }
 }

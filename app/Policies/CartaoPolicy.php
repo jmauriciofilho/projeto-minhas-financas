@@ -21,7 +21,7 @@ class CartaoPolicy
      */
     public function view(User $user, Cartao $cartao): bool
     {
-        return false;
+        return $cartao->user_id === $user->id;
     }
 
     /**
@@ -37,7 +37,7 @@ class CartaoPolicy
      */
     public function update(User $user, Cartao $cartao): bool
     {
-        return false;
+        return $cartao->user_id === $user->id;
     }
 
     /**
@@ -45,7 +45,7 @@ class CartaoPolicy
      */
     public function delete(User $user, Cartao $cartao): bool
     {
-        return false;
+        return $cartao->user_id === $user->id;
     }
 
     /**
@@ -53,7 +53,7 @@ class CartaoPolicy
      */
     public function restore(User $user, Cartao $cartao): bool
     {
-        return false;
+        return $cartao->user_id === $user->id;
     }
 
     /**
@@ -61,6 +61,6 @@ class CartaoPolicy
      */
     public function forceDelete(User $user, Cartao $cartao): bool
     {
-        return false;
+        return $cartao->user_id === $user->id;
     }
 }

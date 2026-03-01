@@ -53,6 +53,9 @@ Route::patch('/despesas/{despesa}/paga', [DespesaController::class, 'updateStatu
     ->name('despesas.updateStatus');
 
 Route::resource('cartoes', CartaoController::class)
+    ->parameters([
+        'cartoes' => 'cartao'
+    ])
     ->middleware(['auth', 'verified']);
 
 require __DIR__.'/settings.php';

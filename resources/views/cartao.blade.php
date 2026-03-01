@@ -39,7 +39,7 @@
         <form
             method="POST"
             action="{{ isset($cartao) 
-                ? route('cartoes.update', $cartao->id) 
+                ? route('cartoes.update', $cartao) 
                 : route('cartoes.store') }}"
             class="flex flex-col gap-5 rounded-xl border border-neutral-200
                    bg-white p-6 shadow-sm dark:border-neutral-700 dark:bg-neutral-900"

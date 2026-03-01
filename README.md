@@ -132,11 +132,11 @@ http://localhost:8000
 - [x] Excluir despesas
 - [x] Adicionar cartoes
 - [x] Listar cartoes
+- [x] Editar cartoes
+- [x] Excluir cartoes
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] Editar cartoes
-- [] Excluir cartoes
 - [] Adicionar faturas
 - [] Listar faturas
 - [] Editar faturas
