@@ -11,7 +11,7 @@ class UpdateFaturaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,18 @@ class UpdateFaturaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'mes_referencia' => [
+                'required',
+                'date_format:Y-m'
+            ],
+            'data_fechamento' => [
+                'required',
+                'date'
+            ],
+            'data_vencimento' => [
+                'required',
+                'date'
+            ]
         ];
     }
 }

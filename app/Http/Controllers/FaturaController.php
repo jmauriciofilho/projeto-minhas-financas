@@ -4,30 +4,39 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFaturaRequest;
 use App\Http\Requests\UpdateFaturaRequest;
+use App\Models\Cartao;
 use App\Models\Conta;
 use App\Models\Fatura;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class FaturaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Conta $conta)
+    public function index(Cartao $cartao)
     {
-        $faturas = Auth::user()->contas()
-            ->where('id', $conta->id)
-            ->firstOrFail()
-            ->faturas;
-        return view('faturas', compact('faturas'));
+        if ($cartao->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $faturas = Fatura::where('cartao_id', $cartao->id)
+            ->get();
+        return view('faturas', compact('faturas', 'cartao'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Cartao $cartao)
     {
-        return view('fatura');
+        if ($cartao->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $contas = Auth::user()->contas;
+        return view('fatura', compact('contas', 'cartao'));
     }
 
     /**
@@ -35,7 +44,26 @@ class FaturaController extends Controller
      */
     public function store(StoreFaturaRequest $request)
     {
-        //
+        $cartao = Cartao::findOrFail($request->cartao_id);
+        if ($cartao->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $conta = Conta::findOrFail($request->conta_id);
+        if ($conta->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        Fatura::create([
+            'mes_referencia' => $request->mes_referencia,
+            'data_fechamento' => $request->data_fechamento,
+            'data_vencimento' => $request->data_vencimento,
+            'conta_id' => $request->conta_id,
+            'cartao_id' => $request->cartao_id,
+        ]);
+
+        return redirect()->route('cartoes.faturas.index', $request->cartao_id)
+            ->with('success', 'Fatura criada com sucesso!');
     }
 
     /**
@@ -49,24 +77,60 @@ class FaturaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Fatura $fatura)
+    public function edit(Cartao $cartao, Fatura $fatura)
     {
-        //
+        if ($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id) {
+            abort(403);
+        }
+
+        $contas = Auth::user()->contas;
+        return view('fatura', compact('fatura', 'contas'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFaturaRequest $request, Fatura $fatura)
+    public function update(UpdateFaturaRequest $request, Cartao $cartao, Fatura $fatura)
     {
-        //
+        if ($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id) {
+            abort(403);
+        }
+
+        $conta = Conta::findOrFail($request->conta_id);
+        if ($conta->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $fatura->update([
+            'mes_referencia' => $request->mes_referencia,
+            'data_fechamento' => $request->data_fechamento,
+            'data_vencimento' => $request->data_vencimento,
+            'conta_id' => $request->conta_id,
+        ]);
+
+        return redirect()->route('cartoes.faturas.index', $fatura->cartao_id)
+            ->with('success', 'Fatura atualizada com sucesso!');
+    }
+
+    public function updateStatus(Fatura $fatura)
+    {
+        // $fatura->ja_foi_paga = true;
+        // $fatura->save();
+
+        // return redirect()->back()->with('success', 'Fatura marcada como paga com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Fatura $fatura)
+    public function destroy(Cartao $cartao, Fatura $fatura)
     {
-        //
+        if ($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id) {
+            abort(403);
+        }
+
+        $fatura->delete();
+        return redirect()->route('cartoes.faturas.index', $fatura->cartao_id)
+            ->with('success', 'Fatura excluída com sucesso!');
     }
 }

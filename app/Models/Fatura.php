@@ -16,14 +16,19 @@ class Fatura extends Model
 
     protected $fillable = [
         'mes_referencia',
-        'dia_fechamento',
-        'dia_vencimento',
-        'ja_foi_paga',
+        'data_fechamento',
+        'data_vencimento',
+        'conta_id',
         'cartao_id',
     ];
 
     public function cartao(): BelongsTo
     {
         return $this->belongsTo(Cartao::class);
+    }
+
+    public function conta(): BelongsTo
+    {
+        return $this->belongsTo(Conta::class);
     }
 }

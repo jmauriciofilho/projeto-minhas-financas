@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('faturas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('mes_referencia');
-            $table->integer('dia_fechamento');
-            $table->integer('dia_vencimento');
+            $table->char('mes_referencia', 7);
+            $table->date('data_fechamento');
+            $table->date('data_vencimento');
+            $table->decimal('despesa_total', 15, 2)->default(0);
             $table->boolean('ja_foi_paga')->default(false);
+            $table->foreignUuid('conta_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
             $table->foreignUuid('cartao_id')
               ->constrained()
               ->cascadeOnDelete();

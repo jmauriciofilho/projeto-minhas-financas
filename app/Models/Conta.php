@@ -28,4 +28,9 @@ class Conta extends Model
     {
         return $this->hasMany(Despesa::class);
     }
+
+    public function faturas(): HasMany
+    {
+        return $this->hasMany(Fatura::class);
+    }
 }

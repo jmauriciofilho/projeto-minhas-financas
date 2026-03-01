@@ -59,10 +59,14 @@ Route::resource('cartoes', CartaoController::class)
     ])
     ->middleware(['auth', 'verified']);
 
-Route::resource('faturas', FaturaController::class)
+Route::resource('cartoes.faturas', FaturaController::class)
     ->parameters([
-        'faturas' => 'fatura'
+        'cartoes' => 'cartao'
     ])
     ->middleware(['auth', 'verified']);
+
+Route::patch('/cartoes/{cartao}/faturas/{fatura}', [FaturaController::class, 'updateStatus'])
+    ->middleware(['auth', 'verified'])
+    ->name('cartoes.faturas.updateStatus');
 
 require __DIR__.'/settings.php';

@@ -50,8 +50,9 @@
                     <div class="absolute right-3 top-3 flex gap-2">
 
                         {{-- Faturas --}}
-                        <button
+                        <a
                             title="Ver faturas"
+                            href="{{ route('cartoes.faturas.index', $cartao) }}"
                             class="rounded-md p-1 text-blue-500
                                 hover:bg-blue-100 hover:text-blue-700
                                 dark:hover:bg-blue-900/40"
@@ -61,7 +62,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v14l-5-3-5 3V6a2 2 0 012-2z"/>
                             </svg>
-                        </button>
+                        </a>
 
                         {{-- Editar --}}
                         <a
