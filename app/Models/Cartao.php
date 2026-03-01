@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cartao extends Model
 {
@@ -18,4 +19,9 @@ class Cartao extends Model
         "final_cartao",
         "user_id"
     ];
+
+    public function faturas(): HasMany
+    {
+        return $this->hasMany(Fatura::class);
+    }
 }

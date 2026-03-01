@@ -146,6 +146,7 @@ http://localhost:8000
 - [] Listar compras cartao
 - [] Editar compra cartao
 - [] Excluir compra cartao
+- [] classificação de despesas e compras no cartao
 - [] Adicionar investimentos
 - [] Listar investimentos
 - [] Editar investimentos

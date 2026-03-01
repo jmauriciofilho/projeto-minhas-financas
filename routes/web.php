@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartaoController;
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\DespesaController;
+use App\Http\Controllers\FaturaController;
 use App\Http\Controllers\ReceitaController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,12 @@ Route::patch('/despesas/{despesa}/paga', [DespesaController::class, 'updateStatu
 Route::resource('cartoes', CartaoController::class)
     ->parameters([
         'cartoes' => 'cartao'
+    ])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('faturas', FaturaController::class)
+    ->parameters([
+        'faturas' => 'fatura'
     ])
     ->middleware(['auth', 'verified']);
 
