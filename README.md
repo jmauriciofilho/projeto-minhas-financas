@@ -134,18 +134,19 @@ http://localhost:8000
 - [x] Listar cartoes
 - [x] Editar cartoes
 - [x] Excluir cartoes
+- [x] Adicionar faturas
+- [x] Listar faturas
+- [x] Editar faturas
+- [x] Excluir faturas
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] Adicionar faturas
-- [] Listar faturas
-- [] Editar faturas
-- [] Fechar e pagar faturas
-- [] Excluir faturas
 - [] Adicionar compra cartao
+- [] Impedir add de compra em conta fechada e pedir para dicionar na proxima fatura
 - [] Listar compras cartao
 - [] Editar compra cartao
 - [] Excluir compra cartao
+- [] Pagar faturas
 - [] classificação de despesas e compras no cartao
 - [] Adicionar investimentos
 - [] Listar investimentos

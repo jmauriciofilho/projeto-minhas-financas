@@ -22,7 +22,8 @@ class FaturaController extends Controller
         }
 
         $faturas = Fatura::where('cartao_id', $cartao->id)
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
         return view('faturas', compact('faturas', 'cartao'));
     }
 
