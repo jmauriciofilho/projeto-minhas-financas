@@ -138,16 +138,18 @@ http://localhost:8000
 - [x] Listar faturas
 - [x] Editar faturas
 - [x] Excluir faturas
+- [x] Adicionar compra cartao
+- [x] Listar compras cartao
+- [x] Excluir compra cartao
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] Adicionar compra cartao
 - [] Impedir add de compra em conta fechada e pedir para dicionar na proxima fatura
-- [] Listar compras cartao
-- [] Editar compra cartao
-- [] Excluir compra cartao
 - [] Pagar faturas
 - [] classificação de despesas e compras no cartao
+
+### Funcionalidades extras (To-Do)
+
 - [] Adicionar investimentos
 - [] Listar investimentos
 - [] Editar investimentos
@@ -155,6 +157,7 @@ http://localhost:8000
 - [] realizar aplicacao
 - [] realizar resgate
 - [] registrar rendimento
+- [] gerenciamento de assinaturas
 
 <!-- ## 📄 Licença
 

@@ -119,6 +119,15 @@
                                 {{-- AÇÕES --}}
                                 <td class="px-6 py-4 text-right space-x-3">
 
+                                     {{-- VER COMPRAS --}}
+                                    <a
+                                        href="{{ route('cartoes.faturas.compras.index', [$cartao, $fatura]) }}"
+                                        class="text-neutral-500 hover:text-indigo-600 transition"
+                                        title="Ver compras"
+                                    >
+                                        🧾
+                                    </a>
+
                                     @if(!$fatura->ja_foi_paga)
                                         <a
                                             href="{{ route('cartoes.faturas.edit', [$cartao, $fatura]) }}"

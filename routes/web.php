@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartaoController;
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\DespesaController;
 use App\Http\Controllers\FaturaController;
@@ -68,5 +69,14 @@ Route::resource('cartoes.faturas', FaturaController::class)
 Route::patch('/cartoes/{cartao}/faturas/{fatura}', [FaturaController::class, 'updateStatus'])
     ->middleware(['auth', 'verified'])
     ->name('cartoes.faturas.updateStatus');
+
+
+Route::resource('cartoes.faturas.compras', CompraController::class)
+    ->parameters([
+        'cartoes' => 'cartao',
+        'faturas' => 'fatura',
+        'compras' => 'compra',
+    ])
+    ->middleware(['auth', 'verified']);
 
 require __DIR__.'/settings.php';

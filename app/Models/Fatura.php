@@ -31,4 +31,9 @@ class Fatura extends Model
     {
         return $this->belongsTo(Conta::class);
     }
+
+    public function compras()
+    {
+        return $this->hasMany(Compra::class);
+    }
 }
