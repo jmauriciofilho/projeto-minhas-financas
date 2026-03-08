@@ -28,12 +28,18 @@
                 </a>
 
                 {{-- NOVA COMPRA --}}
-                <a
-                    href="{{ route('cartoes.faturas.compras.create', [$cartao, $fatura]) }}"
-                    class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition"
-                >
-                    + Nova Compra
-                </a>
+                @if(!$fatura->ja_foi_paga)
+                    <a href="{{ route('cartoes.faturas.compras.create', [$cartao, $fatura]) }}"
+                    class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition">
+                        + Nova compra
+                    </a>
+                @else
+                    <button
+                        class="px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed"
+                        disabled>
+                        + Nova compra
+                    </button>
+                @endif
 
             </div>
 
@@ -114,15 +120,23 @@
                                         action="{{ route('cartoes.faturas.compras.destroy', [$cartao, $fatura, $compra]) }}"
                                         method="POST"
                                         class="inline"
-                                        onsubmit="return confirm('Deseja excluir esta compra?')"
+                                        @if(!$fatura->ja_foi_paga)
+                                            onsubmit="return confirm('Deseja excluir esta compra?')"
+                                        @endif
                                     >
                                         @csrf
                                         @method('DELETE')
 
                                         <button
                                             type="submit"
-                                            class="text-neutral-500 hover:text-red-600 transition"
-                                            title="Excluir"
+                                            @if($fatura->ja_foi_paga)
+                                                disabled
+                                                class="text-neutral-300 cursor-not-allowed"
+                                                title="Fatura paga - não é possível excluir"
+                                            @else
+                                                class="text-neutral-500 hover:text-red-600 transition"
+                                                title="Excluir"
+                                            @endif
                                         >
                                             🗑️
                                         </button>
@@ -130,7 +144,6 @@
                                     </form>
 
                                 </td>
-
                             </tr>
 
                         @empty

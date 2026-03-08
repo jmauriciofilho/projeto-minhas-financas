@@ -8,6 +8,7 @@ use App\Models\Cartao;
 use App\Models\Conta;
 use App\Models\Fatura;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class FaturaController extends Controller
@@ -113,12 +114,22 @@ class FaturaController extends Controller
             ->with('success', 'Fatura atualizada com sucesso!');
     }
 
-    public function updateStatus(Fatura $fatura)
+    public function updateStatus(Cartao $cartao, Fatura $fatura)
     {
-        // $fatura->ja_foi_paga = true;
-        // $fatura->save();
+        if ($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id) {
+            abort(403);
+        }
 
-        // return redirect()->back()->with('success', 'Fatura marcada como paga com sucesso!');
+        DB::transaction(function () use ($fatura) {
+
+            $fatura->ja_foi_paga = true;
+            $fatura->save();
+
+            $fatura->conta()->decrement('saldo', $fatura->despesa_total);
+
+        });
+
+        return redirect()->back()->with('success', 'Pagamento da fatura registrado com sucesso!');
     }
 
     /**

@@ -74,8 +74,20 @@
                                     {{ \Carbon\Carbon::parse($fatura->mes_referencia)->format('m/Y') }}
                                 </td>
 
-                                <td class="px-6 py-4">
-                                    Dia {{ \Carbon\Carbon::parse($fatura->data_fechamento)->format('d/m/Y') }}
+                                <td class="px-4 py-2">
+                                    <div class="flex flex-col">
+                                        <span>{{ \Carbon\Carbon::parse($fatura->data_fechamento)->format('d/m/Y') }}</span>
+
+                                        @if(\Carbon\Carbon::parse($fatura->data_fechamento)->isPast())
+                                            <span class="text-xs text-red-500 font-medium">
+                                                Fechada
+                                            </span>
+                                        @else
+                                            <span class="text-xs text-green-500 font-medium">
+                                                Aberta
+                                            </span>
+                                        @endif
+                                    </div>
                                 </td>
 
                                 <td class="px-6 py-4">
