@@ -70,12 +70,12 @@ cp .env.example .env
 Edite o arquivo .env com as configurações do banco de dados:
 
 ```text
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=gestor_financeiro
-DB_USERNAME=root
-DB_PASSWORD=senha
+DB_CONNECTION=sqlite
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=laravel
+# DB_USERNAME=root
+# DB_PASSWORD=
 ```
 
 ### 5️⃣ Gerar a chave da aplicação
@@ -141,11 +141,11 @@ http://localhost:8000
 - [x] Adicionar compra cartao
 - [x] Listar compras cartao
 - [x] Excluir compra cartao
+- [x] Impedir add de compra em faturas pagas
+- [x] Pagar faturas
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] Impedir add de compra em conta fechada e pedir para dicionar na proxima fatura
-- [] Pagar faturas
 - [] classificação de despesas e compras no cartao
 
 ### Funcionalidades extras (To-Do)

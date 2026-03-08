@@ -79,4 +79,10 @@ Route::resource('cartoes.faturas.compras', CompraController::class)
     ])
     ->middleware(['auth', 'verified']);
 
+Route::resource('classificacoes', \App\Http\Controllers\ClassificacaoController::class)
+    ->parameters([
+        'classificacoes' => 'classificacao'
+    ])
+    ->middleware(['auth', 'verified']);
+
 require __DIR__.'/settings.php';

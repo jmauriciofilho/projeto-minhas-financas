@@ -21,11 +21,17 @@ class Despesa extends Model
         "ja_pago",
         "data_pagamento",
         "conta_id",
-        "user_id"
+        "user_id",
+        "classificacao_id"
     ];
 
     public function conta(): BelongsTo
     {
         return $this->belongsTo(Conta::class);
+    }
+
+    public function classificacao(): BelongsTo
+    {
+        return $this->belongsTo(Classificacao::class);
     }
 }

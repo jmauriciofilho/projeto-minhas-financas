@@ -21,10 +21,16 @@ class Compra extends Model
         'total_parcelas',
         'numero_parcela',
         'fatura_id',
+        'classificacao_id'
     ];
 
     public function fatura(): BelongsTo
     {
         return $this->belongsTo(Fatura::class);
+    }
+
+    public function classificacao(): BelongsTo
+    {
+        return $this->belongsTo(Classificacao::class);
     }
 }
