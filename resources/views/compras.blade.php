@@ -80,6 +80,7 @@
                     <thead class="border-b border-neutral-200 dark:border-neutral-700 text-neutral-500 uppercase text-xs">
                         <tr>
                             <th class="px-6 py-4">Descrição</th>
+                            <th class="px-6 py-4">Classificação</th>
                             <th class="px-6 py-4">Data</th>
                             <th class="px-6 py-4 text-center">Parcela</th>
                             <th class="px-6 py-4 text-right">Valor</th>
@@ -95,6 +96,55 @@
 
                                 <td class="px-6 py-4 font-medium">
                                     {{ $compra->descricao }}
+                                </td>
+
+                                <td class="px-6 py-4">
+    
+                                    @if($fatura->ja_foi_paga)
+
+                                        <select 
+                                            disabled
+                                            class="w-full rounded-md border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 text-sm cursor-not-allowed"
+                                        >
+                                            <option>
+                                                {{ $compra->classificacao->nome ?? 'Sem classificação' }}
+                                            </option>
+                                        </select>
+
+                                    @else
+
+                                        <form 
+                                            action="{{ route('cartoes.faturas.compras.updateClassificacao', [$cartao, $fatura, $compra]) }}"
+                                            method="POST"
+                                        >
+                                            @csrf
+                                            @method('PATCH')
+
+                                            <select 
+                                                name="classificacao_id"
+                                                onchange="this.form.submit()"
+                                                class="w-full rounded-md border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-sm"
+                                            >
+
+                                                <option value="">Sem classificação</option>
+
+                                                @foreach($classificacoes as $classificacao)
+
+                                                    <option 
+                                                        value="{{ $classificacao->id }}"
+                                                        @selected($compra->classificacao_id == $classificacao->id)
+                                                    >
+                                                        {{ $classificacao->nome }}
+                                                    </option>
+
+                                                @endforeach
+
+                                            </select>
+
+                                        </form>
+
+                                    @endif
+
                                 </td>
 
                                 <td class="px-6 py-4">

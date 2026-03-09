@@ -45,12 +45,15 @@ class DespesaController extends Controller
         $quantidadeDespesasNoMes = (clone $queryBase)
             ->count();
 
+        $classificacoes = Auth::user()->classificacoes()->get();
+
         return view('despesas', [
             'mes' => $mes,
             'despesas' => $despesas,
             'totalPagoNoMes' => $totalPagoNoMes,
             'totalParaPagarNoMes' => $totalParaPagarNoMes,
-            'quantidadeDespesasNoMes' => $quantidadeDespesasNoMes
+            'quantidadeDespesasNoMes' => $quantidadeDespesasNoMes,
+            'classificacoes' => $classificacoes
         ]);
     }
 
@@ -163,5 +166,21 @@ class DespesaController extends Controller
             ->route('despesas.index')
             ->with('success', 'Despesa removida com sucesso.');
         
+    }
+
+    public function updateClassificacao(Despesa $despesa, Request $request)
+    {
+        if ($despesa->user_id !== Auth::user()->id) {
+            abort(403);
+        }
+
+        $request->validate([
+            'classificacao_id' => 'required|exists:classificacoes,id',
+        ]);
+
+        $despesa->classificacao_id = $request->classificacao_id;
+        $despesa->save();
+
+        return back()->with('success', 'Classificação da despesa atualizada com sucesso.');
     }
 }

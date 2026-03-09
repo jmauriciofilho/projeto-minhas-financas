@@ -14,7 +14,9 @@ class ClassificacaoController extends Controller
      */
     public function index()
     {
-        $classificacoes = Auth::user()->classificacoes()->get();
+        $classificacoes = Auth::user()->classificacoes()
+            ->paginate(10)
+            ->withQueryString();
         return view('classificacoes', compact('classificacoes'));
     }
 
@@ -23,7 +25,7 @@ class ClassificacaoController extends Controller
      */
     public function create()
     {
-        //
+        return view('classificacao');
     }
 
     /**
@@ -31,7 +33,12 @@ class ClassificacaoController extends Controller
      */
     public function store(StoreClassificacaoRequest $request)
     {
-        //
+        $classificacao = new Classificacao();
+        $classificacao->fill($request->validated());
+        $classificacao->user_id = Auth::id();
+        $classificacao->save();
+
+        return redirect()->route('classificacoes.index')->with('success', 'Classificação criada com sucesso!');
     }
 
     /**
@@ -47,7 +54,11 @@ class ClassificacaoController extends Controller
      */
     public function edit(Classificacao $classificacao)
     {
-        //
+        if ($classificacao->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('classificacao', compact('classificacao'));
     }
 
     /**
@@ -55,7 +66,14 @@ class ClassificacaoController extends Controller
      */
     public function update(UpdateClassificacaoRequest $request, Classificacao $classificacao)
     {
-        //
+        if ($classificacao->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $classificacao->fill($request->validated());
+        $classificacao->save();
+
+        return redirect()->route('classificacoes.index')->with('success', 'Classificação atualizada com sucesso!');
     }
 
     /**
@@ -63,6 +81,12 @@ class ClassificacaoController extends Controller
      */
     public function destroy(Classificacao $classificacao)
     {
-        //
+        if ($classificacao->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $classificacao->delete();
+
+        return redirect()->route('classificacoes.index')->with('success', 'Classificação excluída com sucesso!');
     }
 }

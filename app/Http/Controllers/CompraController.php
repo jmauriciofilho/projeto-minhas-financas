@@ -19,11 +19,12 @@ class CompraController extends Controller
     {
         $compras = Auth::user()->cartaos()->find($cartao->id)->faturas()->find($fatura->id)->compras()
             ->paginate(10)
-            ->withQueryString();;
+            ->withQueryString();
         $cartao = Auth::user()->cartaos()->find($cartao->id);
         $fatura = $cartao->faturas()->find($fatura->id);
+        $classificacoes = Auth::user()->classificacoes()->get();
 
-        return view('compras', compact('compras', 'cartao', 'fatura'));
+        return view('compras', compact('compras', 'cartao', 'fatura', 'classificacoes'));
     }
 
     /**
@@ -104,5 +105,17 @@ class CompraController extends Controller
         });
 
         return redirect()->route('cartoes.faturas.compras.index', ['cartao' => $cartao->id, 'fatura' => $fatura->id]);
+    }
+
+    public function updateClassificacao(Cartao $cartao, Fatura $fatura, Compra $compra)
+    {
+        if($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id || $compra->fatura_id !== $fatura->id) {
+            abort(403);
+        }
+
+        $compra->classificacao_id = request('classificacao_id');
+        $compra->save();
+
+        return back()->with('success', 'Classificação da compra atualizada com sucesso.');
     }
 }

@@ -104,6 +104,7 @@
                         <tr>
                             <th class="px-6 py-4">Descrição</th>
                             <th class="px-6 py-4">Conta</th>
+                            <th class="px-6 py-4">Classificação</th>
                             <th class="px-6 py-4">Data de Pagamento</th>
                             <th class="px-6 py-4 text-right">Valor</th>
                             <th class="px-6 py-4 text-center">Status</th>
@@ -121,6 +122,33 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $despesa->conta->nome }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <form 
+                                        action="{{ route('despesas.updateClassificacao', $despesa) }}"
+                                        method="POST"
+                                    >
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <select 
+                                            name="classificacao_id"
+                                            onchange="this.form.submit()"
+                                            class="w-full rounded-md border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-sm"
+                                        >
+                                            <option value="">Sem classificação</option>
+
+                                            @foreach($classificacoes as $classificacao)
+                                                <option 
+                                                    value="{{ $classificacao->id }}"
+                                                    @selected($despesa->classificacao_id == $classificacao->id)
+                                                >
+                                                    {{ $classificacao->nome }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                    </form>
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $despesa->data_pagamento ? \Carbon\Carbon::parse($despesa->data_pagamento)->format('d/m/Y') : '-' }}

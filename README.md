@@ -143,10 +143,11 @@ http://localhost:8000
 - [x] Excluir compra cartao
 - [x] Impedir add de compra em faturas pagas
 - [x] Pagar faturas
+- [x] classificação de despesas e compras no cartao
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] classificação de despesas e compras no cartao
+- [] Dashboard com visao mensal
 
 ### Funcionalidades extras (To-Do)
 
@@ -159,10 +160,10 @@ http://localhost:8000
 - [] registrar rendimento
 - [] gerenciamento de assinaturas
 
-<!-- ## 📄 Licença
+## 📄 Licença
 
 Este projeto está licenciado sob a MIT License.
-Você é livre para usar, modificar e distribuir. -->
+Você é livre para usar, modificar e distribuir.
 
 ## 👤 Autor
 

@@ -85,4 +85,12 @@ Route::resource('classificacoes', \App\Http\Controllers\ClassificacaoController:
     ])
     ->middleware(['auth', 'verified']);
 
+Route::patch('/despesas/{despesa}/classificacao', [DespesaController::class, 'updateClassificacao'])
+    ->middleware(['auth', 'verified'])
+    ->name('despesas.updateClassificacao');
+
+Route::patch('cartoes/{cartao}/faturas/{fatura}/compras/{compra}/classificacao', [CompraController::class, 'updateClassificacao'])
+    ->middleware(['auth', 'verified'])
+    ->name('cartoes.faturas.compras.updateClassificacao');
+
 require __DIR__.'/settings.php';
