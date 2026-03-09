@@ -74,7 +74,20 @@
                             <tr class="hover:bg-neutral-50 dark:hover:bg-neutral-800 transition">
 
                                 <td class="px-6 py-4 font-medium">
-                                    {{ $classificacao->nome }}
+                                    <div class="flex items-center gap-3">
+
+                                        {{-- INDICADOR DE COR --}}
+                                        <span
+                                            class="h-4 w-4 rounded-full border border-neutral-300 dark:border-neutral-600"
+                                            style="background-color: {{ $classificacao->background_color }}"
+                                        ></span>
+
+                                        {{-- NOME --}}
+                                        <span>
+                                            {{ $classificacao->nome }}
+                                        </span>
+
+                                    </div>
                                 </td>
 
                                 {{-- AÇÕES --}}

@@ -22,7 +22,8 @@ class UpdateClassificacaoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:255'
+            'nome' => 'required|string|max:255',
+            'background_color' => 'nullable|string|max:255',
         ];
     }
 }

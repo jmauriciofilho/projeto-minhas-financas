@@ -69,6 +69,41 @@
                 />
             </div>
 
+            {{-- COR DE BACKGROUND --}}
+            <div class="flex flex-col gap-1">
+                <label class="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+                    Cor de Background
+                </label>
+
+                <div class="flex items-center gap-3">
+                    <input
+                        name="background_color"
+                        type="color"
+                        value="{{ old('background_color', $classificacao->background_color ?? '#3b82f6') }}"
+                        class="h-10 w-16 cursor-pointer rounded border border-neutral-300
+                            dark:border-neutral-700 dark:bg-neutral-800"
+                    />
+
+                    {{-- Preview --}}
+                    <div
+                        id="preview-cor"
+                        class="h-10 w-10 rounded border border-neutral-300 dark:border-neutral-700"
+                        style="background-color: {{ old('background_color', $classificacao->background_color ?? '#3b82f6') }}"
+                    ></div>
+                </div>
+            </div>
+            <script>
+                const inputCor = document.querySelector('input[name="background_color"]');
+                const preview = document.getElementById('preview-cor');
+
+                if (inputCor && preview) {
+                    inputCor.addEventListener('input', function () {
+                        preview.style.backgroundColor = this.value;
+                    });
+                }
+            </script>
+
+
             {{-- AÇÕES --}}
             <div class="mt-4 flex justify-end gap-3">
 
