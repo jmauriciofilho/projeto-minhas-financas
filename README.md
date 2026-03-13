@@ -14,15 +14,13 @@ O Gestor Financeiro Pessoal permite que usuários acompanhem sua vida financeira
 
 ## 🚀 Tecnologias Utilizadas
 
-- **PHP 8.2+**
-- **Laravel 11**
-- **MySQL / MariaDB / SQLite**
+- **PHP 8.4**
+- **Laravel 12**
+- **MySQL**
 - **Composer**
 - **Node.js 18+**
 - **NPM**
-- **Vite**
-- **Blade**
-- **Tailwind CSS**
+- **Docker**
 
 ---
 
@@ -30,36 +28,33 @@ O Gestor Financeiro Pessoal permite que usuários acompanhem sua vida financeira
 
 Antes de rodar o projeto localmente, certifique-se de possuir:
 
-- PHP 8.2 ou superior
-- Composer
-- Node.js e NPM
-- MySQL, MariaDB (se for usar algum desses bancos)
-- Git
+- Docker
+- Docker-compose
 
 ---
 
 ## ⚙️ Instalação e Execução Local (Ambiente de Desenvolvimento)
 
-### 1️⃣ Clonar o repositório
+### 1 Clonar o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/gestor-financeiro.git
-cd gestor-financeiro
+git clone git@github.com:jmauriciofilho/projeto-minhas-financas.git
+cd projeto-minhas-financas
 ```
 
-### 2️⃣ Instalar dependências do backend (PHP)
+### 2 Instalar projeto
 
 ```bash
-composer install
+docker-compose up -d --build
 ```
 
-### 3️⃣ Instalar dependências do frontend
+### 3 Acessar container
 
 ```bash
-npm install
+docker-compose exec app bash
 ```
 
-### 4️⃣ Configurar variáveis de ambiente
+### 4 Configurar variáveis de ambiente
 
 Crie o arquivo .env a partir do exemplo:
 
@@ -78,34 +73,34 @@ DB_CONNECTION=sqlite
 # DB_PASSWORD=
 ```
 
-### 5️⃣ Gerar a chave da aplicação
+### 5 Gerar arquivos composer
+
+```bash
+composer install
+```
+
+### 6 Gerar a chave da aplicação
 
 ```bash
 php artisan key:generate
 ```
 
-### 6️⃣ Executar as migrations
+### 7 Executar as migrations
 
 ```bash
 php artisan migrate
 ```
 
-Opcional (caso existam dados iniciais):
+<!-- Opcional (caso existam dados iniciais):
 
 ```bash
 php artisan db:seed
-```
+``` -->
 
-### 7️⃣ Compilar os assets do frontend
+### 8 Compilar os assets do frontend
 
 ```bash
 npm install && npm run build
-```
-
-### 8️⃣ Iniciar o servidor local
-
-```bash
-composer run dev
 ```
 
 A aplicação estará disponível em:
