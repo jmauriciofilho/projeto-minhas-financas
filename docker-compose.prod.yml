@@ -1,0 +1,28 @@
+services:
+
+  app:
+    restart: always
+    volumes: []
+
+  nginx:
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+
+  db:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: financas
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - laravel
+
+volumes:
+  mysql_data:

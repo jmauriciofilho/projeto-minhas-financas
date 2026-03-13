@@ -45,13 +45,13 @@ cd projeto-minhas-financas
 ### 2 Instalar projeto
 
 ```bash
-docker-compose up -d --build
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 ```
 
 ### 3 Acessar container
 
 ```bash
-docker-compose exec app bash
+docker exec -it laravel_app bash
 ```
 
 ### 4 Configurar variáveis de ambiente
@@ -65,27 +65,21 @@ cp .env.example .env
 Edite o arquivo .env com as configurações do banco de dados:
 
 ```text
-DB_CONNECTION=sqlite
-# DB_HOST=127.0.0.1
-# DB_PORT=3306
-# DB_DATABASE=laravel
-# DB_USERNAME=root
-# DB_PASSWORD=
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=financas
+DB_USERNAME=laravel
+DB_PASSWORD=secret
 ```
 
-### 5 Gerar arquivos composer
-
-```bash
-composer install
-```
-
-### 6 Gerar a chave da aplicação
+### 5 Gerar a chave da aplicação
 
 ```bash
 php artisan key:generate
 ```
 
-### 7 Executar as migrations
+### 6 Executar as migrations
 
 ```bash
 php artisan migrate
@@ -97,7 +91,7 @@ php artisan migrate
 php artisan db:seed
 ``` -->
 
-### 8 Compilar os assets do frontend
+### 7 Compilar os assets do frontend
 
 ```bash
 npm install && npm run build
@@ -105,7 +99,7 @@ npm install && npm run build
 
 A aplicação estará disponível em:
 
-http://localhost:8000
+http://localhost:80
 
 O admin do banco está disponível em:
 
