@@ -107,6 +107,10 @@ A aplicação estará disponível em:
 
 http://localhost:8000
 
+O admin do banco está disponível em:
+
+http://localhost:8080
+
 ## 🧠 Funcionalidades
 
 ### ✅ Funcionalidades Implementadas
