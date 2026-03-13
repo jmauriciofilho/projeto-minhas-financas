@@ -42,19 +42,7 @@ git clone git@github.com:jmauriciofilho/projeto-minhas-financas.git
 cd projeto-minhas-financas
 ```
 
-### 2 Instalar projeto
-
-```bash
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
-```
-
-### 3 Acessar container
-
-```bash
-docker exec -it laravel_app bash
-```
-
-### 4 Configurar variáveis de ambiente
+### 2 Configurar variáveis de ambiente
 
 Crie o arquivo .env a partir do exemplo:
 
@@ -71,6 +59,18 @@ DB_PORT=3306
 DB_DATABASE=financas
 DB_USERNAME=laravel
 DB_PASSWORD=secret
+```
+
+### 3 Instalar projeto
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+```
+
+### 4 Acessar container
+
+```bash
+docker exec -it laravel_app bash
 ```
 
 ### 5 Gerar a chave da aplicação
@@ -101,7 +101,7 @@ A aplicação estará disponível em:
 
 http://localhost:80
 
-O admin do banco está disponível em:
+O adminer para acessar o banco está disponível em:
 
 http://localhost:8080
 
