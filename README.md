@@ -97,6 +97,12 @@ php artisan db:seed
 npm install && npm run build
 ```
 
+Se necessário remover containers execute:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down
+```
+
 A aplicação estará disponível em:
 
 http://localhost:80
@@ -142,7 +148,7 @@ http://localhost:8080
 
 - [] Dashboard com visao mensal
 
-### Funcionalidades extras (To-Do)
+### 🚧 Funcionalidades extras (To-Do)
 
 - [] Adicionar investimentos
 - [] Listar investimentos

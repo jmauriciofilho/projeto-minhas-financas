@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
 
   app:
@@ -19,7 +17,7 @@ services:
     image: nginx:alpine
     container_name: nginx
     ports:
-      - "80:80"
+      - "8000:80"
     volumes:
       - .:/var/www
       - ./docker/nginx:/etc/nginx/conf.d
