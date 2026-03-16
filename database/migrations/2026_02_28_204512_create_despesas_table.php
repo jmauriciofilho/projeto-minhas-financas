@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('despesas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nome');
-            $table->double('valor');
+            $table->double('valor', 15, 2);
+            $table->boolean('recorrente')->default(false);
             $table->boolean('ja_pago');
             $table->char('mes', 7)->index();
             $table->date('data_pagamento')->nullable();

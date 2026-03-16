@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('contas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nome');
-            $table->double('saldo');
+            $table->enum('tipo', ['CORRENTE', 'BENEFICIO']);
+            $table->double('saldo', 15, 2)->default(0.00);
             $table->foreignUuid('user_id')
               ->constrained()
               ->cascadeOnDelete();

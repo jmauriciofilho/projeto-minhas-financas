@@ -169,6 +169,22 @@
                 </select>
             </div>
 
+            {{-- Despesa Recorrente --}}
+            <div class="flex items-center gap-3">
+                <input
+                    id="recorrente"
+                    name="recorrente"
+                    type="checkbox"
+                    value="1"
+                    {{ old('recorrente') ? 'checked' : '' }}
+                    class="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600
+                           dark:border-neutral-700 dark:bg-neutral-800 dark:focus:ring-green-600"
+                />
+                <label for="recorrente" class="text-sm text-neutral-700 dark:text-neutral-300">
+                    Despesa Recorrente
+                </label>
+            </div>
+
             {{-- Status da Receita --}}
             <div class="flex flex-col gap-1">
                 <label

@@ -29,11 +29,11 @@ class StoreContaRequest extends FormRequest
                 'max:120'
             ],
 
-            'saldo' => [
+            'tipo' => [
                 'required',
-                'numeric',
-                'min:0.01'
+                'in:CORRENTE,BENEFICIO'
             ],
+            
         ];
         
     }

@@ -78,6 +78,7 @@ class DespesaController extends Controller
                 'conta_id' => $request->conta_id,
                 'valor' => $request->valor,
                 'mes' => $request->mes,
+                'recorrente' => $request->recorrente ?? false,
                 'ja_pago' => $request->status === 'pago',
                 'user_id' => Auth::user()->id
             ]);

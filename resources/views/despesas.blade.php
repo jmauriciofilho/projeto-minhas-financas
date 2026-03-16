@@ -105,6 +105,7 @@
                             <th class="px-6 py-4">Descrição</th>
                             <th class="px-6 py-4">Conta</th>
                             <th class="px-6 py-4">Classificação</th>
+                            <th class="px-6 py-4">Recorrente</th>
                             <th class="px-6 py-4">Data de Pagamento</th>
                             <th class="px-6 py-4 text-right">Valor</th>
                             <th class="px-6 py-4 text-center">Status</th>
@@ -149,6 +150,17 @@
                                         </select>
 
                                     </form>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    @if($despesa->recorrente)
+                                        <span class="px-2 py-1 text-xs bg-blue-500 text-white rounded-lg">
+                                            Recorrente
+                                        </span>
+                                    @else
+                                        <span class="px-2 py-1 text-xs bg-gray-500 text-white rounded-lg">
+                                            Única
+                                        </span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $despesa->data_pagamento ? \Carbon\Carbon::parse($despesa->data_pagamento)->format('d/m/Y') : '-' }}

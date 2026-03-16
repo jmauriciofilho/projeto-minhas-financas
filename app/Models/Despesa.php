@@ -18,6 +18,7 @@ class Despesa extends Model
         "nome",
         "valor",
         "mes",
+        "recorrente",
         "ja_pago",
         "data_pagamento",
         "conta_id",

@@ -34,7 +34,8 @@ class ContaController extends Controller
         $conta = new Conta;
 
         $conta->nome = $request->nome;
-        $conta->saldo = $request->saldo;
+        $conta->saldo = $request->saldo ?? 0.00;
+        $conta->tipo = $request->tipo;
         $conta->user_id = Auth::user()->id;
 
         $conta->save();

@@ -69,6 +69,31 @@
                 />
             </div>
 
+            {{-- Tipo da conta --}}
+            <div class="flex flex-col gap-1">
+                <label
+                    for="tipo"
+                    class="text-sm font-medium text-neutral-700 dark:text-neutral-300"
+                >
+                    Tipo da conta
+                </label>
+
+                <select
+                    id="tipo"
+                    name="tipo"
+                    class="rounded-lg border border-neutral-300 bg-white px-3 py-2
+                        text-neutral-900 placeholder:text-neutral-400
+                        focus:border-green-600 focus:ring-green-600
+                        dark:border-neutral-700 dark:bg-neutral-800
+                        dark:text-white dark:placeholder:text-neutral-500"
+                    required
+                >
+                    <option value="">Selecione o tipo</option>
+                    <option value="CORRENTE">Conta Corrente</option>
+                    <option value="BENEFICIO">Benefício</option>
+                </select>
+            </div>
+
             {{-- Saldo --}}
             <div class="flex flex-col gap-1">
                 <label
@@ -89,7 +114,6 @@
                            focus:border-green-600 focus:ring-green-600
                            dark:border-neutral-700 dark:bg-neutral-800
                            dark:text-white dark:placeholder:text-neutral-500"
-                    required
                 />
             </div>
 

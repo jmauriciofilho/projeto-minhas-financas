@@ -64,13 +64,13 @@ DB_PASSWORD=secret
 ### 3 Instalar projeto
 
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 ```
 
 ### 4 Acessar container
 
 ```bash
-docker exec -it laravel_app bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml exec app bash
 ```
 
 ### 5 Gerar a chave da aplicação

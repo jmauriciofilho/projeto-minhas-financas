@@ -16,6 +16,7 @@ class Conta extends Model
 
     protected $fillable = [
         "nome",
+        "tipo",
         "saldo"
     ];
 
