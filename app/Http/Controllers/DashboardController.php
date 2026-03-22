@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Despesa;
+use App\Models\Fatura;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +34,25 @@ class DashboardController extends Controller
 
         $saldoTotalContas = Auth::user()->contas()->sum('saldo');
 
-        $saldoTotalContasPrevistoMes = $saldoTotalContas - $gastosPrevistosMes;
+        $somaReceitasContaTipoCorrente = Auth::user()
+            ->receitas()
+            ->where('mes', $mes)
+            ->whereHas('conta', function ($query) {
+                $query->where('tipo', 'CORRENTE');
+            })
+            ->sum('valor');
+
+        $gastosParaRealizarMes = (clone $queryBase)
+            ->sum('valor');
+
+        $faturasParaPagarMes = Fatura::query()
+            ->whereHas('cartao', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
+            ->where('mes_referencia', $mes)
+            ->sum('despesa_total');
+
+        $saldoTotalPrevistoMes = $somaReceitasContaTipoCorrente - $gastosParaRealizarMes - $faturasParaPagarMes;
 
         $classificacoes = Auth::user()
             ->classificacoes()
@@ -49,6 +68,6 @@ class DashboardController extends Controller
             ->toArray();
 
         return view('dashboard', compact('totalGastosMes', 'gastosPrevistosMes', 
-            'saldoTotalContas', 'saldoTotalContasPrevistoMes', 'classificacoes', 'mes'));
+            'saldoTotalContas', 'saldoTotalPrevistoMes', 'classificacoes', 'mes'));
     }
 }

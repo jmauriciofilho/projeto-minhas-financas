@@ -16,7 +16,7 @@ return new class extends Migration
             $table->char('mes_referencia', 7);
             $table->date('data_fechamento');
             $table->date('data_vencimento');
-            $table->decimal('despesa_total', 15, 2)->default(0);
+            $table->decimal('despesa_total', 15, 2)->default(0.00);
             $table->boolean('ja_foi_paga')->default(false);
             $table->foreignUuid('conta_id')
                 ->nullable()

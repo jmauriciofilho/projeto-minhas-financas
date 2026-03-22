@@ -80,7 +80,7 @@
                 </p>
 
                 <p class="text-2xl font-semibold text-blue-600 mt-2">
-                    R$ {{ number_format($saldoTotalContasPrevistoMes, 2, ',', '.') }}
+                    R$ {{ number_format($saldoTotalPrevistoMes, 2, ',', '.') }}
                 </p>
             </div>
 
