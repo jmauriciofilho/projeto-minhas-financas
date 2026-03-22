@@ -141,7 +141,7 @@
             const valores = classificacoes.map(c => c.total_mes);
             const cores = classificacoes.map(c => c.background_color ?? '#9ca3af');
 
-            const ctx = document.getElementById('graficoClassificacao');
+            const ctx = document.getElementById('graficoClassificacao')?.getContext('2d');
 
             new Chart(ctx, {
                 type: 'pie',

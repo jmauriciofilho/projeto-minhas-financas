@@ -41,6 +41,9 @@
                     {{ __('Documentation') }}
                 </flux:sidebar.item> --}}
 
+                <flux:sidebar.item icon="arrow-up-tray" href="{{ route('importacao') }}" :current="request()->routeIs('importacao')" wire:navigate>
+                    {{ __('Importação') }}
+                </flux:sidebar.item>
                 <flux:sidebar.item icon="book-open-text" href="{{ route('classificacoes.index') }}" :current="request()->routeIs('classificacoes.*')" wire:navigate>
                     {{ __('Classificações') }}
                 </flux:sidebar.item>

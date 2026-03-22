@@ -147,6 +147,7 @@ http://localhost:8080
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
 - [] Dashboard com visao mensal
+- [] Importe de dados financeiros por json
 
 ### 🚧 Funcionalidades extras (To-Do)
 

@@ -36,6 +36,7 @@ class ClassificacaoController extends Controller
         $classificacao = new Classificacao();
         $classificacao->fill($request->validated());
         $classificacao->user_id = Auth::id();
+        $classificacao->slug = \Str::slug($request->nome);
         $classificacao->save();
 
         return redirect()->route('classificacoes.index')->with('success', 'Classificação criada com sucesso!');

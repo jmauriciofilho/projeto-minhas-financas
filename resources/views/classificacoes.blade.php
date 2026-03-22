@@ -63,6 +63,7 @@
                     <thead class="border-b border-neutral-200 dark:border-neutral-700 text-neutral-500 uppercase text-xs">
                         <tr>
                             <th class="px-6 py-4">Nome</th>
+                            <th class="px-6 py-4">Slug</th>
                             <th class="px-6 py-4 text-right">Ações</th>
                         </tr>
                     </thead>
@@ -88,6 +89,10 @@
                                         </span>
 
                                     </div>
+                                </td>
+
+                                <td class="px-6 py-4">
+                                    {{ $classificacao->slug }}
                                 </td>
 
                                 {{-- AÇÕES --}}

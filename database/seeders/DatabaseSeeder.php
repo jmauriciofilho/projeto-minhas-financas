@@ -59,12 +59,14 @@ class DatabaseSeeder extends Seeder
 
         $classificacaoSupermercado = Classificacao::factory()->create([
             'nome' => 'Supermercado',
+            'slug' => 'supermercado',
             'user_id' => $user->id,
             'background_color' => '#FF5733',
         ]);
 
         $classificacaoMoradia = Classificacao::factory()->create([
             'nome' => 'Moradia',
+            'slug' => 'moradia',
             'user_id' => $user->id,
             'background_color' => '#33C1FF',
         ]);

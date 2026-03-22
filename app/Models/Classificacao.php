@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,12 +12,13 @@ class Classificacao extends Model
     /** @use HasFactory<\Database\Factories\ClassificacaoFactory> */
     use HasFactory;
 
-    use HasUlids;
+    use HasUuids;
 
     protected $table = 'classificacoes';
 
     protected $fillable = [
         'nome',
+        'slug',
         'background_color',
         'user_id'
     ];

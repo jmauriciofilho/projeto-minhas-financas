@@ -1,13 +1,15 @@
 <?php
 
 use App\Http\Controllers\CartaoController;
+use App\Http\Controllers\ClassificacaoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ContaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DespesaController;
 use App\Http\Controllers\FaturaController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ReceitaController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
 
 Route::get('/', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -80,7 +82,7 @@ Route::resource('cartoes.faturas.compras', CompraController::class)
     ])
     ->middleware(['auth', 'verified']);
 
-Route::resource('classificacoes', \App\Http\Controllers\ClassificacaoController::class)
+Route::resource('classificacoes', ClassificacaoController::class)
     ->parameters([
         'classificacoes' => 'classificacao'
     ])
@@ -93,5 +95,13 @@ Route::patch('/despesas/{despesa}/classificacao', [DespesaController::class, 'up
 Route::patch('cartoes/{cartao}/faturas/{fatura}/compras/{compra}/classificacao', [CompraController::class, 'updateClassificacao'])
     ->middleware(['auth', 'verified'])
     ->name('cartoes.faturas.compras.updateClassificacao');
+
+Route::get('/importacao', [ImportController::class, 'import'])
+    ->middleware(['auth', 'verified'])
+    ->name('importacao');
+
+Route::post('/importacao/json', [ImportController::class, 'importJson'])
+    ->middleware(['auth', 'verified'])
+    ->name('importacao.json');
 
 require __DIR__.'/settings.php';
