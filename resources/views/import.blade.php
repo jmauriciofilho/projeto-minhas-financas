@@ -1,6 +1,6 @@
 <x-layouts::app :title="__('Importacão')">
 
-<form method="POST" action="{{ route('importacao.json') }}">
+<form id="formImportacao" method="POST" action="{{ route('importacao.json') }}">
     @csrf
 
     <div class="flex h-full w-full flex-1 flex-col gap-6 rounded-xl">
@@ -68,9 +68,29 @@
             </div>
         @endif
 
-        @if($errors->has('json'))
-            <div class="text-red-600 text-sm">
-                {{ $errors->first('json') }}
+        @if ($errors->any())
+            <div
+                class="flex flex-col gap-2 rounded-xl border border-red-200
+                    bg-red-50 p-4 text-red-700
+                    dark:border-red-900/50 dark:bg-red-950 dark:text-red-300"
+            >
+                <div class="flex items-center gap-2 font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0
+                               9 9 0 0118 0z"/>
+                    </svg>
+
+                    <span>Não foi possível salvar a despesa</span>
+                </div>
+
+                <ul class="ml-6 list-disc text-sm">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
 
@@ -79,7 +99,7 @@
         <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
 
             <textarea 
-                name="json"
+                name="conteudo_importacao"
                 id="jsonInput"
                 class="w-full h-[500px] p-4 font-mono text-sm 
                        border border-neutral-200 dark:border-neutral-700 
@@ -128,7 +148,7 @@
     const charCount = document.getElementById('charCount');
     const status = document.getElementById('status');
     const fileInput = document.getElementById('fileInput');
-    const form = document.querySelector('form');
+    const form = document.getElementById('formImportacao');
     const tipoImportacao = document.getElementById('tipoImportacao');
 
     function formatJson() {
@@ -225,6 +245,12 @@
         } catch (err) {
             showError('JSON inválido: ' + err.message);
             return;
+        }
+
+        const btnEnviar = document.querySelector('button[onclick="handleSubmit()"]');
+        if (btnEnviar) {
+            btnEnviar.disabled = true;
+            btnEnviar.innerText = 'Enviando...';
         }
 
         form.submit();

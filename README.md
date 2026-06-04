@@ -105,7 +105,7 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml down
 
 A aplicação estará disponível em:
 
-http://localhost:80
+http://localhost:8000
 
 O adminer para acessar o banco está disponível em:
 
@@ -146,8 +146,10 @@ http://localhost:8080
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] Dashboard com visao mensal
+- [] Forma de indetificar facilmente conta para usar no importe
 - [] Importe de dados financeiros por json
+- [] Dashboard com visao mensal
+- [] Editar valor de receitas, despesas e contas de cartão equanto nao for paga ou recebida.
 
 ### 🚧 Funcionalidades extras (To-Do)
 
