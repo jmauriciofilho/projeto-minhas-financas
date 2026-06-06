@@ -20,11 +20,15 @@ return new class extends Migration
         });
 
         Schema::table('compras', function (Blueprint $table) {
-            $table->foreignUuid('classificacao_id')->nullable()->constrained('classificacoes')->onDelete('set null');
+            $table->foreignUuid('classificacao_id')
+                ->nullable()->constrained('classificacoes')
+                ->onDelete('set null');
         });
 
         Schema::table('despesas', function (Blueprint $table) {
-            $table->foreignUuid('classificacao_id')->nullable()->constrained('classificacoes')->onDelete('set null');
+            $table->foreignUuid('classificacao_id')
+                ->nullable()->constrained('classificacoes')
+                ->onDelete('set null');
         });
     }
 

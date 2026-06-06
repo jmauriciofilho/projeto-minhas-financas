@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     {
         $user = User::factory()->create([
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'admin@admin.com',
             'password' => bcrypt('12345678'),
         ]);
 
@@ -39,57 +39,57 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
         ]);
 
-        Receita::factory()->create([
-            'nome' => 'Salário',
-            'valor' => 5000.00,
-            'ja_recebido' => false,
-            'mes' => '2026-04',
-            'user_id' => $user->id,
-            'conta_id' => $contaCorrente->id,
-        ]);
+        // Receita::factory()->create([
+        //     'nome' => 'Salário',
+        //     'valor' => 5000.00,
+        //     'ja_recebido' => false,
+        //     'mes' => '2026-04',
+        //     'user_id' => $user->id,
+        //     'conta_id' => $contaCorrente->id,
+        // ]);
 
-        Receita::factory()->create([
-            'nome' => 'Benefício',
-            'valor' => 1500.00,
-            'ja_recebido' => false,
-            'mes' => '2026-04',
-            'user_id' => $user->id,
-            'conta_id' => $contaCorrente->id,
-        ]);
+        // Receita::factory()->create([
+        //     'nome' => 'Benefício',
+        //     'valor' => 1500.00,
+        //     'ja_recebido' => false,
+        //     'mes' => '2026-04',
+        //     'user_id' => $user->id,
+        //     'conta_id' => $contaCorrente->id,
+        // ]);
 
-        $classificacaoSupermercado = Classificacao::factory()->create([
-            'nome' => 'Supermercado',
-            'slug' => 'supermercado',
-            'user_id' => $user->id,
-            'background_color' => '#FF5733',
-        ]);
+        // $classificacaoSupermercado = Classificacao::factory()->create([
+        //     'nome' => 'Supermercado',
+        //     'slug' => 'supermercado',
+        //     'user_id' => $user->id,
+        //     'background_color' => '#FF5733',
+        // ]);
 
-        $classificacaoMoradia = Classificacao::factory()->create([
-            'nome' => 'Moradia',
-            'slug' => 'moradia',
-            'user_id' => $user->id,
-            'background_color' => '#33C1FF',
-        ]);
+        // $classificacaoMoradia = Classificacao::factory()->create([
+        //     'nome' => 'Moradia',
+        //     'slug' => 'moradia',
+        //     'user_id' => $user->id,
+        //     'background_color' => '#33C1FF',
+        // ]);
 
-        Despesa::factory()->create([
-            'nome' => 'Luz',
-            'valor' => 200.00,
-            'ja_pago' => false,
-            'mes' => '2026-04',
-            'user_id' => $user->id,
-            'conta_id' => $contaCorrente->id,
-            'classificacao_id' => $classificacaoMoradia->id,
-        ]);
+        // Despesa::factory()->create([
+        //     'nome' => 'Luz',
+        //     'valor' => 200.00,
+        //     'ja_pago' => false,
+        //     'mes' => '2026-04',
+        //     'user_id' => $user->id,
+        //     'conta_id' => $contaCorrente->id,
+        //     'classificacao_id' => $classificacaoMoradia->id,
+        // ]);
 
-        Despesa::factory()->create([
-            'nome' => 'Prestação do Apartamento',
-            'valor' => 800.00,
-            'ja_pago' => false,
-            'mes' => '2026-04',
-            'user_id' => $user->id,
-            'conta_id' => $contaCorrente->id,
-            'classificacao_id' => $classificacaoMoradia->id,
-        ]);
+        // Despesa::factory()->create([
+        //     'nome' => 'Prestação do Apartamento',
+        //     'valor' => 800.00,
+        //     'ja_pago' => false,
+        //     'mes' => '2026-04',
+        //     'user_id' => $user->id,
+        //     'conta_id' => $contaCorrente->id,
+        //     'classificacao_id' => $classificacaoMoradia->id,
+        // ]);
 
         $cartao = Cartao::factory()->create([
             'nome' => 'Cartão Nubank',
@@ -97,27 +97,27 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
         ]);
 
-        $fatura = Fatura::factory()->create([
-            'mes_referencia' => '2026-04',
-            'data_fechamento' => '2026-03-25',
-            'data_vencimento' => '2026-04-05',
-            'despesa_total' => 0.00,
-            'ja_foi_paga' => false,
-            'cartao_id' => $cartao->id,
-            'conta_id' => $contaCorrente->id,
-        ]);
+        // $fatura = Fatura::factory()->create([
+        //     'mes_referencia' => '2026-04',
+        //     'data_fechamento' => '2026-03-25',
+        //     'data_vencimento' => '2026-04-05',
+        //     'despesa_total' => 0.00,
+        //     'ja_foi_paga' => false,
+        //     'cartao_id' => $cartao->id,
+        //     'conta_id' => $contaCorrente->id,
+        // ]);
 
-        Compra::factory()->create([
-            'descricao' => 'Compra no supermercado',
-            'valor' => 150.00,
-            'data_compra' => '2026-03-28',
-            'total_parcelas' => 1,
-            'numero_parcela' => 1,
-            'fatura_id' => $fatura->id,
-            'classificacao_id' => $classificacaoSupermercado->id,
-        ]);
+        // Compra::factory()->create([
+        //     'descricao' => 'Compra no supermercado',
+        //     'valor' => 150.00,
+        //     'data_compra' => '2026-03-28',
+        //     'total_parcelas' => 1,
+        //     'numero_parcela' => 1,
+        //     'fatura_id' => $fatura->id,
+        //     'classificacao_id' => $classificacaoSupermercado->id,
+        // ]);
 
-        $fatura->despesa_total += 150.00;
-        $fatura->save();
+        // $fatura->despesa_total += 150.00;
+        // $fatura->save();
     }
 }

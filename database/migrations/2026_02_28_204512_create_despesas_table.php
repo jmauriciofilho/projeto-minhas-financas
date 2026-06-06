@@ -22,9 +22,10 @@ return new class extends Migration
             $table->foreignUuid('user_id')
               ->constrained()
               ->cascadeOnDelete();
-            $table->foreignUuid('conta_id')
-              ->constrained()
-              ->cascadeOnDelete();
+             $table->foreignUuid('conta_id')
+                ->nullable()
+                ->constrained('contas')
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

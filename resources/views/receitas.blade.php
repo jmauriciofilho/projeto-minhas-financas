@@ -120,7 +120,7 @@
                                     {{ $receita->nome }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $receita->conta->nome }}
+                                    {{ $receita->conta ? $receita->conta->nome : 'Nenhuma' }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $receita->data_recebimento ? \Carbon\Carbon::parse($receita->data_recebimento)->format('d/m/Y') : '-' }}

@@ -87,7 +87,7 @@ class ImportController extends Controller
             $rules = [
                 // Validação do bloco de Meses
                 'meses'   => 'required|array|min:1',
-                'meses.*' => 'required|string|date_format:m/Y',
+                'meses.*' => 'required|string|date_format:Y-m',
 
                 // Validação do bloco de Receitas
                 'receitas'               => 'required|array',
@@ -109,7 +109,7 @@ class ImportController extends Controller
                 'meses.array'    => 'O campo "meses" deve ser uma lista.',
                 'meses.min'      => 'É necessário informar pelo menos um mês.',
                 'meses.*.required' => 'O mês na posição :index não pode estar vazio.',
-                'meses.*.date_format' => 'O mês na posição :index deve estar no formato MM/AAAA (Ex: 06/2026).',
+                'meses.*.date_format' => 'O mês na posição :index deve estar no formato AAAA-MM (Ex: 2026-06).',
 
                 // ERROS DO BLOCO: RECEITAS
                 'receitas.required' => 'O bloco "receitas" é obrigatório.',

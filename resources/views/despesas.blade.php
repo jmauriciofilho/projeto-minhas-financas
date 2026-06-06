@@ -122,7 +122,7 @@
                                     {{ $despesa->nome }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $despesa->conta->nome }}
+                                    {{ $despesa->conta ? $despesa->conta->nome : 'Nenhuma' }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <form 
