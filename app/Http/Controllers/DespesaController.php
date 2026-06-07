@@ -109,7 +109,12 @@ class DespesaController extends Controller
      */
     public function edit(Despesa $despesa)
     {
-        //
+        if ($despesa->user_id !== Auth::user()->id) {
+            abort(403);
+        }
+
+        $contas = Auth::user()->contas;
+        return view('editarDespesa', ['despesa' => $despesa, 'contas' => $contas]);
     }
 
     /**
@@ -117,7 +122,25 @@ class DespesaController extends Controller
      */
     public function update(UpdateDespesaRequest $request, Despesa $despesa)
     {
-        //
+        if ($despesa->user_id !== Auth::user()->id) {
+            abort(403);
+        }
+
+        if ($despesa->ja_pago) {
+            return back()->with('error', 'Não é possível editar uma despesa já paga.');
+        }
+
+        $dadosAtualizados = [
+            'nome' => $request->nome,
+            'conta_id' => $request->conta_id,
+            'valor' => $request->valor
+        ];
+
+        $despesa->update($dadosAtualizados);
+
+        return redirect()
+            ->route('despesas.index')
+            ->with('success', 'Despesa atualizada com sucesso.');
     }
 
     public function updateStatus(Despesa $despesa)
@@ -128,6 +151,10 @@ class DespesaController extends Controller
 
         if ($despesa->ja_pago) {
             return back(); // já pago, não altera
+        }
+
+        if (!$despesa->conta) {
+            return back()->with('error', 'A despesa não está associada a uma conta válida.');
         }
 
         DB::transaction(function () use ($despesa) {

@@ -11,7 +11,7 @@ class UpdateReceitaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,24 @@ class UpdateReceitaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nome' => [
+                'required',
+                'string',
+                'min:3',
+                'max:120'
+            ],
+
+            'valor' => [
+                'required',
+                'numeric',
+                'min:0.01'
+            ],
+
+            'conta_id' => [
+                'required',
+                'uuid',
+                'exists:contas,id'
+            ],
         ];
     }
 }

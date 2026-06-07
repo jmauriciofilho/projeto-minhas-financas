@@ -166,6 +166,16 @@
                                 {{-- AÇÕES --}}
                                 <td class="px-6 py-4 text-right space-x-3">
 
+                                    @if(!$fatura->ja_foi_paga)
+                                        <a
+                                            href="{{ route('cartoes.faturas.compras.edit', [$cartao, $fatura, $compra]) }}"
+                                            class="text-neutral-500 hover:text-blue-600 transition"
+                                            title="Editar"
+                                        >
+                                            ✏️
+                                        </a>
+                                    @endif
+
                                     <form
                                         action="{{ route('cartoes.faturas.compras.destroy', [$cartao, $fatura, $compra]) }}"
                                         method="POST"

@@ -77,17 +77,31 @@ class CompraController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Compra $compra)
+    public function edit(Cartao $cartao, Fatura $fatura, Compra $compra)
     {
-        //
+        if($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id || $compra->fatura_id !== $fatura->id) {
+            abort(403);
+        }
+
+        return view('editarCompra', compact('cartao', 'fatura', 'compra'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCompraRequest $request, Compra $compra)
+    public function update(UpdateCompraRequest $request, Cartao $cartao, Fatura $fatura, Compra $compra)
     {
-        //
+        if($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id || $compra->fatura_id !== $fatura->id) {
+            abort(403);
+        }
+
+        if($fatura->ja_foi_paga) {
+            return back()->withErrors('Não é possível editar uma compra de uma fatura que já foi paga.');
+        }
+
+        $compra->update($request->validated());
+
+        return redirect()->route('cartoes.faturas.compras.index', ['cartao' => $cartao->id, 'fatura' => $fatura->id]);
     }
 
     /**

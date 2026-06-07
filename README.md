@@ -143,13 +143,13 @@ http://localhost:8080
 - [x] Impedir add de compra em faturas pagas
 - [x] Pagar faturas
 - [x] classificação de despesas e compras no cartao
+- [x] Editar valor de receitas, despesas e contas de cartão equanto nao for paga ou recebida.
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] Forma de indetificar facilmente conta para usar no importe
 - [] Importe de dados financeiros por json
 - [] Dashboard com visao mensal
-- [] Editar valor de receitas, despesas e contas de cartão equanto nao for paga ou recebida.
+
 
 ### 🚧 Funcionalidades extras (To-Do)
 

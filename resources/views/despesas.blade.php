@@ -69,6 +69,36 @@
             </div>
         @endif
 
+        @if (session('error'))
+            <div 
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 4000)"
+                x-transition
+                class="fixed top-6 right-6 z-50 max-w-md"
+            >
+                <div class="flex items-center gap-4 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700 shadow-lg dark:border-red-900/50 dark:bg-red-950 dark:text-red-300">
+                    
+                    {{-- Ícone SVG de erro integrado do layout do formulário --}}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+
+                    <span class="text-sm font-medium">
+                        {{ session('error') }}
+                    </span>
+
+                    {{-- Botão Fechar ajustado para a nova paleta --}}
+                    <button 
+                        @click="show = false"
+                        class="ml-auto text-red-400 hover:text-red-700 dark:text-red-500 dark:hover:text-red-300 text-lg leading-none"
+                    >
+                        &times;
+                    </button>
+                </div>
+            </div>
+        @endif
+
         {{-- CARDS DE RESUMO --}}
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
 
@@ -192,24 +222,37 @@
                                     @endif
 
                                 </td>
-                                <td class="px-6 py-4 text-right space-x-2">
-                                    <!-- <button class="text-blue-600 hover:underline">Editar</button> -->
-                                    <form 
-                                        action="{{ route('despesas.destroy', $despesa) }}" 
-                                        method="POST"
-                                        onsubmit="return confirm('Tem certeza que deseja excluir esta despesa?')"
-                                    >
-                                        @csrf
-                                        @method('DELETE')
 
-                                        <button
-                                            type="submit"
-                                            title="Excluir"
-                                            class="text-red-600 hover:underline"
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-end gap-3">
+                                        @if(!$despesa->ja_pago)
+                                            <a
+                                                href="{{ route('despesas.edit', $despesa) }}"
+                                                class="text-neutral-500 hover:text-blue-600 transition"
+                                                title="Editar"
+                                            >
+                                                ✏️
+                                            </a>
+                                        @endif
+
+                                        <form 
+                                            action="{{ route('despesas.destroy', $despesa) }}" 
+                                            method="POST"
+                                            onsubmit="return confirm('Tem certeza que deseja excluir esta despesa?')"
+                                            class="inline"
                                         >
-                                            Excluir
-                                        </button>
-                                    </form>
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="text-neutral-500 hover:text-red-600 transition block"
+                                                title="Excluir"
+                                            >
+                                                🗑️
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

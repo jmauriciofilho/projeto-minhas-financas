@@ -11,7 +11,7 @@ class UpdateCompraRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateCompraRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'descricao' => 'required|string|max:255',
+            'data_compra' => 'required|date',
+            'valor' => 'required|numeric|min:0',
+            'total_parcelas' => 'required|integer|min:1',
+            'numero_parcela' => 'required|integer|min:1|max:' . $this->input('total_parcelas')
         ];
     }
 }

@@ -105,7 +105,13 @@ class ReceitaController extends Controller
      */
     public function edit(Receita $receita)
     {
-        //
+        if ($receita->user_id !== Auth::user()->id) {
+            abort(403);
+        }
+
+        $contas = Auth::user()->contas;
+
+        return view('editarReceita', ['receita' => $receita, 'contas' => $contas]);
     }
 
     /**
@@ -113,7 +119,28 @@ class ReceitaController extends Controller
      */
     public function update(UpdateReceitaRequest $request, Receita $receita)
     {
-        //
+        if ($receita->user_id !== Auth::user()->id) {
+            abort(403);
+        }
+
+        if ($receita->ja_recebido) {
+            return back()->with('error', 'Não é possível editar uma receita já recebida.'); // já recebido, não altera
+        }
+
+        DB::transaction(function () use ($request, $receita) {
+
+            $dadosAtualizados = [
+                'nome' => $request->nome,
+                'conta_id' => $request->conta_id,
+                'valor' => $request->valor
+            ];
+
+            $receita->update($dadosAtualizados);
+        });
+
+        return redirect()
+            ->route('receitas.index')
+            ->with('success', 'Receita atualizada com sucesso.');
     }
 
     public function updateStatus(Receita $receita)
@@ -124,6 +151,10 @@ class ReceitaController extends Controller
 
         if ($receita->ja_recebido) {
             return back(); // já recebido, não altera
+        }
+
+        if (!$receita->conta) {
+            return back()->with('error', 'A receita não está associada a uma conta válida.');
         }
 
         DB::transaction(function () use ($receita) {
