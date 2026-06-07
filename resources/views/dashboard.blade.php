@@ -37,46 +37,10 @@
         {{-- CARDS --}}
         <div class="grid auto-rows-min gap-4 md:grid-cols-4">
 
-            {{-- TOTAL GASTO --}}
+            {{-- Saldo Previsto no Mês --}}
             <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
                 <p class="text-sm text-neutral-500">
-                    Total gasto no mês
-                </p>
-
-                <p class="text-2xl font-semibold text-red-600 mt-2">
-                    R$ {{ number_format($totalGastosMes, 2, ',', '.') }}
-                </p>
-            </div>
-
-
-            {{-- SALDO CONTAS --}}
-            <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
-                <p class="text-sm text-neutral-500">
-                    Saldo de todas as contas
-                </p>
-
-                <p class="text-2xl font-semibold text-green-600 mt-2">
-                    R$ {{ number_format($saldoTotalContas, 2, ',', '.') }}
-                </p>
-            </div>
-
-
-            {{-- GASTO PREVISTO --}}
-            <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
-                <p class="text-sm text-neutral-500">
-                    Gasto previsto do mês
-                </p>
-
-                <p class="text-2xl font-semibold text-orange-500 mt-2">
-                    R$ {{ number_format($gastosPrevistosMes, 2, ',', '.') }}
-                </p>
-            </div>
-
-
-            {{-- SALDO PREVISTO --}}
-            <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
-                <p class="text-sm text-neutral-500">
-                    Saldo previsto do mês
+                    Saldo previsto no mês
                 </p>
 
                 <p class="text-2xl font-semibold text-blue-600 mt-2">
@@ -84,13 +48,48 @@
                 </p>
             </div>
 
+
+            {{-- Saldo Previsto no Mês (Sem Benefícios) --}}
+            <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
+                <p class="text-sm text-yellow-500">
+                    Saldo previsto no mês (Sem Benefícios)
+                </p>
+
+                <p class="text-2xl font-semibold text-green-600 mt-2">
+                    R$ {{ number_format($saldoTotalPrevistoMesSemBeneficios, 2, ',', '.') }}
+                </p>
+            </div>
+
+
+            {{-- GASTO PREVISTO --}}
+            {{-- <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
+                <p class="text-sm text-neutral-500">
+                    Gasto previsto do mês
+                </p>
+
+                <p class="text-2xl font-semibold text-orange-500 mt-2">
+                    R$ {{ number_format($gastosPrevistosMes, 2, ',', '.') }}
+                </p>
+            </div> --}}
+
+
+            {{-- SALDO PREVISTO --}}
+            {{-- <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
+                <p class="text-sm text-neutral-500">
+                    Saldo previsto do mês
+                </p>
+
+                <p class="text-2xl font-semibold text-blue-600 mt-2">
+                    R$ {{ number_format($saldoTotalPrevistoMes, 2, ',', '.') }}
+                </p>
+            </div> --}}
+
         </div>
 
 
         {{-- GRAFICOS --}}
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {{-- <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
-            {{-- GRAFICO PIZZA --}}
             <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
 
                 <h2 class="text-lg font-semibold mb-4 text-neutral-900 dark:text-white">
@@ -101,8 +100,6 @@
 
             </div>
 
-
-            {{-- RESUMO --}}
             <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">
 
                 <h2 class="text-lg font-semibold mb-4 text-neutral-900 dark:text-white">
@@ -124,7 +121,7 @@
 
             </div>
 
-        </div>
+        </div> --}}
 
     </div>
 
