@@ -144,12 +144,12 @@ http://localhost:8080
 - [x] Pagar faturas
 - [x] classificação de despesas e compras no cartao
 - [x] Editar valor de receitas, despesas e contas de cartão equanto nao for paga ou recebida.
+- [x] Importe de dados financeiros por json
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
 
-- [] Importe de dados financeiros por json
 - [] Dashboard com visao mensal
-
+- [] Melhorar importes de dados em json
 
 ### 🚧 Funcionalidades extras (To-Do)
 
