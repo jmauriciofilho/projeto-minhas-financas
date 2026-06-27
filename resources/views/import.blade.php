@@ -22,7 +22,7 @@
                 >
                     <option value="">Selecione o tipo</option>
                     <option value="classificacao">Classificação</option>
-                    <option value="financeiro_mes">Receitas e despesas (mês)</option>
+                    <option value="financeiro_mes">Financeiro Completo</option>
                 </select>
 
                 <button type="button" onclick="formatJson()" 

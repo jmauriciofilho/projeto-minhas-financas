@@ -49,7 +49,7 @@
                             <td class="py-4">R$ {{ number_format($resumo['previsto']['receita'] ?? 0, 2, ',', '.') }}</td>
                             <td class="py-4 text-red-500">R$ {{ number_format($resumo['previsto']['despesas'] ?? 0, 2, ',', '.') }}</td>
                             <td class="py-4 text-red-500">R$ {{ number_format($resumo['previsto']['faturas'] ?? 0, 2, ',', '.') }}</td>
-                            <td class="py-4 font-semibold {{ ($resumo['previsto']['saldo'] ?? 0) >= 0 ? 'text-sky-500' : 'text-red-500' }}">
+                            <td class="py-4 font-semibold {{ ($resumo['previsto']['saldo'] ?? 0) > 0 ? 'text-green-600 dark:text-green-400' : (($resumo['previsto']['saldo'] ?? 0) < 0 ? 'text-red-500 dark:text-red-400' : 'text-amber-500 dark:text-amber-400') }}">
                                 R$ {{ number_format($resumo['previsto']['saldo'] ?? 0, 2, ',', '.') }}
                             </td>
                         </tr>
@@ -59,7 +59,7 @@
                             <td class="py-4">R$ {{ number_format($resumo['realizado']['receita'] ?? 0, 2, ',', '.') }}</td>
                             <td class="py-4 text-red-500">R$ {{ number_format($resumo['realizado']['despesas'] ?? 0, 2, ',', '.') }}</td>
                             <td class="py-4 text-red-500">R$ {{ number_format($resumo['realizado']['faturas'] ?? 0, 2, ',', '.') }}</td>
-                            <td class="py-4 font-semibold {{ ($resumo['realizado']['saldo'] ?? 0) >= 0 ? 'text-sky-500' : 'text-red-500' }}">
+                            <td class="py-4 font-semibold {{ ($resumo['realizado']['saldo'] ?? 0) > 0 ? 'text-green-600 dark:text-green-400' : (($resumo['realizado']['saldo'] ?? 0) < 0 ? 'text-red-500 dark:text-red-400' : 'text-amber-500 dark:text-amber-400') }}">
                                 R$ {{ number_format($resumo['realizado']['saldo'] ?? 0, 2, ',', '.') }}
                             </td>
                         </tr>
@@ -72,7 +72,7 @@
                     Saldo Previsto Próximo Mês<br>
                     <span class="text-sm font-normal text-neutral-500">(Sem Multibenefícios)</span>
                 </h2>
-                <p class="text-3xl font-bold mt-6 text-neutral-900 dark:text-white">
+                <p class="text-3xl font-bold mt-6 {{ ($saldoPrevistoProximoMesSemBeneficio ?? 0) > 0 ? 'text-green-600 dark:text-green-400' : (($saldoPrevistoProximoMesSemBeneficio ?? 0) < 0 ? 'text-red-500 dark:text-red-400' : 'text-amber-500 dark:text-amber-400') }}">
                     R$ {{ number_format($saldoPrevistoProximoMesSemBeneficio ?? 0, 2, ',', '.') }}
                 </p>
             </div>
@@ -158,73 +158,93 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            
-            // --- GRÁFICO DE BARRAS (Receita x Despesas) ---
-            const dadosBarras = @json($graficoBarras ?? ['receita' => 0, 'despesas' => 0]);
-            const ctxBarras = document.getElementById('graficoBarras')?.getContext('2d');
-            
-            if (ctxBarras) {
-                new Chart(ctxBarras, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Receita', 'Despesas'],
-                        datasets: [{
-                            label: 'Valor',
-                            data: [dadosBarras.receita, dadosBarras.despesas],
-                            backgroundColor: ['#4ade80', '#f87171'], // Verde e Vermelho
-                            borderColor: ['#16a34a', '#dc2626'],
-                            borderWidth: 1,
-                            barPercentage: 0.6
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: {
-                            y: { 
-                                beginAtZero: true, 
-                                title: { display: true, text: 'valor', align: 'end' } 
-                            },
-                            x: { grid: { display: false } }
-                        }
+        (function () {
+            function inicializarGraficos() {
+                // --- GRÁFICO DE BARRAS (Receita x Despesas) ---
+                const dadosBarras = @json($graficoBarras ?? ['receita' => 0, 'despesas' => 0]);
+                const canvasBarras = document.getElementById('graficoBarras');
+                
+                if (canvasBarras) {
+                    // Destrói instância existente para evitar o erro "Canvas is already in use"
+                    const graficoExistente = Chart.getChart(canvasBarras);
+                    if (graficoExistente) {
+                        graficoExistente.destroy();
                     }
-                });
-            }
 
-            // --- GRÁFICO DE PIZZA (Gastos por Área) ---
-            const classificacoes = @json($classificacoes ?? []);
-            const ctxPizza = document.getElementById('graficoPizza')?.getContext('2d');
-
-            if (ctxPizza && classificacoes.length > 0) {
-                new Chart(ctxPizza, {
-                    type: 'pie',
-                    data: {
-                        labels: classificacoes.map(c => c.nome),
-                        datasets: [{
-                            data: classificacoes.map(c => c.total_mes),
-                            backgroundColor: classificacoes.map(c => c.background_color ?? '#9ca3af'),
-                            borderWidth: 0
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        layout: {
-                            padding: 10
+                    new Chart(canvasBarras, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Receita', 'Despesas'],
+                            datasets: [{
+                                label: 'Valor',
+                                data: [dadosBarras.receita, dadosBarras.despesas],
+                                backgroundColor: ['#4ade80', '#f87171'], // Verde e Vermelho
+                                borderColor: ['#16a34a', '#dc2626'],
+                                borderWidth: 1,
+                                barPercentage: 0.6
+                            }]
                         },
-                        plugins: {
-                            // Legenda nativa DESATIVADA. Estamos usando a legenda em HTML.
-                            legend: {
-                                display: false 
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                y: { 
+                                    beginAtZero: true, 
+                                    title: { display: true, text: 'valor', align: 'end' } 
+                                },
+                                x: { grid: { display: false } }
                             }
                         }
+                    });
+                }
+
+                // --- GRÁFICO DE PIZZA (Gastos por Área) ---
+                const classificacoes = @json($classificacoes ?? []);
+                const canvasPizza = document.getElementById('graficoPizza');
+
+                if (canvasPizza && classificacoes.length > 0) {
+                    // Destrói instância existente para evitar conflitos na troca de páginas
+                    const graficoExistente = Chart.getChart(canvasPizza);
+                    if (graficoExistente) {
+                        graficoExistente.destroy();
                     }
-                });
+
+                    new Chart(canvasPizza, {
+                        type: 'pie',
+                        data: {
+                            labels: classificacoes.map(c => c.nome),
+                            datasets: [{
+                                data: classificacoes.map(c => c.total_mes),
+                                backgroundColor: classificacoes.map(c => c.background_color ?? '#9ca3af'),
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            layout: {
+                                padding: 10
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false 
+                                }
+                            }
+                        }
+                    });
+                }
             }
 
-        });
+            // Suporte para carregamento tradicional (F5 / Primeiro Acesso)
+            document.addEventListener('DOMContentLoaded', inicializarGraficos);
+            
+            // Suporte para Livewire 3 (Se o starter kit usar wire:navigate)
+            document.addEventListener('livewire:navigated', inicializarGraficos);
+            
+            // Suporte para Turbo Drive (Caso use a stack com Turbo/Hotwire)
+            document.addEventListener('turbo:load', inicializarGraficos);
+        })();
     </script>
 
 </x-layouts::app>

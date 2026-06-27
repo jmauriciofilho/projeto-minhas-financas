@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cartao;
 use App\Models\Classificacao;
+use App\Models\Compra;
+use App\Models\Conta;
 use App\Models\Despesa;
+use App\Models\Fatura;
 use App\Models\Receita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,13 +73,16 @@ class ImportController extends Controller
 
             DB::transaction(function () use ($dadosValidados) {
 
-                foreach($dadosValidados['classificacoes'] as $index => $classificacao){
-                    Classificacao::create([
-                        'nome' => $classificacao['nome'],
-                        'slug' => $classificacao['slug'],
-                        'background_color' => $classificacao['background_color'],
-                        'user_id' => Auth::user()->id
-                    ]);
+                foreach($dadosValidados['classificacoes'] as $classificacao){
+                    Classificacao::firstOrCreate(
+                        ['slug' => $classificacao['slug']], 
+                        
+                        [
+                            'nome' => $classificacao['nome'],
+                            'background_color' => $classificacao['background_color'],
+                            'user_id' => Auth::user()->id
+                        ] 
+                    );
                 }
 
             });
@@ -89,60 +96,108 @@ class ImportController extends Controller
                 'meses'   => 'required|array|min:1',
                 'meses.*' => 'required|string|date_format:Y-m',
 
-                // Validação do bloco de Receitas
-                'receitas'               => 'required|array',
-                'receitas.*.nome'        => 'required|string|max:255',
-                'receitas.*.valor'       => 'required|numeric|min:0',
-                'receitas.*.ja_recebido' => 'required|string|in:sim,não',
+                // Validação do bloco de Contas
+                'contas'                 => 'required|array|min:1',
+                'contas.*.nome'          => 'required|string|max:255',
+                'contas.*.tipo'          => 'required|string|max:255',
+                'contas.*.saldo_inicial' => 'required|numeric',
 
-                // Validação do bloco de Despesas
-                'despesas'              => 'required|array',
-                'despesas.*.nome'       => 'required|string|max:255',
-                'despesas.*.valor'      => 'required|numeric|min:0',
-                'despesas.*.recorrente' => 'required|string|in:sim,não',
-                'despesas.*.ja_pago'    => 'required|string|in:sim,não',
+                // Validação do bloco de Receitas (Aninhado em Contas)
+                'contas.*.receitas'               => 'required|array',
+                'contas.*.receitas.*.nome'        => 'required|string|max:255',
+                'contas.*.receitas.*.valor'       => 'required|numeric|min:0',
+                'contas.*.receitas.*.ja_recebido' => 'required|string|in:sim,não',
+
+                // Validação do bloco de Despesas (Aninhado em Contas)
+                'contas.*.despesas'                 => 'required|array',
+                'contas.*.despesas.*.nome'          => 'required|string|max:255',
+                'contas.*.despesas.*.valor'         => 'required|numeric|min:0',
+                'contas.*.despesas.*.recorrente'    => 'required|string|in:sim,não',
+                'contas.*.despesas.*.ja_pago'       => 'required|string|in:sim,não',
+                'contas.*.despesas.*.classificacao' => 'sometimes|string|max:255',
+
+                // Validação do bloco de Cartões (Aninhado em Contas - Opcional usando 'sometimes')
+                'contas.*.cartoes'                            => 'sometimes|array',
+                'contas.*.cartoes.*.nome'                     => 'required|string|max:255',
+                'contas.*.cartoes.*.final_cartao'             => 'required|string|max:10',
+                'contas.*.cartoes.*.faturas'                  => 'required|array',
+                'contas.*.cartoes.*.faturas.*.ja_foi_pago'    => 'required|string|in:sim,não',
+                'contas.*.cartoes.*.faturas.*.dia_fechamento' => 'required|string|max:2',
+                'contas.*.cartoes.*.faturas.*.dia_vencimento' => 'required|string|max:2',
+
+                // Validação de Compras (Aninhado em Faturas de Cartões)
+                'contas.*.cartoes.*.faturas.*.compras'                  => 'required|array',
+                'contas.*.cartoes.*.faturas.*.compras.*.descricao'      => 'required|string|max:255',
+                'contas.*.cartoes.*.faturas.*.compras.*.data_compra'    => 'required|string|date_format:Y-m-d',
+                'contas.*.cartoes.*.faturas.*.compras.*.valor'          => 'required|numeric|min:0',
+                'contas.*.cartoes.*.faturas.*.compras.*.total_parcelas' => 'required|integer|min:1',
+                'contas.*.cartoes.*.faturas.*.compras.*.numero_parcela' => 'required|integer|min:1',
+                'contas.*.cartoes.*.faturas.*.compras.*.classificacao'  => 'sometimes|string|max:255',
             ];
 
             $messages = [
                 // ERROS DO BLOCO: MESES
-                'meses.required' => 'O bloco "meses" é obrigatório.',
-                'meses.array'    => 'O campo "meses" deve ser uma lista.',
-                'meses.min'      => 'É necessário informar pelo menos um mês.',
-                'meses.*.required' => 'O mês na posição :index não pode estar vazio.',
+                'meses.required'      => 'O bloco "meses" é obrigatório.',
+                'meses.array'         => 'O campo "meses" deve ser uma lista.',
+                'meses.min'           => 'É necessário informar pelo menos um mês.',
+                'meses.*.required'    => 'O mês na posição :index não pode estar vazio.',
                 'meses.*.date_format' => 'O mês na posição :index deve estar no formato AAAA-MM (Ex: 2026-06).',
 
+                // ERROS DO BLOCO: CONTAS
+                'contas.required'                 => 'O bloco "contas" é obrigatório.',
+                'contas.array'                    => 'O campo "contas" deve ser uma lista.',
+                'contas.min'                      => 'É necessário informar pelo menos uma conta.',
+                'contas.*.nome.required'          => 'O nome da conta é obrigatório.',
+                'contas.*.tipo.required'          => 'O tipo da conta é obrigatório.',
+                'contas.*.saldo_inicial.required' => 'O saldo inicial da conta é obrigatório.',
+                'contas.*.saldo_inicial.numeric'  => 'O saldo inicial deve ser um valor numérico.',
+
                 // ERROS DO BLOCO: RECEITAS
-                'receitas.required' => 'O bloco "receitas" é obrigatório.',
-                'receitas.array'    => 'O campo "receitas" deve ser uma lista.',
-                
-                'receitas.*.nome.required' => 'O nome da receita na posição :index é obrigatório.',
-                'receitas.*.nome.string'   => 'O nome da receita na posição :index deve ser um texto válido.',
-                'receitas.*.nome.max'      => 'O nome da receita na posição :index não pode passar de 255 caracteres.',
-                
-                'receitas.*.valor.required' => 'O valor da receita na posição :index é obrigatório.',
-                'receitas.*.valor.numeric'  => 'O valor da receita na posição :index precisa ser um número.',
-                'receitas.*.valor.min'      => 'O valor da receita na posição :index não pode ser negativo.',
-                
-                'receitas.*.ja_recebido.required' => 'O campo "ja_recebido" na receita :index é obrigatório.',
-                'receitas.*.ja_recebido.in'       => 'O campo "ja_recebido" na receita :index deve ser exatamente "sim" ou "não".',
+                'contas.*.receitas.required'        => 'O bloco "receitas" é obrigatório dentro da conta.',
+                'contas.*.receitas.array'           => 'O campo "receitas" deve ser uma lista.',
+                'contas.*.receitas.*.nome.required' => 'O nome da receita é obrigatório.',
+                'contas.*.receitas.*.nome.max'      => 'O nome da receita não pode passar de 255 caracteres.',
+                'contas.*.receitas.*.valor.required'=> 'O valor da receita é obrigatório.',
+                'contas.*.receitas.*.valor.numeric' => 'O valor da receita precisa ser um número.',
+                'contas.*.receitas.*.valor.min'     => 'O valor da receita não pode ser negativo.',
+                'contas.*.receitas.*.ja_recebido.required' => 'O campo "ja_recebido" é obrigatório.',
+                'contas.*.receitas.*.ja_recebido.in'       => 'O campo "ja_recebido" deve ser exatamente "sim" ou "não".',
 
                 // ERROS DO BLOCO: DESPESAS
-                'despesas.required' => 'O bloco "despesas" é obrigatório.',
-                'despesas.array'    => 'O campo "despesas" deve ser uma lista.',
-                
-                'despesas.*.nome.required' => 'O nome da despesa na posição :index é obrigatório.',
-                'despesas.*.nome.string'   => 'O nome da despesa na posição :index deve ser um texto válido.',
-                'despesas.*.nome.max'      => 'O nome da despesa na posição :index não pode passar de 255 caracteres.',
-                
-                'despesas.*.valor.required' => 'O valor da despesa na posição :index é obrigatório.',
-                'despesas.*.valor.numeric'  => 'O valor da despesa na posição :index precisa ser um número.',
-                'despesas.*.valor.min'      => 'O valor da despesa na posição :index não pode ser negativo.',
-                
-                'despesas.*.recorrente.required' => 'O campo "recorrente" na despesa :index é obrigatório.',
-                'despesas.*.recorrente.in'       => 'O campo "recorrente" na despesa :index deve ser exatamente "sim" ou "não".',
-                
-                'despesas.*.ja_pago.required' => 'O campo "ja_pago" na despesa :index é obrigatório.',
-                'despesas.*.ja_pago.in'       => 'O campo "ja_pago" na despesa :index deve ser exatamente "sim" ou "não".',
+                'contas.*.despesas.required'        => 'O bloco "despesas" é obrigatório dentro da conta.',
+                'contas.*.despesas.array'           => 'O campo "despesas" deve ser uma lista.',
+                'contas.*.despesas.*.nome.required' => 'O nome da despesa é obrigatório.',
+                'contas.*.despesas.*.nome.max'      => 'O nome da despesa não pode passar de 255 caracteres.',
+                'contas.*.despesas.*.valor.required'=> 'O valor da despesa é obrigatório.',
+                'contas.*.despesas.*.valor.numeric' => 'O valor da despesa precisa ser um número.',
+                'contas.*.despesas.*.valor.min'     => 'O valor da despesa não pode ser negativo.',
+                'contas.*.despesas.*.recorrente.required' => 'O campo "recorrente" na despesa é obrigatório.',
+                'contas.*.despesas.*.recorrente.in'       => 'O campo "recorrente" deve ser exatamente "sim" ou "não".',
+                'contas.*.despesas.*.ja_pago.required'    => 'O campo "ja_pago" é obrigatório.',
+                'contas.*.despesas.*.ja_pago.in'          => 'O campo "ja_pago" deve ser exatamente "sim" ou "não".',
+
+                // ERROS DO BLOCO: CARTÕES e FATURAS
+                'contas.*.cartoes.array'                           => 'O campo "cartoes" deve ser uma lista.',
+                'contas.*.cartoes.*.nome.required'                 => 'O nome do cartão é obrigatório.',
+                'contas.*.cartoes.*.final_cartao.required'         => 'O final do cartão é obrigatório.',
+                'contas.*.cartoes.*.faturas.required'              => 'O bloco de faturas do cartão é obrigatório.',
+                'contas.*.cartoes.*.faturas.*.ja_foi_pago.required'=> 'O status de pagamento da fatura é obrigatório.',
+                'contas.*.cartoes.*.faturas.*.ja_foi_pago.in'      => 'O status de pagamento da fatura deve ser "sim" ou "não".',
+                'contas.*.cartoes.*.faturas.*.dia_fechamento.required' => 'O dia de fechamento da fatura é obrigatório.',
+                'contas.*.cartoes.*.faturas.*.dia_vencimento.required' => 'O dia de vencimento da fatura é obrigatório.',
+
+                // ERROS DO BLOCO: COMPRAS
+                'contas.*.cartoes.*.faturas.*.compras.required'               => 'O bloco de compras da fatura é obrigatório.',
+                'contas.*.cartoes.*.faturas.*.compras.*.descricao.required'   => 'A descrição da compra é obrigatória.',
+                'contas.*.cartoes.*.faturas.*.compras.*.data_compra.required' => 'A data da compra é obrigatória.',
+                'contas.*.cartoes.*.faturas.*.compras.*.data_compra.date_format' => 'A data da compra deve seguir o formato AAAA-MM-DD.',
+                'contas.*.cartoes.*.faturas.*.compras.*.valor.required'       => 'O valor da compra é obrigatório.',
+                'contas.*.cartoes.*.faturas.*.compras.*.valor.numeric'        => 'O valor da compra deve ser um número.',
+                'contas.*.cartoes.*.faturas.*.compras.*.valor.min'            => 'O valor da compra não pode ser negativo.',
+                'contas.*.cartoes.*.faturas.*.compras.*.total_parcelas.required' => 'O total de parcelas é obrigatório.',
+                'contas.*.cartoes.*.faturas.*.compras.*.total_parcelas.integer'  => 'O total de parcelas deve ser um número inteiro.',
+                'contas.*.cartoes.*.faturas.*.compras.*.numero_parcela.required' => 'O número da parcela atual é obrigatório.',
+                'contas.*.cartoes.*.faturas.*.compras.*.numero_parcela.integer'  => 'O número da parcela deve ser um número inteiro.',
             ];
 
             $validator = Validator::make($dados, $rules, $messages);
@@ -156,26 +211,106 @@ class ImportController extends Controller
             $dadosValidados = $validator->validated();
             
             DB::transaction(function () use ($dadosValidados) {
-                foreach($dadosValidados['meses'] as $mes) {
-                    foreach($dadosValidados['receitas'] as $receita) {
-                        Receita::create([
-                            'nome' => $receita['nome'],
-                            'valor' => $receita['valor'],
-                            'mes' => $mes,
-                            'ja_recebido' => ($receita['ja_recebido'] === 'sim'),
+                foreach($dadosValidados['contas'] as $conta) {
+                    $contaCriada = Conta::firstOrCreate(
+                        ['nome' => $conta['nome']],
+                        [
+                            'nome' => $conta['nome'],
+                            'tipo' => $conta['tipo'],
+                            'saldo' => $conta['saldo_inicial'],
                             'user_id' => Auth::user()->id
-                        ]);
+                        ]
+                    );
+
+                    foreach($dadosValidados['meses'] as $mes) {
+                        foreach($dadosValidados['receitas'] as $receita) {
+                            Receita::firstOrCreate(
+                                [
+                                    'nome' => $receita['nome'],
+                                    'mes' => $mes
+                                ],
+                                [
+                                    'nome' => $receita['nome'],
+                                    'valor' => $receita['valor'],
+                                    'mes' => $mes,
+                                    'ja_recebido' => ($receita['ja_recebido'] === 'sim'),
+                                    'user_id' => Auth::user()->id,
+                                    'conta_id' => $contaCriada->id
+                                ]
+                            );
+                        }
+                        
+                        foreach($dadosValidados['despesas'] as $despesa) {
+                            Despesa::firstOrCreate(
+                                [
+                                    'nome' => $despesa['nome'],
+                                    'mes' => $mes
+                                ],
+                                [
+                                    'nome' => $despesa['nome'],
+                                    'valor' => $despesa['valor'],
+                                    'mes' => $mes,
+                                    'recorrente' => ($despesa['recorrente'] === 'sim'),
+                                    'ja_pago' => ($despesa['ja_pago'] === 'sim'),
+                                    'user_id' => Auth::user()->id,
+                                    'conta_id' => $contaCriada->id,
+                                    'classificacao_id' => Classificacao::where('slug', $despesa['classificacao'])->first()->id
+                                ]
+                            );
+                        }
                     }
-                    foreach($dadosValidados['despesas'] as $despesa) {
-                        Despesa::create([
-                            'nome' => $despesa['nome'],
-                            'valor' => $despesa['valor'],
-                            'mes' => $mes,
-                            'recorrente' => ($despesa['recorrente'] === 'sim'),
-                            'ja_pago' => ($despesa['ja_pago'] === 'sim'),
-                            'user_id' => Auth::user()->id
-                        ]);
+
+                    if ($conta->has('cartoes')) {
+                        foreach($conta['cartoes'] as $cartao){
+                            $cartaoCriada = Cartao::firstOrCreate(
+                                [
+                                    'nome' => $cartao['nome'],
+                                    'final_cartao' => $cartao['final_cartao']
+                                ],
+                                [
+                                    'nome' => $cartao['nome'],
+                                    'final_cartao' => $cartao['final_cartao'],
+                                    'user_id' => Auth::user()->id
+                                ]
+                            );
+
+                            foreach($dadosValidados['meses'] as $mes){
+                                foreach($cartao['faturas'] as $fatura){
+                                    $faturaCriada = Fatura::firstOrCreate(
+                                        [
+                                            'mes_referencia' => $mes,
+                                        ],
+                                        [
+                                            'mes_referencia' => $mes,
+                                            'data_fechamento' => \Carbon\Carbon::createFromFormat('Y-m', $mes)->subMonth()->format('Y-m') 
+                                                . '-' 
+                                                . $fatura->dia_fechamento,
+                                            'data_vencimento' => $mes . '-' . $fatura->dia_vencimento,
+                                            'cartao_id' => $cartaoCriada->id
+                                        ]
+                                    );
+
+                                    foreach($cartao['compras'] as $compra){
+                                        Compra::firstOrCreate(
+                                            [
+                                                'descricao' => $compra['descricao']
+                                            ],
+                                            [
+                                                'descricao' => $compra['descricao'],
+                                                'data_compra' => $compra['data_compra'],
+                                                'valor' => $compra['valor'],
+                                                'total_parcelas' => $compra['total_parcelas'],
+                                                'numero_parcela' => $compra['numero_parcela'],
+                                                'classificacao_id' => Classificacao::where('slug', $compra['classificacao'])->first()->id
+                                            ]
+                                        );
+                                    }
+                                }
+                            }
+                        }
                     }
+
+                    
                 }
             });
 
