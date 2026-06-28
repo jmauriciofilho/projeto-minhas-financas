@@ -120,7 +120,7 @@ class ImportController extends Controller
                 'contas.*.cartoes'                            => 'sometimes|array',
                 'contas.*.cartoes.*.nome'                     => 'required|string|max:255',
                 'contas.*.cartoes.*.final_cartao'             => 'required|string|max:10',
-                'contas.*.cartoes.*.faturas'                  => 'required|array',
+                'contas.*.cartoes.*.fatura'                   => 'required',
                 'contas.*.cartoes.*.faturas.*.ja_foi_pago'    => 'required|string|in:sim,não',
                 'contas.*.cartoes.*.faturas.*.dia_fechamento' => 'required|string|max:2',
                 'contas.*.cartoes.*.faturas.*.dia_vencimento' => 'required|string|max:2',
@@ -180,24 +180,24 @@ class ImportController extends Controller
                 'contas.*.cartoes.array'                           => 'O campo "cartoes" deve ser uma lista.',
                 'contas.*.cartoes.*.nome.required'                 => 'O nome do cartão é obrigatório.',
                 'contas.*.cartoes.*.final_cartao.required'         => 'O final do cartão é obrigatório.',
-                'contas.*.cartoes.*.faturas.required'              => 'O bloco de faturas do cartão é obrigatório.',
-                'contas.*.cartoes.*.faturas.*.ja_foi_pago.required'=> 'O status de pagamento da fatura é obrigatório.',
-                'contas.*.cartoes.*.faturas.*.ja_foi_pago.in'      => 'O status de pagamento da fatura deve ser "sim" ou "não".',
-                'contas.*.cartoes.*.faturas.*.dia_fechamento.required' => 'O dia de fechamento da fatura é obrigatório.',
-                'contas.*.cartoes.*.faturas.*.dia_vencimento.required' => 'O dia de vencimento da fatura é obrigatório.',
+                'contas.*.cartoes.*.fatura.required'              => 'O bloco de fatura do cartão é obrigatório.',
+                'contas.*.cartoes.*.fatura.*.ja_foi_pago.required'=> 'O status de pagamento da fatura é obrigatório.',
+                'contas.*.cartoes.*.fatura.*.ja_foi_pago.in'      => 'O status de pagamento da fatura deve ser "sim" ou "não".',
+                'contas.*.cartoes.*.fatura.*.dia_fechamento.required' => 'O dia de fechamento da fatura é obrigatório.',
+                'contas.*.cartoes.*.fatura.*.dia_vencimento.required' => 'O dia de vencimento da fatura é obrigatório.',
 
                 // ERROS DO BLOCO: COMPRAS
-                'contas.*.cartoes.*.faturas.*.compras.required'               => 'O bloco de compras da fatura é obrigatório.',
-                'contas.*.cartoes.*.faturas.*.compras.*.descricao.required'   => 'A descrição da compra é obrigatória.',
-                'contas.*.cartoes.*.faturas.*.compras.*.data_compra.required' => 'A data da compra é obrigatória.',
-                'contas.*.cartoes.*.faturas.*.compras.*.data_compra.date_format' => 'A data da compra deve seguir o formato AAAA-MM-DD.',
-                'contas.*.cartoes.*.faturas.*.compras.*.valor.required'       => 'O valor da compra é obrigatório.',
-                'contas.*.cartoes.*.faturas.*.compras.*.valor.numeric'        => 'O valor da compra deve ser um número.',
-                'contas.*.cartoes.*.faturas.*.compras.*.valor.min'            => 'O valor da compra não pode ser negativo.',
-                'contas.*.cartoes.*.faturas.*.compras.*.total_parcelas.required' => 'O total de parcelas é obrigatório.',
-                'contas.*.cartoes.*.faturas.*.compras.*.total_parcelas.integer'  => 'O total de parcelas deve ser um número inteiro.',
-                'contas.*.cartoes.*.faturas.*.compras.*.numero_parcela.required' => 'O número da parcela atual é obrigatório.',
-                'contas.*.cartoes.*.faturas.*.compras.*.numero_parcela.integer'  => 'O número da parcela deve ser um número inteiro.',
+                'contas.*.cartoes.*.fatura.*.compras.required'               => 'O bloco de compras da fatura é obrigatório.',
+                'contas.*.cartoes.*.fatura.*.compras.*.descricao.required'   => 'A descrição da compra é obrigatória.',
+                'contas.*.cartoes.*.fatura.*.compras.*.data_compra.required' => 'A data da compra é obrigatória.',
+                'contas.*.cartoes.*.fatura.*.compras.*.data_compra.date_format' => 'A data da compra deve seguir o formato AAAA-MM-DD.',
+                'contas.*.cartoes.*.fatura.*.compras.*.valor.required'       => 'O valor da compra é obrigatório.',
+                'contas.*.cartoes.*.fatura.*.compras.*.valor.numeric'        => 'O valor da compra deve ser um número.',
+                'contas.*.cartoes.*.fatura.*.compras.*.valor.min'            => 'O valor da compra não pode ser negativo.',
+                'contas.*.cartoes.*.fatura.*.compras.*.total_parcelas.required' => 'O total de parcelas é obrigatório.',
+                'contas.*.cartoes.*.fatura.*.compras.*.total_parcelas.integer'  => 'O total de parcelas deve ser um número inteiro.',
+                'contas.*.cartoes.*.fatura.*.compras.*.numero_parcela.required' => 'O número da parcela atual é obrigatório.',
+                'contas.*.cartoes.*.fatura.*.compras.*.numero_parcela.integer'  => 'O número da parcela deve ser um número inteiro.',
             ];
 
             $validator = Validator::make($dados, $rules, $messages);
@@ -223,12 +223,8 @@ class ImportController extends Controller
                     );
 
                     foreach($dadosValidados['meses'] as $mes) {
-                        foreach($dadosValidados['receitas'] as $receita) {
-                            Receita::firstOrCreate(
-                                [
-                                    'nome' => $receita['nome'],
-                                    'mes' => $mes
-                                ],
+                        foreach($conta['receitas'] as $receita) {
+                            $receitaCriada = Receita::create(
                                 [
                                     'nome' => $receita['nome'],
                                     'valor' => $receita['valor'],
@@ -238,14 +234,14 @@ class ImportController extends Controller
                                     'conta_id' => $contaCriada->id
                                 ]
                             );
+
+                            if($receitaCriada->ja_recebido){
+                                $receitaCriada->conta->increment('saldo', $receitaCriada->valor);
+                            }
                         }
                         
-                        foreach($dadosValidados['despesas'] as $despesa) {
-                            Despesa::firstOrCreate(
-                                [
-                                    'nome' => $despesa['nome'],
-                                    'mes' => $mes
-                                ],
+                        foreach($conta['despesas'] as $despesa) {
+                            $despesaCriada = Despesa::create(
                                 [
                                     'nome' => $despesa['nome'],
                                     'valor' => $despesa['valor'],
@@ -257,10 +253,14 @@ class ImportController extends Controller
                                     'classificacao_id' => Classificacao::where('slug', $despesa['classificacao'])->first()->id
                                 ]
                             );
+
+                            if($despesaCriada->ja_pago){
+                                $despesaCriada->conta->decrement('saldo', $despesaCriada->valor);
+                            }
                         }
                     }
 
-                    if ($conta->has('cartoes')) {
+                    if (isset($conta['cartoes'])) {
                         foreach($conta['cartoes'] as $cartao){
                             $cartaoCriada = Cartao::firstOrCreate(
                                 [
@@ -275,36 +275,41 @@ class ImportController extends Controller
                             );
 
                             foreach($dadosValidados['meses'] as $mes){
-                                foreach($cartao['faturas'] as $fatura){
-                                    $faturaCriada = Fatura::firstOrCreate(
+                                $faturaCriada = Fatura::firstOrCreate(
+                                    [
+                                        'mes_referencia' => $mes,
+                                        'cartao_id' => $cartaoCriada->id
+                                    ],
+                                    [
+                                        'mes_referencia' => $mes,
+                                        'data_fechamento' => \Carbon\Carbon::createFromFormat('Y-m', $mes)->subMonth()->format('Y-m') 
+                                            . '-' 
+                                            . $cartao['fatura']['dia_fechamento'],
+                                        'data_vencimento' => $mes . '-' . $cartao['fatura']['dia_vencimento'],
+                                        'cartao_id' => $cartaoCriada->id,
+                                        'conta_id' => $contaCriada->id,
+                                        'ja_foi_paga' => ($cartao['fatura']['ja_foi_pago'] === 'sim')
+                                    ]
+                                );
+
+                                foreach($cartao['fatura']['compras'] as $compra){
+                                    $compraCriada = Compra::create(
                                         [
-                                            'mes_referencia' => $mes,
-                                        ],
-                                        [
-                                            'mes_referencia' => $mes,
-                                            'data_fechamento' => \Carbon\Carbon::createFromFormat('Y-m', $mes)->subMonth()->format('Y-m') 
-                                                . '-' 
-                                                . $fatura->dia_fechamento,
-                                            'data_vencimento' => $mes . '-' . $fatura->dia_vencimento,
-                                            'cartao_id' => $cartaoCriada->id
+                                            'descricao' => $compra['descricao'],
+                                            'data_compra' => $compra['data_compra'],
+                                            'valor' => $compra['valor'],
+                                            'total_parcelas' => $compra['total_parcelas'],
+                                            'numero_parcela' => $compra['numero_parcela'],
+                                            'fatura_id' => $faturaCriada->id, 
+                                            'classificacao_id' => Classificacao::where('slug', $compra['classificacao'])->first()->id
                                         ]
                                     );
 
-                                    foreach($cartao['compras'] as $compra){
-                                        Compra::firstOrCreate(
-                                            [
-                                                'descricao' => $compra['descricao']
-                                            ],
-                                            [
-                                                'descricao' => $compra['descricao'],
-                                                'data_compra' => $compra['data_compra'],
-                                                'valor' => $compra['valor'],
-                                                'total_parcelas' => $compra['total_parcelas'],
-                                                'numero_parcela' => $compra['numero_parcela'],
-                                                'classificacao_id' => Classificacao::where('slug', $compra['classificacao'])->first()->id
-                                            ]
-                                        );
-                                    }
+                                    $faturaCriada->increment('despesa_total', $compraCriada->valor);
+                                }
+
+                                if($faturaCriada->ja_foi_paga){
+                                    $faturaCriada->conta()->decrement('saldo', $faturaCriada->despesa_total);
                                 }
                             }
                         }

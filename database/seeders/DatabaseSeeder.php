@@ -25,19 +25,19 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678'),
         ]);
 
-        $contaCorrente = Conta::factory()->create([
-            'nome' => 'Conta Corrente',
-            'tipo' => 'CORRENTE',
-            'saldo' => 0.00,
-            'user_id' => $user->id,
-        ]);
+        // $contaCorrente = Conta::factory()->create([
+        //     'nome' => 'Conta Corrente',
+        //     'tipo' => 'CORRENTE',
+        //     'saldo' => 0.00,
+        //     'user_id' => $user->id,
+        // ]);
 
-        $contaBeneficio = Conta::factory()->create([
-            'nome' => 'Benefício',
-            'tipo' => 'BENEFICIO',
-            'saldo' => 0.00,
-            'user_id' => $user->id,
-        ]);
+        // $contaBeneficio = Conta::factory()->create([
+        //     'nome' => 'Benefício',
+        //     'tipo' => 'BENEFICIO',
+        //     'saldo' => 0.00,
+        //     'user_id' => $user->id,
+        // ]);
 
         // Receita::factory()->create([
         //     'nome' => 'Salário',
@@ -91,11 +91,11 @@ class DatabaseSeeder extends Seeder
         //     'classificacao_id' => $classificacaoMoradia->id,
         // ]);
 
-        $cartao = Cartao::factory()->create([
-            'nome' => 'Cartão Nubank',
-            'final_cartao' => '1234',
-            'user_id' => $user->id,
-        ]);
+        // $cartao = Cartao::factory()->create([
+        //     'nome' => 'Cartão Nubank',
+        //     'final_cartao' => '1234',
+        //     'user_id' => $user->id,
+        // ]);
 
         // $fatura = Fatura::factory()->create([
         //     'mes_referencia' => '2026-04',

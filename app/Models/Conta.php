@@ -17,7 +17,8 @@ class Conta extends Model
     protected $fillable = [
         "nome",
         "tipo",
-        "saldo"
+        "saldo",
+        "user_id"
     ];
 
     public function receitas(): HasMany

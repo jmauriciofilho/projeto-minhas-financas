@@ -20,6 +20,7 @@ class Fatura extends Model
         'data_vencimento',
         'conta_id',
         'cartao_id',
+        'ja_foi_paga'
     ];
 
     public function cartao(): BelongsTo
