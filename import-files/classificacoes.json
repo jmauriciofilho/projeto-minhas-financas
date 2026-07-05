@@ -1,0 +1,89 @@
+{
+  "classificacoes": [
+    {
+      "nome": "Alimentação & Restaurantes",
+      "slug": "alimentacao-e-restaurantes",
+      "background_color": "#FF5733"
+    },
+    {
+      "nome": "Supermercado",
+      "slug": "supermercado",
+      "background_color": "#4CAF50"
+    },
+    {
+      "nome": "Transporte & Mobilidade",
+      "slug": "transporte-e-mobilidade",
+      "background_color": "#3357FF"
+    },
+    {
+      "nome": "Moradia & Contas",
+      "slug": "moradia-e-contas",
+      "background_color": "#FFC300"
+    },
+    {
+      "nome": "Saúde & Bem-estar",
+      "slug": "saude-e-bem-estar",
+      "background_color": "#E91E63"
+    },
+    {
+      "nome": "Entretenimento & Lazer",
+      "slug": "entretenimento-e-lazer",
+      "background_color": "#9C27B0"
+    },
+    {
+      "nome": "Compras & Vestuário",
+      "slug": "compras-e-vestuario",
+      "background_color": "#9A7D0A"
+    },
+    {
+      "nome": "Educação",
+      "slug": "educacao",
+      "background_color": "#00BCD4"
+    },
+    {
+      "nome": "Viagens",
+      "slug": "viagens",
+      "background_color": "#FF9800"
+    },
+    {
+      "nome": "Serviços & Assinaturas",
+      "slug": "servicos-e-assinaturas",
+      "background_color": "#607D8B"
+    },
+    {
+      "nome": "Cuidados Pessoais",
+      "slug": "cuidados-pessoais",
+      "background_color": "#E040FB"
+    },
+    {
+      "nome": "Outros & Diversos",
+      "slug": "outros-e-diversos",
+      "background_color": "#795548"
+    },
+    {
+      "nome": "Investimentos & Finanças",
+      "slug": "investimentos-e-financas",
+      "background_color": "#3F51B5"
+    },
+    {
+      "nome": "Doações & Caridade",
+      "slug": "doacoes-e-caridade",
+      "background_color": "#8BC34A"
+    },
+    {
+      "nome": "Presentes & Hobbies",
+      "slug": "presentes-e-hobbies",
+      "background_color": "#FF5722"
+    },
+    {
+      "nome": "Familia",
+      "slug": "familia",
+      "background_color":"#ABEB34"
+    },
+    {
+      "nome": "Receber de Volta",
+      "slug": "receber-de-volta",
+      "background_color": "#ABEB34"
+    }
+  ]
+}

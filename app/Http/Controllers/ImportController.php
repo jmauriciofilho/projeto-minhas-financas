@@ -93,8 +93,7 @@ class ImportController extends Controller
             
             $rules = [
                 // Validação do bloco de Meses
-                'meses'   => 'required|array|min:1',
-                'meses.*' => 'required|string|date_format:Y-m',
+                'mes'   => 'required|string|date_format:Y-m',
 
                 // Validação do bloco de Contas
                 'contas'                 => 'required|array|min:1',
@@ -114,7 +113,7 @@ class ImportController extends Controller
                 'contas.*.despesas.*.valor'         => 'required|numeric|min:0',
                 'contas.*.despesas.*.recorrente'    => 'required|string|in:sim,não',
                 'contas.*.despesas.*.ja_pago'       => 'required|string|in:sim,não',
-                'contas.*.despesas.*.classificacao' => 'sometimes|string|max:255',
+                'contas.*.despesas.*.classificacao' => 'sometimes|string|max:255|exists:classificacoes,slug',
 
                 // Validação do bloco de Cartões (Aninhado em Contas - Opcional usando 'sometimes')
                 'contas.*.cartoes'                            => 'sometimes|array',
@@ -132,16 +131,13 @@ class ImportController extends Controller
                 'contas.*.cartoes.*.faturas.*.compras.*.valor'          => 'required|numeric|min:0',
                 'contas.*.cartoes.*.faturas.*.compras.*.total_parcelas' => 'required|integer|min:1',
                 'contas.*.cartoes.*.faturas.*.compras.*.numero_parcela' => 'required|integer|min:1',
-                'contas.*.cartoes.*.faturas.*.compras.*.classificacao'  => 'sometimes|string|max:255',
+                'contas.*.cartoes.*.faturas.*.compras.*.classificacao'  => 'sometimes|string|max:255|exists:classificacoes,slug',
             ];
 
             $messages = [
                 // ERROS DO BLOCO: MESES
-                'meses.required'      => 'O bloco "meses" é obrigatório.',
-                'meses.array'         => 'O campo "meses" deve ser uma lista.',
-                'meses.min'           => 'É necessário informar pelo menos um mês.',
-                'meses.*.required'    => 'O mês na posição :index não pode estar vazio.',
-                'meses.*.date_format' => 'O mês na posição :index deve estar no formato AAAA-MM (Ex: 2026-06).',
+                'mes.required'      => 'O bloco "mes" é obrigatório.',
+                'mes.date_format' => 'O mês deve estar no formato AAAA-MM (Ex: 2026-06).',
 
                 // ERROS DO BLOCO: CONTAS
                 'contas.required'                 => 'O bloco "contas" é obrigatório.',
@@ -213,7 +209,10 @@ class ImportController extends Controller
             DB::transaction(function () use ($dadosValidados) {
                 foreach($dadosValidados['contas'] as $conta) {
                     $contaCriada = Conta::firstOrCreate(
-                        ['nome' => $conta['nome']],
+                        [
+                            'nome' => $conta['nome'],
+                            'user_id' => Auth::user()->id
+                        ],
                         [
                             'nome' => $conta['nome'],
                             'tipo' => $conta['tipo'],
@@ -222,41 +221,39 @@ class ImportController extends Controller
                         ]
                     );
 
-                    foreach($dadosValidados['meses'] as $mes) {
-                        foreach($conta['receitas'] as $receita) {
-                            $receitaCriada = Receita::create(
-                                [
-                                    'nome' => $receita['nome'],
-                                    'valor' => $receita['valor'],
-                                    'mes' => $mes,
-                                    'ja_recebido' => ($receita['ja_recebido'] === 'sim'),
-                                    'user_id' => Auth::user()->id,
-                                    'conta_id' => $contaCriada->id
-                                ]
-                            );
+                    foreach($conta['receitas'] as $receita) {
+                        $receitaCriada = Receita::create(
+                            [
+                                'nome' => $receita['nome'],
+                                'valor' => $receita['valor'],
+                                'mes' => $dadosValidados['mes'],
+                                'ja_recebido' => ($receita['ja_recebido'] === 'sim'),
+                                'user_id' => Auth::user()->id,
+                                'conta_id' => $contaCriada->id
+                            ]
+                        );
 
-                            if($receitaCriada->ja_recebido){
-                                $receitaCriada->conta->increment('saldo', $receitaCriada->valor);
-                            }
+                        if($receitaCriada->ja_recebido){
+                            $receitaCriada->conta->increment('saldo', $receitaCriada->valor);
                         }
-                        
-                        foreach($conta['despesas'] as $despesa) {
-                            $despesaCriada = Despesa::create(
-                                [
-                                    'nome' => $despesa['nome'],
-                                    'valor' => $despesa['valor'],
-                                    'mes' => $mes,
-                                    'recorrente' => ($despesa['recorrente'] === 'sim'),
-                                    'ja_pago' => ($despesa['ja_pago'] === 'sim'),
-                                    'user_id' => Auth::user()->id,
-                                    'conta_id' => $contaCriada->id,
-                                    'classificacao_id' => Classificacao::where('slug', $despesa['classificacao'])->first()->id
-                                ]
-                            );
+                    }
+                    
+                    foreach($conta['despesas'] as $despesa) {
+                        $despesaCriada = Despesa::create(
+                            [
+                                'nome' => $despesa['nome'],
+                                'valor' => $despesa['valor'],
+                                'mes' => $dadosValidados['mes'],
+                                'recorrente' => ($despesa['recorrente'] === 'sim'),
+                                'ja_pago' => ($despesa['ja_pago'] === 'sim'),
+                                'user_id' => Auth::user()->id,
+                                'conta_id' => $contaCriada->id,
+                                'classificacao_id' => Classificacao::where('slug', $despesa['classificacao'])->first()->id
+                            ]
+                        );
 
-                            if($despesaCriada->ja_pago){
-                                $despesaCriada->conta->decrement('saldo', $despesaCriada->valor);
-                            }
+                        if($despesaCriada->ja_pago){
+                            $despesaCriada->conta->decrement('saldo', $despesaCriada->valor);
                         }
                     }
 
@@ -274,43 +271,41 @@ class ImportController extends Controller
                                 ]
                             );
 
-                            foreach($dadosValidados['meses'] as $mes){
-                                $faturaCriada = Fatura::firstOrCreate(
+                            $faturaCriada = Fatura::firstOrCreate(
+                                [
+                                    'mes_referencia' => $dadosValidados['mes'],
+                                    'cartao_id' => $cartaoCriada->id
+                                ],
+                                [
+                                    'mes_referencia' => $dadosValidados['mes'],
+                                    'data_fechamento' => \Carbon\Carbon::createFromFormat('Y-m', $dadosValidados['mes'])->subMonth()->format('Y-m') 
+                                        . '-' 
+                                        . $cartao['fatura']['dia_fechamento'],
+                                    'data_vencimento' => $dadosValidados['mes'] . '-' . $cartao['fatura']['dia_vencimento'],
+                                    'cartao_id' => $cartaoCriada->id,
+                                    'conta_id' => $contaCriada->id,
+                                    'ja_foi_paga' => ($cartao['fatura']['ja_foi_pago'] === 'sim')
+                                ]
+                            );
+
+                            foreach($cartao['fatura']['compras'] as $compra){
+                                $compraCriada = Compra::create(
                                     [
-                                        'mes_referencia' => $mes,
-                                        'cartao_id' => $cartaoCriada->id
-                                    ],
-                                    [
-                                        'mes_referencia' => $mes,
-                                        'data_fechamento' => \Carbon\Carbon::createFromFormat('Y-m', $mes)->subMonth()->format('Y-m') 
-                                            . '-' 
-                                            . $cartao['fatura']['dia_fechamento'],
-                                        'data_vencimento' => $mes . '-' . $cartao['fatura']['dia_vencimento'],
-                                        'cartao_id' => $cartaoCriada->id,
-                                        'conta_id' => $contaCriada->id,
-                                        'ja_foi_paga' => ($cartao['fatura']['ja_foi_pago'] === 'sim')
+                                        'descricao' => $compra['descricao'],
+                                        'data_compra' => $compra['data_compra'],
+                                        'valor' => $compra['valor'],
+                                        'total_parcelas' => $compra['total_parcelas'],
+                                        'numero_parcela' => $compra['numero_parcela'],
+                                        'fatura_id' => $faturaCriada->id, 
+                                        'classificacao_id' => Classificacao::where('slug', $compra['classificacao'])->first()->id
                                     ]
                                 );
 
-                                foreach($cartao['fatura']['compras'] as $compra){
-                                    $compraCriada = Compra::create(
-                                        [
-                                            'descricao' => $compra['descricao'],
-                                            'data_compra' => $compra['data_compra'],
-                                            'valor' => $compra['valor'],
-                                            'total_parcelas' => $compra['total_parcelas'],
-                                            'numero_parcela' => $compra['numero_parcela'],
-                                            'fatura_id' => $faturaCriada->id, 
-                                            'classificacao_id' => Classificacao::where('slug', $compra['classificacao'])->first()->id
-                                        ]
-                                    );
+                                $faturaCriada->increment('despesa_total', $compraCriada->valor);
+                            }
 
-                                    $faturaCriada->increment('despesa_total', $compraCriada->valor);
-                                }
-
-                                if($faturaCriada->ja_foi_paga){
-                                    $faturaCriada->conta()->decrement('saldo', $faturaCriada->despesa_total);
-                                }
+                            if($faturaCriada->ja_foi_paga){
+                                $faturaCriada->conta()->decrement('saldo', $faturaCriada->despesa_total);
                             }
                         }
                     }

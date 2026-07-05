@@ -1,0 +1,560 @@
+{
+    "mes": "2026-06",
+    "contas": [
+        {
+            "nome": "Nubank",
+            "tipo": "CORRENTE",
+            "saldo_inicial": 110.10,
+            "receitas": [
+                {
+                    "nome": "Adiantamento de Salário",
+                    "valor": 2828.71,
+                    "ja_recebido": "sim"
+                },
+                {
+                    "nome": "Salário",
+                    "valor": 4682.54,
+                    "ja_recebido": "sim"
+                },
+                {
+                    "nome": "Contribuição Seu Zé",
+                    "valor": 400.00,
+                    "ja_recebido": "sim"
+                },
+                {
+                    "nome": "Contribuição Dona Rosa",
+                    "valor": 188.00,
+                    "ja_recebido": "sim"
+                },
+                {
+                    "nome": "Presente Bruna",
+                    "valor": 300.00,
+                    "ja_recebido": "sim"
+                },
+                {
+                    "nome": "Retorno Pix Encanador",
+                    "valor": 5.50,
+                    "ja_recebido": "sim"
+                },
+                {
+                    "nome": "Livelo",
+                    "valor": 2.92,
+                    "ja_recebido": "sim"
+                }
+            ],
+            "despesas": [
+                {
+                    "nome": "Previdencia Privada",
+                    "valor": 281.67,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "investimentos-e-financas"
+                },
+                {
+                    "nome": "Conta de Luz Potiguara",
+                    "valor":149.52,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "receber-de-volta"
+                },
+                {
+                    "nome": "Taixa de Serviço Caixa",
+                    "valor": 14.97,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Gás de Cozinha Potiguara",
+                    "valor": 23.81,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "receber-de-volta"
+                },
+                {
+                    "nome": "Parcela Financiamento Apartamento Potiguara",
+                    "valor": 746.71,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Taxa Condomínio Potiguara",
+                    "valor": 414.03,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "receber-de-volta"
+                },
+                {
+                    "nome": "Plano Funerario",
+                    "valor": 69.52,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "familia"
+                },
+                {
+                    "nome": "Vivo",
+                    "valor": 141.41,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "servicos-e-assinaturas"
+                },
+                {
+                    "nome": "Água Mineral",
+                    "valor": 56.00,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
+                },
+                {
+                    "nome": "Parcela Financiamento Apartamento Jequitíba",
+                    "valor": 1865.44,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Taxa de Condomínio Jequitíba",
+                    "valor": 550.00,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Conta de Luz Jequitíba",
+                    "valor": 396.62,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Internet",
+                    "valor": 99.90,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "servicos-e-assinaturas"
+                },
+                {
+                    "nome": "Terapia",
+                    "valor": 360.00,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "saude-e-bem-estar"
+                },
+                {
+                    "nome": "Personal Trainer",
+                    "valor": 540.00,
+                    "recorrente": "sim",
+                    "ja_pago": "sim",
+                    "classificacao": "saude-e-bem-estar"
+                },
+                {
+                    "nome": "Açaí",
+                    "valor": 42.60,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Center Box",
+                    "valor": 51.45,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
+                },
+                {
+                    "nome": "Pague Menos",
+                    "valor": 19.49,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "saude-e-bem-estar"
+                },
+                {
+                    "nome": "Açaí",
+                    "valor": 37.89,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Sorvete",
+                    "valor": 18.99,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Festa de São João Condomínio",
+                    "valor": 75.00,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "entretenimento-e-lazer"
+                },
+                {
+                    "nome": "Açaí",
+                    "valor": 38.26,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Center Box",
+                    "valor": 18.78,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
+                },
+                {
+                    "nome": "Sorvete",
+                    "valor": 28.00,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Açaí",
+                    "valor": 39.91,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Mc Donald",
+                    "valor": 53.90,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Açaí",
+                    "valor": 38.39,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Pague Menos",
+                    "valor": 20.96,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "saude-e-bem-estar"
+                },
+                {
+                    "nome": "Açaí",
+                    "valor": 29.89,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                }
+            ],
+            "cartoes": [
+                {
+                    "nome": "Nubank",
+                    "final_cartao": "9993",
+                    "fatura": {
+                        "ja_foi_pago": "sim",
+                        "dia_fechamento": "05",
+                        "dia_vencimento": "10",
+                        "compras": [
+                            {
+                                "descricao": "Crunchyroll",
+                                "data_compra": "2026-05-20",
+                                "valor": 19.90,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "servicos-e-assinaturas"
+                            },
+                            {
+                                "descricao": "Seguro Apartamento Potiguara",
+                                "data_compra": "2026-05-20",
+                                "valor": 17.64,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "moradia-e-contas"
+                            },
+                            {
+                                "descricao": "Alura",
+                                "data_compra": "2026-05-20",
+                                "valor": 92.65,
+                                "total_parcelas": 12,
+                                "numero_parcela": 12,
+                                "classificacao": "educacao"
+                            },
+                            {
+                                "descricao": "Headphone",
+                                "data_compra": "2026-05-20",
+                                "valor": 189.45,
+                                "total_parcelas": 5,
+                                "numero_parcela": 5,
+                                "classificacao": "compras-e-vestuario"
+                            },
+                            {
+                                "descricao": "Amazon AD Free",
+                                "data_compra": "2026-05-20",
+                                "valor": 10.00,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "servicos-e-assinaturas"
+                            },
+                            {
+                                "descricao": "Consulta Psquiatra",
+                                "data_compra": "2026-05-20",
+                                "valor": 450.00,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "saude-e-bem-estar"
+                            },
+                            {
+                                "descricao": "Meli+",
+                                "data_compra": "2026-05-20",
+                                "valor": 149.00,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "servicos-e-assinaturas"
+                            },
+                            {
+                                "descricao": "Compras Amazon",
+                                "data_compra": "2026-05-20",
+                                "valor": 123.15,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "compras-e-vestuario"
+                            },
+                            {
+                                "descricao": "Nintendo Eshop",
+                                "data_compra": "2026-05-20",
+                                "valor": 50.00,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "presentes-e-hobbies"
+                            },
+                            {
+                                "descricao": "Nintendo Eshop",
+                                "data_compra": "2026-05-20",
+                                "valor": 250.00,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "presentes-e-hobbies"
+                            },
+                            {
+                                "descricao": "Steam",
+                                "data_compra": "2026-05-20",
+                                "valor": 71.64,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "presentes-e-hobbies"
+                            },
+                            {
+                                "descricao": "Amazon Prime",
+                                "data_compra": "2026-05-20",
+                                "valor": 13.90,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "servicos-e-assinaturas"
+                            },
+                            {
+                                "descricao": "Center Box",
+                                "data_compra": "2026-05-20",
+                                "valor": 59.29,
+                                "total_parcelas": 2,
+                                "numero_parcela": 1,
+                                "classificacao": "supermercado"
+                            },
+                            {
+                                "descricao": "Alura",
+                                "data_compra": "2026-05-20",
+                                "valor": 131.76,
+                                "total_parcelas": 12,
+                                "numero_parcela": 1,
+                                "classificacao": "educacao"
+                            },
+                            {
+                                "descricao": "Leitura",
+                                "data_compra": "2026-05-20",
+                                "valor": 167.70,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "presentes-e-hobbies"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "nome": "Bradesco",
+                    "final_cartao": "6859",
+                    "fatura": {
+                        "ja_foi_pago": "sim",
+                        "dia_fechamento": "28",
+                        "dia_vencimento": "10",
+                        "compras": [
+                            {
+                                "descricao": "Amazon Compras",
+                                "data_compra": "2026-05-20",
+                                "valor": 27.95,
+                                "total_parcelas": 2,
+                                "numero_parcela": 2,
+                                "classificacao": "compras-e-vestuario"
+                            },
+                            {
+                                "descricao": "Uber",
+                                "data_compra": "2026-05-20",
+                                "valor": 14.95,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "transporte-e-mobilidade"
+                            },
+                            {
+                                "descricao": "Uber",
+                                "data_compra": "2026-05-20",
+                                "valor": 29.90,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "transporte-e-mobilidade"
+                            },
+                            {
+                                "descricao": "Uber",
+                                "data_compra": "2026-05-20",
+                                "valor": 30.95,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "transporte-e-mobilidade"
+                            },
+                            {
+                                "descricao": "Uber",
+                                "data_compra": "2026-05-20",
+                                "valor": 15.94,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "transporte-e-mobilidade"
+                            },
+                            {
+                                "descricao": "Ifood",
+                                "data_compra": "2026-05-20",
+                                "valor": 130.39,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "alimentacao-e-restaurantes"
+                            },
+                            {
+                                "descricao": "Uber",
+                                "data_compra": "2026-05-20",
+                                "valor": 17.96,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "transporte-e-mobilidade"
+                            },
+                            {
+                                "descricao": "Uber",
+                                "data_compra": "2026-05-20",
+                                "valor": 19.94,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "transporte-e-mobilidade"
+                            },
+                            {
+                                "descricao": "Ifood",
+                                "data_compra": "2026-05-20",
+                                "valor": 31.96,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "alimentacao-e-restaurantes"
+                            }
+                        ]
+                    }
+
+                },
+                {
+                    "nome": "Ourocard",
+                    "final_cartao": "1289",
+                    "fatura": {
+                        "ja_foi_pago": "sim",
+                        "dia_fechamento": "28",
+                        "dia_vencimento": "15",
+                        "compras": [
+                            {
+                                "descricao": "Total Pass",
+                                "data_compra": "2026-05-20",
+                                "valor": 89.90,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "saude-e-bem-estar"
+                            },
+                            {
+                                "descricao": "Açaí",
+                                "data_compra": "2026-05-20",
+                                "valor": 41.85,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "alimentacao-e-restaurantes"
+                            },
+                            {
+                                "descricao": "Uber",
+                                "data_compra": "2026-05-20",
+                                "valor": 23.96,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "transporte-e-mobilidade"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "nome": "Flash",
+            "tipo": "BENEFICIO",
+            "saldo_inicial": 217.88,
+            "receitas": [
+                {
+                    "nome": "Multi Bebenefícios",
+                    "valor": 1602.61,
+                    "ja_recebido": "sim"
+                }
+            ],
+            "despesas": [
+                {
+                    "nome": "Center Box",
+                    "valor": 200.00,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
+                },
+                {
+                    "nome": "Center Box",
+                    "valor": 374.77,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
+                },
+                {
+                    "nome": "Sams",
+                    "valor": 460.89,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
+                },
+                {
+                    "nome": "Center Box",
+                    "valor": 10.79,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
+                },
+                {
+                    "nome": "Pague Menos",
+                    "valor": 16.48,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "saude-e-bem-estar"
+                },
+                {
+                    "nome": "Center Box",
+                    "valor": 94.75,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
+                }
+            ]
+        }
+    ]
+}

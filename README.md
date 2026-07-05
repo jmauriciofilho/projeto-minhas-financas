@@ -145,11 +145,10 @@ http://localhost:8080
 - [x] classificação de despesas e compras no cartao
 - [x] Editar valor de receitas, despesas e contas de cartão equanto nao for paga ou recebida.
 - [x] Importe de dados financeiros por json
+- [x] Dashboard com visao mensal
+- [x] Melhorar importes de dados em json
 
 ### 🚧 Funcionalidades Planejadas (To-Do)
-
-- [] Dashboard com visao mensal
-- [] Melhorar importes de dados em json
 
 ### 🚧 Funcionalidades extras (To-Do)
 

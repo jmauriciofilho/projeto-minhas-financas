@@ -71,9 +71,12 @@ class DashboardController extends Controller
             })
             ->sum('valor');
         
-        $despesaTotalMesPrevistaProximoMes = Auth::user()
+        $despesaTotalMesPrevistaProximoMesSemBeneficios = Auth::user()
             ->despesas()
             ->where('mes', $proximoMes)
+            ->whereHas('conta', function ($query) {
+                $query->where('tipo', 'CORRENTE');
+            })
             ->sum('valor');
 
         $totalFaturasMesPrevistaProximoMes = Fatura::query()
@@ -85,7 +88,7 @@ class DashboardController extends Controller
         
         $saldoPrevistoProximoMesSemBeneficio = 
             $receitaTotalMesPrevistaProximoMesSemBeneficios 
-            - $despesaTotalMesPrevistaProximoMes 
+            - $despesaTotalMesPrevistaProximoMesSemBeneficios 
             - $totalFaturasMesPrevistaProximoMes;
 
         $contas = Auth::user()
