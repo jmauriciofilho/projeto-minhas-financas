@@ -24,12 +24,12 @@
                 {
                     "nome": "Contribuição Seu Zé",
                     "valor": 380.00,
-                    "ja_recebido": "não"
+                    "ja_recebido": "sim"
                 },
                 {
                     "nome": "Contribuição Dona Rosa",
-                    "valor": 183.55,
-                    "ja_recebido": "não"
+                    "valor": 200.00,
+                    "ja_recebido": "sim"
                 },
                 {
                     "nome": "Estorno São João",
@@ -47,9 +47,9 @@
                 },
                 {
                     "nome": "Conta de Luz Potiguara",
-                    "valor":149.52,
+                    "valor":181.76,
                     "recorrente": "sim",
-                    "ja_pago": "não",
+                    "ja_pago": "sim",
                     "classificacao": "receber-de-volta"
                 },
                 {
@@ -70,7 +70,7 @@
                     "nome": "Taxa Condomínio Potiguara",
                     "valor": 414.03,
                     "recorrente": "sim",
-                    "ja_pago": "não",
+                    "ja_pago": "sim",
                     "classificacao": "receber-de-volta"
                 },
                 {
@@ -110,9 +110,9 @@
                 },
                 {
                     "nome": "Conta de Luz Jequitíba",
-                    "valor": 396.62,
+                    "valor": 421.54,
                     "recorrente": "sim",
-                    "ja_pago": "não",
+                    "ja_pago": "sim",
                     "classificacao": "moradia-e-contas"
                 },
                 {
@@ -142,6 +142,27 @@
                     "recorrente": "não",
                     "ja_pago": "sim",
                     "classificacao": "saude-e-bem-estar"
+                },
+                {
+                    "nome": "Pizza",
+                    "valor": 120.00,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Açaí",
+                    "valor": 37.94,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Açaí",
+                    "valor": 31.14,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
                 }
             ],
             "cartoes": [
@@ -149,7 +170,7 @@
                     "nome": "Nubank",
                     "final_cartao": "9993",
                     "fatura": {
-                        "ja_foi_pago": "não",
+                        "ja_foi_pago": "sim",
                         "dia_fechamento": "05",
                         "dia_vencimento": "10",
                         "compras": [

@@ -144,7 +144,7 @@
                 </div>
 
                 <div class="mt-4 flex justify-end">
-                    <a href="{{ route('cartoes.index') }}" class="px-5 py-2.5 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 rounded-xl text-sm hover:opacity-80 transition font-medium shadow-sm">
+                    <a href="{{ route('contas') }}" class="px-5 py-2.5 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 rounded-xl text-sm hover:opacity-80 transition font-medium shadow-sm">
                         Ver Contas
                     </a>
                 </div>

@@ -99,7 +99,13 @@ class CompraController extends Controller
             return back()->withErrors('Não é possível editar uma compra de uma fatura que já foi paga.');
         }
 
-        $compra->update($request->validated());
+        DB::transaction(function () use ($request, $compra, $fatura) {
+            $fatura->decrement('despesa_total', $compra->valor);
+
+            $compra->update($request->validated());
+
+            $fatura->increment('despesa_total', $request->valor);
+        });
 
         return redirect()->route('cartoes.faturas.compras.index', ['cartao' => $cartao->id, 'fatura' => $fatura->id]);
     }

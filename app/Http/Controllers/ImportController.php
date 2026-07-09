@@ -108,7 +108,7 @@ class ImportController extends Controller
                 'contas.*.receitas.*.ja_recebido' => 'required|string|in:sim,não',
 
                 // Validação do bloco de Despesas (Aninhado em Contas)
-                'contas.*.despesas'                 => 'required|array',
+                'contas.*.despesas'                 => 'array',
                 'contas.*.despesas.*.nome'          => 'required|string|max:255',
                 'contas.*.despesas.*.valor'         => 'required|numeric|min:0',
                 'contas.*.despesas.*.recorrente'    => 'required|string|in:sim,não',
