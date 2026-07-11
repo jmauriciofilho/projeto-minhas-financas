@@ -211,6 +211,14 @@
                                 "total_parcelas": 1,
                                 "numero_parcela": 1,
                                 "classificacao": "receber-de-volta"
+                            },
+                            {
+                                "descricao": "Amazon Prime Aluguel de Filme",
+                                "data_compra": "2026-07-11",
+                                "valor": 6.99,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "receber-de-volta"
                             }
                         ]
                     }
@@ -278,6 +286,14 @@
                                 "total_parcelas": 1,
                                 "numero_parcela": 1,
                                 "classificacao": "transporte-e-mobilidade"
+                            },
+                            {
+                                "descricao": "Ifood Habib's",
+                                "data_compra": "2026-07-10",
+                                "valor": 97.73,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "alimentacao-e-restaurantes"
                             }
                         ]
                     }

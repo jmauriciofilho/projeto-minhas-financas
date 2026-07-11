@@ -101,12 +101,14 @@
             <textarea 
                 name="conteudo_importacao"
                 id="jsonInput"
-                class="w-full h-[500px] p-4 font-mono text-sm 
+                style="height: 600px !important; min-height: 500px !important; background-color: #171717 !important; color: #ffffff !important;"
+                class="w-full h-[600px] min-h-[450px] p-4 font-mono text-sm 
                        border border-neutral-200 dark:border-neutral-700 
                        rounded-lg 
                        bg-white dark:bg-neutral-900 
                        text-neutral-900 dark:text-white
                        focus:outline-none focus:ring-2 focus:ring-green-500"
+
                 placeholder='Cole ou escreva seu JSON aqui...'
             ></textarea>
 

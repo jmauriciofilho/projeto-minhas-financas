@@ -6,6 +6,8 @@ services:
       dockerfile: docker/php/Dockerfile
     container_name: laravel_app
     working_dir: /var/www
+    ports:
+      - "5173:5173"
     volumes:
       - .:/var/www
     networks:

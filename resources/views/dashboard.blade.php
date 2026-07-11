@@ -67,12 +67,13 @@
                 </table>
             </div>
 
-            <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6 bg-white items-center justify-center text-center dark:bg-neutral-900">
+            <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6 bg-white items-center justify-center text-center dark:bg-neutral-900 flex flex-col justify-between">
                 <h2 class="text-lg font-medium text-neutral-900 dark:text-white">
                     Saldo Previsto Próximo Mês<br>
                     <span class="text-sm font-normal text-neutral-500">(Sem Multibenefícios)</span>
                 </h2>
-                <p class="text-3xl font-bold mt-6 {{ ($saldoPrevistoProximoMesSemBeneficio ?? 0) > 0 ? 'text-green-600 dark:text-green-400' : (($saldoPrevistoProximoMesSemBeneficio ?? 0) < 0 ? 'text-red-500 dark:text-red-400' : 'text-amber-500 dark:text-amber-400') }}">
+                {{-- Aumento do tamanho do texto (de text-3xl para text-5xl) e peso para font-extrabold --}}
+                <p class="text-4xl lg:text-5xl font-extrabold mt-6 tracking-tight {{ ($saldoPrevistoProximoMesSemBeneficio ?? 0) > 0 ? 'text-green-600 dark:text-green-400' : (($saldoPrevistoProximoMesSemBeneficio ?? 0) < 0 ? 'text-red-500 dark:text-red-400' : 'text-amber-500 dark:text-amber-400') }}">
                     R$ {{ number_format($saldoPrevistoProximoMesSemBeneficio ?? 0, 2, ',', '.') }}
                 </p>
             </div>

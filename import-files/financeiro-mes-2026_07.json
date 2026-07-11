@@ -163,6 +163,13 @@
                     "recorrente": "não",
                     "ja_pago": "sim",
                     "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Sorvete McDonalds",
+                    "valor": 24.00,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
                 }
             ],
             "cartoes": [
@@ -585,6 +592,20 @@
                 {
                     "nome": "Center Box",
                     "valor": 78.00,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
+                },
+                {
+                    "nome": "Lalu Confetaria",
+                    "valor": 28.00,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Center Box",
+                    "valor": 253.60,
                     "recorrente": "não",
                     "ja_pago": "sim",
                     "classificacao": "supermercado"
