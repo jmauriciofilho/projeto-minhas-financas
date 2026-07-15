@@ -9,6 +9,7 @@ use App\Models\Conta;
 use App\Models\Despesa;
 use App\Models\Fatura;
 use App\Models\Receita;
+use App\Models\ImportRegister;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -90,6 +91,14 @@ class ImportController extends Controller
             return redirect()->back()->with('success', 'Classificações importadas com sucesso!');
 
         } elseif($request->tipo_importacao === 'financeiro_mes'){
+
+            $importRegisterExists = ImportRegister::where('data_mes', $dados['mes'])
+                ->where('user_id', Auth::user()->id)
+                ->exists();
+
+            if ($importRegisterExists) {
+                return redirect()->back()->with('error', 'Já existe um registro de importação para o mês informado.');
+            }
             
             $rules = [
                 // Validação do bloco de Meses
@@ -311,6 +320,13 @@ class ImportController extends Controller
 
                     
                 }
+                
+                ImportRegister::create([
+                    'data_mes' => $dadosValidados['mes'],
+                    'data_import' => json_encode($dadosValidados),
+                    'user_id' => Auth::user()->id,
+                ]);
+
             });
 
             return redirect()->back()->with('success', 'Dados financeiros importados com sucesso!');

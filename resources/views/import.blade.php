@@ -94,6 +94,36 @@
             </div>
         @endif
 
+        @if (session('error'))
+            <div 
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 4000)"
+                x-transition
+                class="fixed top-6 right-6 z-50 max-w-md"
+            >
+                <div class="flex items-center gap-4 rounded-xl border border-red-200 bg-red-50 p-4 text-red-700 shadow-lg dark:border-red-900/50 dark:bg-red-950 dark:text-red-300">
+                    
+                    {{-- Ícone SVG de erro integrado do layout do formulário --}}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+
+                    <span class="text-sm font-medium">
+                        {{ session('error') }}
+                    </span>
+
+                    {{-- Botão Fechar ajustado para a nova paleta --}}
+                    <button 
+                        @click="show = false"
+                        class="ml-auto text-red-400 hover:text-red-700 dark:text-red-500 dark:hover:text-red-300 text-lg leading-none"
+                    >
+                        &times;
+                    </button>
+                </div>
+            </div>
+        @endif
+
 
         {{-- EDITOR --}}
         <div class="rounded-xl border border-neutral-200 dark:border-neutral-700 p-6">

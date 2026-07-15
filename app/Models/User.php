@@ -90,4 +90,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Classificacao::class);
     }
+
+    public function importRegisters(): HasMany
+    {
+        return $this->hasMany(ImportRegister::class);
+    }
 }
