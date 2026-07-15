@@ -19,6 +19,10 @@ Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('visaoMes', [DashboardController::class, 'visaoMes'])
+    ->middleware(['auth', 'verified'])
+    ->name('visaoMes');
+
 Route::get('/contas', [ContaController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('contas');
