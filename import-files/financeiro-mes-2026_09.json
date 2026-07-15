@@ -1,5 +1,5 @@
 {
-    "mes": "2026-08",
+    "mes": "2026-09",
     "contas": [
         {
             "nome": "Nubank",
@@ -27,7 +27,7 @@
                     "ja_recebido": "não"
                 },
                 {
-                    "nome": "Panelas Seu Zé 1/2",
+                    "nome": "Panelas Seu Zé 2/2",
                     "valor": 238.90,
                     "ja_recebido": "não"
                 }
@@ -137,6 +137,13 @@
                     "recorrente": "sim",
                     "ja_pago": "não",
                     "classificacao": "familia"
+                },
+                {
+                    "nome": "Plano de Saúde Bruna",
+                    "valor": 611.16,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "saude-e-bem-estar"
                 }
             ],
             "cartoes": [
@@ -150,7 +157,7 @@
                         "compras": [
                             {
                                 "descricao": "Crunchyroll",
-                                "data_compra": "2026-07-20",
+                                "data_compra": "2026-08-20",
                                 "valor": 19.90,
                                 "total_parcelas": 1,
                                 "numero_parcela": 1,
@@ -158,7 +165,7 @@
                             },
                             {
                                 "descricao": "Seguro Apartamento Potiguara",
-                                "data_compra": "2026-07-20",
+                                "data_compra": "2026-08-20",
                                 "valor": 17.64,
                                 "total_parcelas": 1,
                                 "numero_parcela": 1,
@@ -166,7 +173,7 @@
                             },
                             {
                                 "descricao": "Amazon AD Free",
-                                "data_compra": "2026-07-20",
+                                "data_compra": "2026-08-20",
                                 "valor": 10.00,
                                 "total_parcelas": 1,
                                 "numero_parcela": 1,
@@ -174,7 +181,7 @@
                             },
                             {
                                 "descricao": "Meli+",
-                                "data_compra": "2026-07-20",
+                                "data_compra": "2026-08-20",
                                 "valor": 149.00,
                                 "total_parcelas": 1,
                                 "numero_parcela": 1,
@@ -182,7 +189,7 @@
                             },
                             {
                                 "descricao": "Amazon Prime",
-                                "data_compra": "2026-07-20",
+                                "data_compra": "2026-08-20",
                                 "valor": 13.90,
                                 "total_parcelas": 1,
                                 "numero_parcela": 1,
@@ -190,7 +197,7 @@
                             },
                             {
                                 "descricao": "Alura",
-                                "data_compra": "2026-07-20",
+                                "data_compra": "2026-08-20",
                                 "valor": 131.76,
                                 "total_parcelas": 12,
                                 "numero_parcela": 2,
@@ -198,35 +205,19 @@
                             },
                             {
                                 "descricao": "Panelas Seu Zé",
-                                "data_compra": "2026-07-20",
+                                "data_compra": "2026-08-20",
                                 "valor": 238.90,
                                 "total_parcelas": 2,
-                                "numero_parcela": 1,
+                                "numero_parcela": 2,
                                 "classificacao": "receber-de-volta"
                             },
                             {
                                 "descricao": "Google One IA",
-                                "data_compra": "2026-07-20",
+                                "data_compra": "2026-08-20",
                                 "valor": 96.99,
                                 "total_parcelas": 1,
                                 "numero_parcela": 1,
                                 "classificacao": "servicos-e-assinaturas"
-                            },
-                            {
-                                "descricao": "Amazon Prime Aluguel de Filme",
-                                "data_compra": "2026-07-11",
-                                "valor": 6.99,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "entretenimento-e-lazer"
-                            },
-                            {
-                                "descricao": "Fogo Campeiro",
-                                "data_compra": "2026-07-14",
-                                "valor": 250.03,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "alimentacao-e-restaurantes"
                             }
                         ]
                     }
@@ -238,104 +229,7 @@
                         "ja_foi_pago": "não",
                         "dia_fechamento": "28",
                         "dia_vencimento": "10",
-                        "compras": [
-                            {
-                                "descricao": "Ifood",
-                                "data_compra": "2026-07-20",
-                                "valor": 74.66,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "alimentacao-e-restaurantes"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-20",
-                                "valor": 13.94,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-20",
-                                "valor": 14.95,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-20",
-                                "valor": 35.49,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-20",
-                                "valor": 38.45,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-20",
-                                "valor": 30.39,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-20",
-                                "valor": 27.95,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            },
-                            {
-                                "descricao": "Ifood Habib's",
-                                "data_compra": "2026-07-10",
-                                "valor": 97.73,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "alimentacao-e-restaurantes"
-                            },
-                            {
-                                "descricao": "Ifood",
-                                "data_compra": "2026-07-12",
-                                "valor": 73.24,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "alimentacao-e-restaurantes"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-13",
-                                "valor": 17.98,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-13",
-                                "valor": 16.98,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-14",
-                                "valor": 12.93,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            }
-                        ]
+                        "compras": []
                     }
 
                 },
@@ -349,43 +243,11 @@
                         "compras": [
                             {
                                 "descricao": "Total Pass",
-                                "data_compra": "2026-07-20",
+                                "data_compra": "2026-08-20",
                                 "valor": 89.90,
                                 "total_parcelas": 1,
                                 "numero_parcela": 1,
                                 "classificacao": "saude-e-bem-estar"
-                            },
-                            {
-                                "descricao": "Açaí",
-                                "data_compra": "2026-07-20",
-                                "valor": 39.01,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "alimentacao-e-restaurantes"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-20",
-                                "valor": 25.96,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-20",
-                                "valor": 25.96,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
-                            },
-                            {
-                                "descricao": "Uber",
-                                "data_compra": "2026-07-15",
-                                "valor": 13.99,
-                                "total_parcelas": 1,
-                                "numero_parcela": 1,
-                                "classificacao": "transporte-e-mobilidade"
                             }
                         ]
                     }

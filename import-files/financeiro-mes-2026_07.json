@@ -170,6 +170,20 @@
                     "recorrente": "não",
                     "ja_pago": "sim",
                     "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Açaí",
+                    "valor": 41.17,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "alimentacao-e-restaurantes"
+                },
+                {
+                    "nome": "Água Mineral",
+                    "valor": 1.00,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
                 }
             ],
             "cartoes": [
@@ -606,6 +620,13 @@
                 {
                     "nome": "Center Box",
                     "valor": 253.60,
+                    "recorrente": "não",
+                    "ja_pago": "sim",
+                    "classificacao": "supermercado"
+                },
+                {
+                    "nome": "Center Box",
+                    "valor": 66.27,
                     "recorrente": "não",
                     "ja_pago": "sim",
                     "classificacao": "supermercado"

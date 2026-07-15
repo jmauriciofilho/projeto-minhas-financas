@@ -125,7 +125,7 @@ class ImportController extends Controller
                 'contas.*.cartoes.*.faturas.*.dia_vencimento' => 'required|string|max:2',
 
                 // Validação de Compras (Aninhado em Faturas de Cartões)
-                'contas.*.cartoes.*.faturas.*.compras'                  => 'required|array',
+                'contas.*.cartoes.*.faturas.*.compras'                  => 'array',
                 'contas.*.cartoes.*.faturas.*.compras.*.descricao'      => 'required|string|max:255',
                 'contas.*.cartoes.*.faturas.*.compras.*.data_compra'    => 'required|string|date_format:Y-m-d',
                 'contas.*.cartoes.*.faturas.*.compras.*.valor'          => 'required|numeric|min:0',
@@ -183,7 +183,6 @@ class ImportController extends Controller
                 'contas.*.cartoes.*.fatura.*.dia_vencimento.required' => 'O dia de vencimento da fatura é obrigatório.',
 
                 // ERROS DO BLOCO: COMPRAS
-                'contas.*.cartoes.*.fatura.*.compras.required'               => 'O bloco de compras da fatura é obrigatório.',
                 'contas.*.cartoes.*.fatura.*.compras.*.descricao.required'   => 'A descrição da compra é obrigatória.',
                 'contas.*.cartoes.*.fatura.*.compras.*.data_compra.required' => 'A data da compra é obrigatória.',
                 'contas.*.cartoes.*.fatura.*.compras.*.data_compra.date_format' => 'A data da compra deve seguir o formato AAAA-MM-DD.',
