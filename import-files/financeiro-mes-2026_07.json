@@ -84,7 +84,7 @@
                     "nome": "Vivo",
                     "valor": 141.41,
                     "recorrente": "sim",
-                    "ja_pago": "não",
+                    "ja_pago": "sim",
                     "classificacao": "servicos-e-assinaturas"
                 },
                 {

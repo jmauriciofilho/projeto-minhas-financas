@@ -18,12 +18,12 @@
                 },
                 {
                     "nome": "Contribuição Seu Zé",
-                    "valor": 300.00,
+                    "valor": 414.03,
                     "ja_recebido": "não"
                 },
                 {
                     "nome": "Contribuição Dona Rosa",
-                    "valor": 200.00,
+                    "valor": 400.00,
                     "ja_recebido": "não"
                 },
                 {
@@ -53,6 +53,13 @@
                     "recorrente": "sim",
                     "ja_pago": "não",
                     "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Gás de Cozinha Potiguara",
+                    "valor": 100.00,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "receber-de-volta"
                 },
                 {
                     "nome": "Parcela Financiamento Apartamento Potiguara",
@@ -119,7 +126,7 @@
                 },
                 {
                     "nome": "Terapia",
-                    "valor": 450.00,
+                    "valor": 360.00,
                     "recorrente": "sim",
                     "ja_pago": "não",
                     "classificacao": "saude-e-bem-estar"

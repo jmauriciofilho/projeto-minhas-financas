@@ -84,12 +84,14 @@
                 <h2 class="text-center text-lg font-medium text-neutral-900 dark:text-white mb-6">Faturas Cartões Próximos Mês</h2>
                 
                 <div class="flex-1 space-y-4 overflow-y-auto pr-2">
-                    @foreach ($faturas ?? [] as $fatura)
+                    @forelse ($faturas ?? [] as $fatura)
                         <div class="flex justify-between items-center text-neutral-900 dark:text-white border-b border-neutral-100 dark:border-neutral-800 pb-2">
                             <span>{{ $fatura['nome'] }}:</span>
                             <span class="font-medium text-red-500">R$ {{ number_format($fatura['valor'], 2, ',', '.') }}</span>
                         </div>
-                    @endforeach
+                    @empty
+                        <p class="text-sm text-neutral-500 dark:text-neutral-400">Nenhuma fatura cadastrada.</p>
+                    @endforelse
                 </div>
 
                 <div class="mt-4 flex justify-end">
