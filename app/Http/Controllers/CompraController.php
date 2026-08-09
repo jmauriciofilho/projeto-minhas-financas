@@ -18,6 +18,7 @@ class CompraController extends Controller
     public function index(Cartao $cartao, Fatura $fatura)
     {
         $compras = Auth::user()->cartaos()->find($cartao->id)->faturas()->find($fatura->id)->compras()
+            ->orderBy('data_compra', 'desc')
             ->paginate(10)
             ->withQueryString();
         $cartao = Auth::user()->cartaos()->find($cartao->id);

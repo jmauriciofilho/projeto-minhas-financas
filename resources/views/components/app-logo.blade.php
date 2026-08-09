@@ -9,7 +9,7 @@
         <x-slot name="logo" class="!h-auto !w-auto flex items-center justify-center overflow-visible text-current">
             
             <img 
-                src="{{ asset('icon-mfp.png') }}" 
+                src="{{ asset('icon-mfp-2.png') }}" 
                 alt="Logo Minhas Finanças"
                 {{-- !text-transparent remove interferências de cores de texto do Flux --}}
                 {{-- mix-blend-normal garante renderização padrão de cores --}}
@@ -24,7 +24,7 @@
         <x-slot name="logo" class="!h-auto !w-auto flex items-center justify-center overflow-visible text-current">
             
             <img 
-                src="{{ asset('icon-mfp.png') }}" 
+                src="{{ asset('icon-mfp-2.png') }}" 
                 alt="Logo Minhas Finanças"
                 class="h-9 w-auto flex-shrink-0 object-contain block !text-transparent mix-blend-normal"
             />

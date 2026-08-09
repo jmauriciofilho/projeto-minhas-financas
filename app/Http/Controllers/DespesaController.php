@@ -30,7 +30,7 @@ class DespesaController extends Controller
         }
 
         $despesas = (clone $queryBase)
-            ->orderBy('mes', 'desc')
+            ->orderBy('data_pagamento', 'desc')
             ->paginate(10)
             ->withQueryString();
 
