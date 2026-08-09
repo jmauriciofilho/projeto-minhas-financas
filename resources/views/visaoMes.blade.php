@@ -1,5 +1,10 @@
 <x-layouts::app :title="__('Visão Mês')">
 
+    {{-- CARREGA O CHART.JS DO JEITO CERTO NO LIVEWIRE --}}
+    @assets
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @endassets
+
     <div class="flex h-full w-full flex-1 flex-col gap-6 p-2 md:p-4">
 
         {{-- TOPO / FILTRO DE MÊS ORIGINAL --}}
@@ -140,9 +145,6 @@
         </div>
 
     </div>
-
-    {{-- SCRIPTS CHART.JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         (function () {

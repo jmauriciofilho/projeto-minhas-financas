@@ -1,5 +1,10 @@
 <x-layouts::app :title="__('Dashboard')">
 
+    {{-- CARREGA O CHART.JS DO JEITO CERTO NO LIVEWIRE --}}
+    @assets
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @endassets
+
     <div class="flex h-full w-full flex-1 flex-col gap-6 p-2 md:p-4">
 
         {{-- TOPO / FILTRO DE MÊS --}}
@@ -67,8 +72,7 @@
 
     </div>
 
-    {{-- SCRIPTS DOS GRÁFICOS (Chart.js) --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         (function () {
             function inicializarGraficos() {
