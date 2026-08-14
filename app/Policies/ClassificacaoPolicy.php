@@ -21,7 +21,7 @@ class ClassificacaoPolicy
      */
     public function view(User $user, Classificacao $classificacao): bool
     {
-        return false;
+        return $classificacao->user_id === $user->id;
     }
 
     /**
@@ -37,7 +37,7 @@ class ClassificacaoPolicy
      */
     public function update(User $user, Classificacao $classificacao): bool
     {
-        return false;
+        return $classificacao->user_id === $user->id;
     }
 
     /**
@@ -45,7 +45,7 @@ class ClassificacaoPolicy
      */
     public function delete(User $user, Classificacao $classificacao): bool
     {
-        return false;
+        return $classificacao->user_id === $user->id;
     }
 
     /**

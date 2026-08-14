@@ -1,0 +1,258 @@
+{
+    "mes": "2026-10",
+    "contas": [
+        {
+            "nome": "Nubank",
+            "tipo": "CORRENTE",
+            "saldo_inicial": 0.00,
+            "receitas": [
+                {
+                    "nome": "Adiantamento de Salário",
+                    "valor": 2828.71,
+                    "ja_recebido": "não"
+                },
+                {
+                    "nome": "Salário",
+                    "valor": 4682.54,
+                    "ja_recebido": "não"
+                },
+                {
+                    "nome": "Contribuição Seu Zé",
+                    "valor": 414.03,
+                    "ja_recebido": "não"
+                },
+                {
+                    "nome": "Contribuição Dona Rosa",
+                    "valor": 400.00,
+                    "ja_recebido": "não"
+                }
+            ],
+            "despesas": [
+                {
+                    "nome": "Previdencia Privada",
+                    "valor": 281.67,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "investimentos-e-financas"
+                },
+                {
+                    "nome": "Conta de Luz Potiguara",
+                    "valor": 300.00,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "receber-de-volta"
+                },
+                {
+                    "nome": "Taixa de Serviço Caixa",
+                    "valor": 14.97,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Gás de Cozinha Potiguara",
+                    "valor": 100.00,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "receber-de-volta"
+                },
+                {
+                    "nome": "Parcela Financiamento Apartamento Potiguara",
+                    "valor": 747.96,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Taxa Condomínio Potiguara",
+                    "valor": 414.03,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "receber-de-volta"
+                },
+                {
+                    "nome": "Plano Funerario",
+                    "valor": 69.52,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "familia"
+                },
+                {
+                    "nome": "Vivo",
+                    "valor": 141.41,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "servicos-e-assinaturas"
+                },
+                {
+                    "nome": "Água Mineral",
+                    "valor": 56.00,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "supermercado"
+                },
+                {
+                    "nome": "Parcela Financiamento Apartamento Jequitíba",
+                    "valor": 1867.91,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Taxa de Condomínio Jequitíba",
+                    "valor": 550.00,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Conta de Luz Jequitíba",
+                    "valor": 400.00,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "moradia-e-contas"
+                },
+                {
+                    "nome": "Internet",
+                    "valor": 99.90,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "servicos-e-assinaturas"
+                },
+                {
+                    "nome": "Personal Trainer",
+                    "valor": 540.00,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "saude-e-bem-estar"
+                },
+                {
+                    "nome": "Pai e Mãe",
+                    "valor": 300.00,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "familia"
+                },
+                {
+                    "nome": "Plano de Saúde Bruna",
+                    "valor": 678.00,
+                    "recorrente": "sim",
+                    "ja_pago": "não",
+                    "classificacao": "saude-e-bem-estar"
+                }
+            ],
+            "cartoes": [
+                {
+                    "nome": "Nubank",
+                    "final_cartao": "9993",
+                    "fatura": {
+                        "ja_foi_pago": "não",
+                        "dia_fechamento": "05",
+                        "dia_vencimento": "10",
+                        "compras": [
+                            {
+                                "descricao": "Crunchyroll",
+                                "data_compra": "2026-09-20",
+                                "valor": 19.90,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "servicos-e-assinaturas"
+                            },
+                            {
+                                "descricao": "Seguro Apartamento Potiguara",
+                                "data_compra": "2026-09-20",
+                                "valor": 17.64,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "moradia-e-contas"
+                            },
+                            {
+                                "descricao": "Amazon AD Free",
+                                "data_compra": "2026-09-20",
+                                "valor": 10.00,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "servicos-e-assinaturas"
+                            },
+                            {
+                                "descricao": "Meli+",
+                                "data_compra": "2026-09-20",
+                                "valor": 149.00,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "servicos-e-assinaturas"
+                            },
+                            {
+                                "descricao": "Amazon Prime",
+                                "data_compra": "2026-09-20",
+                                "valor": 13.90,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "servicos-e-assinaturas"
+                            },
+                            {
+                                "descricao": "Alura",
+                                "data_compra": "2026-09-20",
+                                "valor": 131.76,
+                                "total_parcelas": 12,
+                                "numero_parcela": 3,
+                                "classificacao": "educacao"
+                            },
+                            {
+                                "descricao": "Google One IA",
+                                "data_compra": "2026-09-20",
+                                "valor": 96.99,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "servicos-e-assinaturas"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "nome": "Bradesco",
+                    "final_cartao": "6859",
+                    "fatura": {
+                        "ja_foi_pago": "não",
+                        "dia_fechamento": "28",
+                        "dia_vencimento": "10",
+                        "compras": []
+                    }
+
+                },
+                {
+                    "nome": "Ourocard",
+                    "final_cartao": "1289",
+                    "fatura": {
+                        "ja_foi_pago": "não",
+                        "dia_fechamento": "28",
+                        "dia_vencimento": "15",
+                        "compras": [
+                            {
+                                "descricao": "Total Pass",
+                                "data_compra": "2026-09-20",
+                                "valor": 89.90,
+                                "total_parcelas": 1,
+                                "numero_parcela": 1,
+                                "classificacao": "saude-e-bem-estar"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "nome": "Flash",
+            "tipo": "BENEFICIO",
+            "saldo_inicial": 0.00,
+            "receitas": [
+                {
+                    "nome": "Multi Bebenefícios",
+                    "valor": 1602.61,
+                    "ja_recebido": "não"
+                }
+            ],
+            "despesas": []
+        }
+    ]
+}

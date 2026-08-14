@@ -6,6 +6,7 @@ use App\Http\Requests\StoreClassificacaoRequest;
 use App\Http\Requests\UpdateClassificacaoRequest;
 use App\Models\Classificacao;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ClassificacaoController extends Controller
 {
@@ -55,9 +56,7 @@ class ClassificacaoController extends Controller
      */
     public function edit(Classificacao $classificacao)
     {
-        if ($classificacao->user_id !== Auth::id()) {
-            abort(403);
-        }
+        Gate::authorize('view', $classificacao);
 
         return view('classificacao', compact('classificacao'));
     }
@@ -67,9 +66,7 @@ class ClassificacaoController extends Controller
      */
     public function update(UpdateClassificacaoRequest $request, Classificacao $classificacao)
     {
-        if ($classificacao->user_id !== Auth::id()) {
-            abort(403);
-        }
+        Gate::authorize('update', $classificacao);
 
         $classificacao->fill($request->validated());
         $classificacao->save();
@@ -82,9 +79,7 @@ class ClassificacaoController extends Controller
      */
     public function destroy(Classificacao $classificacao)
     {
-        if ($classificacao->user_id !== Auth::id()) {
-            abort(403);
-        }
+        Gate::authorize('delete', $classificacao);
 
         $classificacao->delete();
 

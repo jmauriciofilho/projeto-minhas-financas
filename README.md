@@ -152,6 +152,7 @@ http://localhost:8080
 
 ### 🚧 Funcionalidades extras (To-Do)
 
+- [] Melhorar código, aplicando princípios SOLID
 - [] Adicionar investimentos
 - [] Listar investimentos
 - [] Editar investimentos
