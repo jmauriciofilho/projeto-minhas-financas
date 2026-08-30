@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Receita;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ReceitaPolicy
 {
@@ -21,7 +20,7 @@ class ReceitaPolicy
      */
     public function view(User $user, Receita $receita): bool
     {
-        return false;
+        return $receita->user_id === $user->id;
     }
 
     /**
@@ -37,7 +36,7 @@ class ReceitaPolicy
      */
     public function update(User $user, Receita $receita): bool
     {
-        return false;
+        return $receita->user_id === $user->id;
     }
 
     /**
@@ -45,7 +44,7 @@ class ReceitaPolicy
      */
     public function delete(User $user, Receita $receita): bool
     {
-        return false;
+        return $receita->user_id === $user->id;
     }
 
     /**
@@ -53,7 +52,7 @@ class ReceitaPolicy
      */
     public function restore(User $user, Receita $receita): bool
     {
-        return false;
+        return $receita->user_id === $user->id;
     }
 
     /**
@@ -61,6 +60,6 @@ class ReceitaPolicy
      */
     public function forceDelete(User $user, Receita $receita): bool
     {
-        return false;
+        return $receita->user_id === $user->id;
     }
 }

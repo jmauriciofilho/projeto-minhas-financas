@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Conta;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ContaPolicy
 {
@@ -21,7 +20,7 @@ class ContaPolicy
      */
     public function view(User $user, Conta $conta): bool
     {
-        return false;
+        return $conta->user_id === $user->id;
     }
 
     /**
@@ -37,7 +36,7 @@ class ContaPolicy
      */
     public function update(User $user, Conta $conta): bool
     {
-        return false;
+        return $conta->user_id === $user->id;
     }
 
     /**
@@ -45,7 +44,7 @@ class ContaPolicy
      */
     public function delete(User $user, Conta $conta): bool
     {
-        return false;
+        return $conta->user_id === $user->id;
     }
 
     /**
@@ -53,7 +52,7 @@ class ContaPolicy
      */
     public function restore(User $user, Conta $conta): bool
     {
-        return false;
+        return $conta->user_id === $user->id;
     }
 
     /**
@@ -61,6 +60,6 @@ class ContaPolicy
      */
     public function forceDelete(User $user, Conta $conta): bool
     {
-        return false;
+        return $conta->user_id === $user->id;
     }
 }

@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Classificacao;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ClassificacaoPolicy
 {
@@ -53,7 +52,7 @@ class ClassificacaoPolicy
      */
     public function restore(User $user, Classificacao $classificacao): bool
     {
-        return false;
+        return $classificacao->user_id === $user->id;
     }
 
     /**
@@ -61,6 +60,6 @@ class ClassificacaoPolicy
      */
     public function forceDelete(User $user, Classificacao $classificacao): bool
     {
-        return false;
+        return $classificacao->user_id === $user->id;
     }
 }

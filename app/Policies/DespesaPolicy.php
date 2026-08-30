@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Despesa;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class DespesaPolicy
 {
@@ -21,7 +20,7 @@ class DespesaPolicy
      */
     public function view(User $user, Despesa $despesa): bool
     {
-        return false;
+        return $despesa->user_id === $user->id;
     }
 
     /**
@@ -37,7 +36,7 @@ class DespesaPolicy
      */
     public function update(User $user, Despesa $despesa): bool
     {
-        return false;
+        return $despesa->user_id === $user->id;
     }
 
     /**
@@ -45,7 +44,7 @@ class DespesaPolicy
      */
     public function delete(User $user, Despesa $despesa): bool
     {
-        return false;
+        return $despesa->user_id === $user->id;
     }
 
     /**
@@ -53,7 +52,7 @@ class DespesaPolicy
      */
     public function restore(User $user, Despesa $despesa): bool
     {
-        return false;
+        return $despesa->user_id === $user->id;
     }
 
     /**
@@ -61,6 +60,6 @@ class DespesaPolicy
      */
     public function forceDelete(User $user, Despesa $despesa): bool
     {
-        return false;
+        return $despesa->user_id === $user->id;
     }
 }

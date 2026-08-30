@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Receita;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreReceitaRequest;
 use App\Http\Requests\UpdateReceitaRequest;
+use App\Models\Receita;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ReceitaController extends Controller
 {
@@ -18,12 +19,12 @@ class ReceitaController extends Controller
     {
         $mes = $request->get('mes');
 
-        $queryBase =  Receita::query()
+        $queryBase = Receita::query()
             ->where('user_id', Auth::id());
 
         if ($mes) {
             $queryBase->where('mes', $mes);
-        }else{
+        } else {
             $data = now();
             $mes = $data->format('Y-m');
             $queryBase->where('mes', $mes);
@@ -50,7 +51,7 @@ class ReceitaController extends Controller
             'receitas' => $receitas,
             'totalRecebidoNoMes' => $totalRecebidoNoMes,
             'totalParaReceberNoMes' => $totalParaReceberNoMes,
-            'quantidadeReceitasNoMes' => $quantidadeReceitasNoMes
+            'quantidadeReceitasNoMes' => $quantidadeReceitasNoMes,
         ]);
     }
 
@@ -60,6 +61,7 @@ class ReceitaController extends Controller
     public function create()
     {
         $contas = Auth::user()->contas;
+
         return view('adicionarReceita', ['contas' => $contas]);
     }
 
@@ -76,7 +78,7 @@ class ReceitaController extends Controller
                 'valor' => $request->valor,
                 'mes' => $request->mes,
                 'ja_recebido' => $request->status === 'recebido',
-                'user_id' => Auth::user()->id
+                'user_id' => Auth::user()->id,
             ]);
 
             if ($request->status === 'recebido') {
@@ -105,9 +107,7 @@ class ReceitaController extends Controller
      */
     public function edit(Receita $receita)
     {
-        if ($receita->user_id !== Auth::user()->id) {
-            abort(403);
-        }
+        Gate::authorize('view', $receita);
 
         $contas = Auth::user()->contas;
 
@@ -119,9 +119,7 @@ class ReceitaController extends Controller
      */
     public function update(UpdateReceitaRequest $request, Receita $receita)
     {
-        if ($receita->user_id !== Auth::user()->id) {
-            abort(403);
-        }
+        Gate::authorize('update', $receita);
 
         if ($receita->ja_recebido) {
             return back()->with('error', 'Não é possível editar uma receita já recebida.'); // já recebido, não altera
@@ -132,7 +130,7 @@ class ReceitaController extends Controller
             $dadosAtualizados = [
                 'nome' => $request->nome,
                 'conta_id' => $request->conta_id,
-                'valor' => $request->valor
+                'valor' => $request->valor,
             ];
 
             $receita->update($dadosAtualizados);
@@ -145,15 +143,13 @@ class ReceitaController extends Controller
 
     public function updateStatus(Receita $receita)
     {
-        if ($receita->user_id !== Auth::user()->id) {
-            abort(403);
-        }
+        Gate::authorize('update', $receita);
 
         if ($receita->ja_recebido) {
             return back(); // já recebido, não altera
         }
 
-        if (!$receita->conta) {
+        if (! $receita->conta) {
             return back()->with('error', 'A receita não está associada a uma conta válida.');
         }
 
@@ -163,7 +159,7 @@ class ReceitaController extends Controller
 
             $receita->update([
                 'ja_recebido' => true,
-                'data_recebimento' => $data
+                'data_recebimento' => $data,
             ]);
 
             $receita->conta->increment('saldo', $receita->valor);
@@ -177,9 +173,7 @@ class ReceitaController extends Controller
      */
     public function destroy(Receita $receita)
     {
-        if ($receita->user_id !== Auth::user()->id) {
-            abort(403);
-        }
+        Gate::authorize('delete', $receita);
 
         DB::transaction(function () use ($receita) {
 
@@ -193,5 +187,5 @@ class ReceitaController extends Controller
         return redirect()
             ->route('receitas.index')
             ->with('success', 'Receita removida com sucesso.');
-        }
     }
+}

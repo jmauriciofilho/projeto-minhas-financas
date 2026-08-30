@@ -8,6 +8,7 @@ use App\Models\Despesa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class DespesaController extends Controller
 {
@@ -18,12 +19,12 @@ class DespesaController extends Controller
     {
         $mes = $request->get('mes');
 
-        $queryBase =  Despesa::query()
+        $queryBase = Despesa::query()
             ->where('user_id', Auth::id());
 
         if ($mes) {
             $queryBase->where('mes', $mes);
-        }else{
+        } else {
             $data = now();
             $mes = $data->format('Y-m');
             $queryBase->where('mes', $mes);
@@ -53,7 +54,7 @@ class DespesaController extends Controller
             'totalPagoNoMes' => $totalPagoNoMes,
             'totalParaPagarNoMes' => $totalParaPagarNoMes,
             'quantidadeDespesasNoMes' => $quantidadeDespesasNoMes,
-            'classificacoes' => $classificacoes
+            'classificacoes' => $classificacoes,
         ]);
     }
 
@@ -63,6 +64,7 @@ class DespesaController extends Controller
     public function create()
     {
         $contas = Auth::user()->contas;
+
         return view('adicionarDespesa', ['contas' => $contas]);
     }
 
@@ -80,14 +82,14 @@ class DespesaController extends Controller
                 'mes' => $request->mes,
                 'recorrente' => $request->recorrente ?? false,
                 'ja_pago' => $request->status === 'pago',
-                'user_id' => Auth::user()->id
+                'user_id' => Auth::user()->id,
             ]);
 
             if ($request->status === 'pago') {
                 $data = now()->format('Y-m-d');
                 $despesa->data_pagamento = $data;
                 $despesa->save();
-                
+
                 $despesa->conta->decrement('saldo', $despesa->valor);
             }
 
@@ -109,11 +111,10 @@ class DespesaController extends Controller
      */
     public function edit(Despesa $despesa)
     {
-        if ($despesa->user_id !== Auth::user()->id) {
-            abort(403);
-        }
+        Gate::authorize('view', $despesa);
 
         $contas = Auth::user()->contas;
+
         return view('editarDespesa', ['despesa' => $despesa, 'contas' => $contas]);
     }
 
@@ -122,9 +123,7 @@ class DespesaController extends Controller
      */
     public function update(UpdateDespesaRequest $request, Despesa $despesa)
     {
-        if ($despesa->user_id !== Auth::user()->id) {
-            abort(403);
-        }
+        Gate::authorize('update', $despesa);
 
         if ($despesa->ja_pago) {
             return back()->with('error', 'Não é possível editar uma despesa já paga.');
@@ -133,7 +132,7 @@ class DespesaController extends Controller
         $dadosAtualizados = [
             'nome' => $request->nome,
             'conta_id' => $request->conta_id,
-            'valor' => $request->valor
+            'valor' => $request->valor,
         ];
 
         $despesa->update($dadosAtualizados);
@@ -145,15 +144,13 @@ class DespesaController extends Controller
 
     public function updateStatus(Despesa $despesa)
     {
-        if ($despesa->user_id !== Auth::user()->id) {
-            abort(403);
-        }
+        Gate::authorize('update', $despesa);
 
         if ($despesa->ja_pago) {
             return back(); // já pago, não altera
         }
 
-        if (!$despesa->conta) {
+        if (! $despesa->conta) {
             return back()->with('error', 'A despesa não está associada a uma conta válida.');
         }
 
@@ -163,7 +160,7 @@ class DespesaController extends Controller
 
             $despesa->update([
                 'ja_pago' => true,
-                'data_pagamento' => $data
+                'data_pagamento' => $data,
             ]);
 
             $despesa->conta->decrement('saldo', $despesa->valor);
@@ -177,9 +174,7 @@ class DespesaController extends Controller
      */
     public function destroy(Despesa $despesa)
     {
-        if ($despesa->user_id !== Auth::user()->id) {
-            abort(403);
-        }
+        Gate::authorize('delete', $despesa);
 
         DB::transaction(function () use ($despesa) {
 
@@ -193,14 +188,12 @@ class DespesaController extends Controller
         return redirect()
             ->route('despesas.index')
             ->with('success', 'Despesa removida com sucesso.');
-        
+
     }
 
     public function updateClassificacao(Despesa $despesa, Request $request)
     {
-        if ($despesa->user_id !== Auth::user()->id) {
-            abort(403);
-        }
+        Gate::authorize('update', $despesa);
 
         $request->validate([
             'classificacao_id' => 'required|exists:classificacoes,id',

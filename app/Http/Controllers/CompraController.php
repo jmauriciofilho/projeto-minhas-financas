@@ -9,6 +9,7 @@ use App\Models\Compra;
 use App\Models\Fatura;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class CompraController extends Controller
 {
@@ -17,6 +18,9 @@ class CompraController extends Controller
      */
     public function index(Cartao $cartao, Fatura $fatura)
     {
+        Gate::authorize('view', $cartao);
+        Gate::authorize('view', $fatura);
+
         $compras = Auth::user()->cartaos()->find($cartao->id)->faturas()->find($fatura->id)->compras()
             ->orderBy('data_compra', 'desc')
             ->paginate(10)
@@ -33,9 +37,8 @@ class CompraController extends Controller
      */
     public function create(Cartao $cartao, Fatura $fatura)
     {
-        if($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id) {
-            abort(403);
-        }
+        Gate::authorize('view', $cartao);
+        Gate::authorize('view', $fatura);
 
         return view('compra', compact('cartao', 'fatura'));
     }
@@ -45,9 +48,8 @@ class CompraController extends Controller
      */
     public function store(StoreCompraRequest $request, Cartao $cartao, Fatura $fatura)
     {
-        if($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id) {
-            abort(403);
-        }
+        Gate::authorize('update', $cartao);
+        Gate::authorize('update', $fatura);
 
         DB::transaction(function () use ($request, $fatura) {
 
@@ -80,9 +82,9 @@ class CompraController extends Controller
      */
     public function edit(Cartao $cartao, Fatura $fatura, Compra $compra)
     {
-        if($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id || $compra->fatura_id !== $fatura->id) {
-            abort(403);
-        }
+        Gate::authorize('view', $cartao);
+        Gate::authorize('view', $fatura);
+        Gate::authorize('view', $compra);
 
         return view('editarCompra', compact('cartao', 'fatura', 'compra'));
     }
@@ -92,11 +94,11 @@ class CompraController extends Controller
      */
     public function update(UpdateCompraRequest $request, Cartao $cartao, Fatura $fatura, Compra $compra)
     {
-        if($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id || $compra->fatura_id !== $fatura->id) {
-            abort(403);
-        }
+        Gate::authorize('update', $cartao);
+        Gate::authorize('update', $fatura);
+        Gate::authorize('update', $compra);
 
-        if($fatura->ja_foi_paga) {
+        if ($fatura->ja_foi_paga) {
             return back()->withErrors('Não é possível editar uma compra de uma fatura que já foi paga.');
         }
 
@@ -116,9 +118,9 @@ class CompraController extends Controller
      */
     public function destroy(Cartao $cartao, Fatura $fatura, Compra $compra)
     {
-        if($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id || $compra->fatura_id !== $fatura->id) {
-            abort(403);
-        }
+        Gate::authorize('delete', $cartao);
+        Gate::authorize('delete', $fatura);
+        Gate::authorize('delete', $compra);
 
         DB::transaction(function () use ($compra, $fatura) {
             $fatura->decrement('despesa_total', $compra->valor);
@@ -130,9 +132,9 @@ class CompraController extends Controller
 
     public function updateClassificacao(Cartao $cartao, Fatura $fatura, Compra $compra)
     {
-        if($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id || $compra->fatura_id !== $fatura->id) {
-            abort(403);
-        }
+        Gate::authorize('update', $cartao);
+        Gate::authorize('update', $fatura);
+        Gate::authorize('update', $compra);
 
         $compra->classificacao_id = request('classificacao_id');
         $compra->save();

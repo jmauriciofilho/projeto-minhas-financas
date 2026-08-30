@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Compra;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CompraPolicy
 {
@@ -21,7 +20,7 @@ class CompraPolicy
      */
     public function view(User $user, Compra $compra): bool
     {
-        return false;
+        return $compra->fatura?->cartao?->user_id === $user->id;
     }
 
     /**
@@ -37,7 +36,7 @@ class CompraPolicy
      */
     public function update(User $user, Compra $compra): bool
     {
-        return false;
+        return $compra->fatura?->cartao?->user_id === $user->id;
     }
 
     /**
@@ -45,7 +44,7 @@ class CompraPolicy
      */
     public function delete(User $user, Compra $compra): bool
     {
-        return false;
+        return $compra->fatura?->cartao?->user_id === $user->id;
     }
 
     /**
@@ -53,7 +52,7 @@ class CompraPolicy
      */
     public function restore(User $user, Compra $compra): bool
     {
-        return false;
+        return $compra->fatura?->cartao?->user_id === $user->id;
     }
 
     /**
@@ -61,6 +60,6 @@ class CompraPolicy
      */
     public function forceDelete(User $user, Compra $compra): bool
     {
-        return false;
+        return $compra->fatura?->cartao?->user_id === $user->id;
     }
 }

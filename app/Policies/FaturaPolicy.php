@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Fatura;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class FaturaPolicy
 {
@@ -53,7 +52,7 @@ class FaturaPolicy
      */
     public function restore(User $user, Fatura $fatura): bool
     {
-        return false;
+        return $user->id === $fatura->cartao->user_id;
     }
 
     /**
@@ -61,6 +60,6 @@ class FaturaPolicy
      */
     public function forceDelete(User $user, Fatura $fatura): bool
     {
-        return false;
+        return $user->id === $fatura->cartao->user_id;
     }
 }

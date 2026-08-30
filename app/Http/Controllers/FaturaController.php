@@ -18,13 +18,12 @@ class FaturaController extends Controller
      */
     public function index(Cartao $cartao)
     {
-        if ($cartao->user_id !== Auth::id()) {
-            abort(403);
-        }
+        Gate::authorize('view', $cartao);
 
         $faturas = Fatura::where('cartao_id', $cartao->id)
             ->paginate(10)
             ->withQueryString();
+
         return view('faturas', compact('faturas', 'cartao'));
     }
 
@@ -33,11 +32,10 @@ class FaturaController extends Controller
      */
     public function create(Cartao $cartao)
     {
-        if ($cartao->user_id !== Auth::id()) {
-            abort(403);
-        }
+        Gate::authorize('view', $cartao);
 
         $contas = Auth::user()->contas;
+
         return view('fatura', compact('contas', 'cartao'));
     }
 
@@ -47,14 +45,10 @@ class FaturaController extends Controller
     public function store(StoreFaturaRequest $request)
     {
         $cartao = Cartao::findOrFail($request->cartao_id);
-        if ($cartao->user_id !== Auth::id()) {
-            abort(403);
-        }
+        Gate::authorize('view', $cartao);
 
         $conta = Conta::findOrFail($request->conta_id);
-        if ($conta->user_id !== Auth::id()) {
-            abort(403);
-        }
+        Gate::authorize('view', $conta);
 
         Fatura::create([
             'mes_referencia' => $request->mes_referencia,
@@ -81,11 +75,11 @@ class FaturaController extends Controller
      */
     public function edit(Cartao $cartao, Fatura $fatura)
     {
-        if ($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id) {
-            abort(403);
-        }
+        Gate::authorize('view', $cartao);
+        Gate::authorize('view', $fatura);
 
         $contas = Auth::user()->contas;
+
         return view('fatura', compact('fatura', 'contas'));
     }
 
@@ -94,14 +88,11 @@ class FaturaController extends Controller
      */
     public function update(UpdateFaturaRequest $request, Cartao $cartao, Fatura $fatura)
     {
-        if ($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id) {
-            abort(403);
-        }
+        Gate::authorize('update', $cartao);
+        Gate::authorize('update', $fatura);
 
         $conta = Conta::findOrFail($request->conta_id);
-        if ($conta->user_id !== Auth::id()) {
-            abort(403);
-        }
+        Gate::authorize('view', $conta);
 
         $fatura->update([
             'mes_referencia' => $request->mes_referencia,
@@ -116,9 +107,8 @@ class FaturaController extends Controller
 
     public function updateStatus(Cartao $cartao, Fatura $fatura)
     {
-        if ($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id) {
-            abort(403);
-        }
+        Gate::authorize('update', $cartao);
+        Gate::authorize('update', $fatura);
 
         DB::transaction(function () use ($fatura) {
 
@@ -137,11 +127,11 @@ class FaturaController extends Controller
      */
     public function destroy(Cartao $cartao, Fatura $fatura)
     {
-        if ($cartao->user_id !== Auth::id() || $fatura->cartao_id !== $cartao->id) {
-            abort(403);
-        }
+        Gate::authorize('delete', $cartao);
+        Gate::authorize('delete', $fatura);
 
         $fatura->delete();
+
         return redirect()->route('cartoes.faturas.index', $fatura->cartao_id)
             ->with('success', 'Fatura excluída com sucesso!');
     }
