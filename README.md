@@ -73,9 +73,11 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 docker compose -f docker-compose.yml -f docker-compose.dev.yml exec app bash
 ```
 
-### 5 Gerar a chave da aplicação
+### 5 Instalar dependências e Gerar a chave da aplicação
 
 ```bash
+composer install
+
 php artisan key:generate
 ```
 

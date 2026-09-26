@@ -149,7 +149,7 @@
                     required
                 >
                     @php
-                        $mesAtual = old('mes', now()->month);
+                        $mesAtual = old('mes', now()->format('Y-m'));
                     @endphp
 
                     @for ($i = -6; $i <= 6; $i++)
