@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classificacao;
-use App\Models\Despesa;
 use App\Models\Fatura;
 use App\Models\Receita;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-   public function index()
+    public function index()
     {
         $mes = now()->format('Y-m');
 
-        Carbon::setLocale('pt_BR'); 
+        Carbon::setLocale('pt_BR');
 
         $dataFinal = Carbon::parse($mes);
         $mesesEscopo = collect();
@@ -31,8 +30,8 @@ class DashboardController extends Controller
         $receitasAgrupadas = Auth::user()
             ->receitas()
             ->whereBetween('mes', [
-                $dataFinal->copy()->subMonths(5)->format('Y-m'), 
-                $dataFinal->copy()->format('Y-m')
+                $dataFinal->copy()->subMonths(5)->format('Y-m'),
+                $dataFinal->copy()->format('Y-m'),
             ])
             ->selectRaw('mes as ano_mes, SUM(valor) as total')
             ->groupBy('mes')
@@ -40,14 +39,14 @@ class DashboardController extends Controller
 
         $totalReceitasUltimoSeisMeses = $mesesEscopo->map(function ($nomeMes, $anoMes) use ($receitasAgrupadas) {
             return (float) $receitasAgrupadas->get($anoMes, 0);
-        })->values()->toArray(); 
+        })->values()->toArray();
 
         // 3. Despesas (Últimos 6 meses)
         $despesasAgrupadas = Auth::user()
             ->despesas()
             ->whereBetween('mes', [
-                $dataFinal->copy()->subMonths(5)->format('Y-m'), 
-                $dataFinal->copy()->format('Y-m')
+                $dataFinal->copy()->subMonths(5)->format('Y-m'),
+                $dataFinal->copy()->format('Y-m'),
             ])
             ->selectRaw('mes as ano_mes, SUM(valor) as total')
             ->groupBy('mes')
@@ -63,8 +62,8 @@ class DashboardController extends Controller
                 $query->where('user_id', Auth::id());
             })
             ->whereBetween('mes_referencia', [
-                $dataFinal->copy()->subMonths(5)->format('Y-m'), 
-                $dataFinal->copy()->format('Y-m')
+                $dataFinal->copy()->subMonths(5)->format('Y-m'),
+                $dataFinal->copy()->format('Y-m'),
             ])
             ->selectRaw('mes_referencia as ano_mes, SUM(despesa_total) as total')
             ->groupBy('mes_referencia')
@@ -79,8 +78,8 @@ class DashboardController extends Controller
             ->despesas()
             ->with('classificacao') // Carrega a relação para evitar N+1
             ->whereBetween('mes', [
-                $dataFinal->copy()->subMonths(5)->format('Y-m'), 
-                $dataFinal->copy()->format('Y-m')
+                $dataFinal->copy()->subMonths(5)->format('Y-m'),
+                $dataFinal->copy()->format('Y-m'),
             ])
             ->get();
 
@@ -90,7 +89,7 @@ class DashboardController extends Controller
         }, $totalDespesasUltimoSeisMeses, $totalFaturasUltimoSeisMeses);
 
         // Agrupa as despesas pelo nome da classificação
-        $agrupadoPorClassificacao = $despesasBrutas->groupBy(function($despesa) {
+        $agrupadoPorClassificacao = $despesasBrutas->groupBy(function ($despesa) {
             return $despesa->classificacao->nome ?? 'Sem Categoria';
         });
 
@@ -116,14 +115,14 @@ class DashboardController extends Controller
                 'data' => $dadosMesAMes,
                 'borderColor' => $cor,
                 'borderWidth' => 2,
-                'tension' => 0.3
+                'tension' => 0.3,
             ];
-            
+
             $corIndex++;
         }
 
         // 6. Labels do Gráfico (Eixo X)
-        $labelsMeses = $mesesEscopo->values()->toArray(); 
+        $labelsMeses = $mesesEscopo->values()->toArray();
 
         // 7. Contas
         $contas = Auth::user()
@@ -148,29 +147,43 @@ class DashboardController extends Controller
     {
         $mes = $request->get('mes');
 
-        if (!$mes) {
+        if (! $mes) {
             $data = now();
             $mes = $data->format('Y-m');
         }
 
-        $receitaTotalMesPrevista = Auth::user()
+        $saldoContasCorrentes = (float) Auth::user()
+            ->contas()
+            ->where('tipo', 'CORRENTE')
+            ->sum('saldo');
+
+        $receitasParaReceber = (float) Auth::user()
             ->receitas()
             ->where('mes', $mes)
+            ->where('ja_recebido', false)
+            ->whereHas('conta', function ($query) {
+                $query->where('tipo', 'CORRENTE');
+            })
             ->sum('valor');
 
-        $despesaTotalMesPrevista = Auth::user()
+        $despesasParaPagar = (float) Auth::user()
             ->despesas()
             ->where('mes', $mes)
+            ->where('ja_pago', false)
+            ->whereHas('conta', function ($query) {
+                $query->where('tipo', 'CORRENTE');
+            })
             ->sum('valor');
 
-        $totalFaturasMesPrevista = Fatura::query()
+        $faturasParaPagar = (float) Fatura::query()
             ->whereHas('cartao', function ($query) {
                 $query->where('user_id', Auth::id());
             })
             ->where('mes_referencia', $mes)
+            ->where('ja_foi_paga', false)
             ->sum('despesa_total');
 
-        $saldoTotalPrevistoMes = $receitaTotalMesPrevista - $despesaTotalMesPrevista - $totalFaturasMesPrevista;
+        $saldoRestante = $saldoContasCorrentes + $receitasParaReceber - $despesasParaPagar - $faturasParaPagar;
 
         $receitaTotalMesRealizada = Auth::user()
             ->receitas()
@@ -192,8 +205,6 @@ class DashboardController extends Controller
             ->where('ja_foi_paga', true)
             ->sum('despesa_total');
 
-        $saldoTotalRealizadoMes = $receitaTotalMesRealizada - $despesaTotalMesRealizada - $totalFaturasMesRealizada;
-
         $proximoMes = $mes ? \Carbon\Carbon::createFromFormat('Y-m', $mes)->addMonth()->format('Y-m') : null;
 
         $receitaTotalMesPrevistaProximoMesSemBeneficios = Receita::query()
@@ -203,7 +214,7 @@ class DashboardController extends Controller
                 $query->where('tipo', 'CORRENTE');
             })
             ->sum('valor');
-        
+
         $despesaTotalMesPrevistaProximoMesSemBeneficios = Auth::user()
             ->despesas()
             ->where('mes', $proximoMes)
@@ -218,10 +229,10 @@ class DashboardController extends Controller
             })
             ->where('mes_referencia', $proximoMes)
             ->sum('despesa_total');
-        
-        $saldoPrevistoProximoMesSemBeneficio = 
-            $receitaTotalMesPrevistaProximoMesSemBeneficios 
-            - $despesaTotalMesPrevistaProximoMesSemBeneficios 
+
+        $saldoPrevistoProximoMesSemBeneficio =
+            $receitaTotalMesPrevistaProximoMesSemBeneficios
+            - $despesaTotalMesPrevistaProximoMesSemBeneficios
             - $totalFaturasMesPrevistaProximoMes;
 
         $classificacoes = Classificacao::query()
@@ -234,7 +245,7 @@ class DashboardController extends Controller
                 return [
                     'nome' => $classificacao->nome,
                     'total_mes' => $classificacao->despesas_sum_valor,
-                    'background_color' => $classificacao->background_color
+                    'background_color' => $classificacao->background_color,
                 ];
             })
             ->toArray();
@@ -248,25 +259,18 @@ class DashboardController extends Controller
             ->get()
             ->map(function ($fatura) {
                 return [
-                    'nome'  => $fatura->cartao->nome,
-                    'valor' => $fatura->despesa_total, 
+                    'nome' => $fatura->cartao->nome,
+                    'valor' => $fatura->despesa_total,
                 ];
             })
             ->toArray();
 
-        $resumo = [
-            'previsto' => [
-                'receita' => $receitaTotalMesPrevista,
-                'despesas' => $despesaTotalMesPrevista,
-                'faturas' => $totalFaturasMesPrevista,
-                'saldo' => $saldoTotalPrevistoMes,
-            ],
-            'realizado' => [
-                'receita' => $receitaTotalMesRealizada,
-                'despesas' => $despesaTotalMesRealizada,
-                'faturas' => $totalFaturasMesRealizada,
-                'saldo' => $saldoTotalRealizadoMes,
-            ],
+        $projecao = [
+            'saldo_contas' => $saldoContasCorrentes,
+            'receitas_a_receber' => $receitasParaReceber,
+            'despesas_a_pagar' => $despesasParaPagar,
+            'faturas_a_pagar' => $faturasParaPagar,
+            'saldo_restante' => $saldoRestante,
         ];
 
         $graficoBarras = [
@@ -276,7 +280,7 @@ class DashboardController extends Controller
 
         return view('visaoMes', compact(
             'mes',
-            'resumo',
+            'projecao',
             'saldoPrevistoProximoMesSemBeneficio',
             'graficoBarras',
             'classificacoes',
@@ -284,5 +288,3 @@ class DashboardController extends Controller
         ));
     }
 }
-
-
