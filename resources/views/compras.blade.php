@@ -351,10 +351,11 @@
                 </table>
             </div>
 
+
             {{-- PAGINAÇÃO --}}
-            @if($classificacoes instanceof \Illuminate\Contracts\Pagination\Paginator)
+            @if($compras instanceof \Illuminate\Contracts\Pagination\Paginator)
                 <div class="border-t border-neutral-200 dark:border-neutral-800 p-4">
-                    {{ $classificacoes->withQueryString()->links('partials.pagination') }}
+                    {{ $compras->withQueryString()->links('partials.pagination') }}
                 </div>
             @endif
 

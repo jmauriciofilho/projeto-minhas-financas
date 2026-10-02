@@ -281,9 +281,9 @@
             </div>
 
             {{-- PAGINAÇÃO --}}
-            @if($classificacoes instanceof \Illuminate\Contracts\Pagination\Paginator)
+            @if($receitas instanceof \Illuminate\Contracts\Pagination\Paginator)
                 <div class="border-t border-neutral-200 dark:border-neutral-800 p-4">
-                    {{ $classificacoes->withQueryString()->links('partials.pagination') }}
+                    {{ $receitas->withQueryString()->links('partials.pagination') }}
                 </div>
             @endif
 
