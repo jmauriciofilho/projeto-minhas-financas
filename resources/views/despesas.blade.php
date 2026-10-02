@@ -12,20 +12,7 @@
 
             <div class="flex flex-wrap items-center gap-2 sm:gap-3">
                 {{-- FILTRO POR MÊS --}}
-                <form action="{{ route('despesas.index') }}" method="GET" class="flex items-center gap-2">
-                    <input 
-                        type="month"
-                        name="mes"
-                        value="{{ $mes }}"
-                        class="rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2 text-sm text-neutral-800 dark:text-neutral-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400"
-                    >
-                    <button 
-                        type="submit"
-                        class="px-3.5 py-2 bg-neutral-800 text-white dark:bg-neutral-100 dark:text-neutral-900 text-sm font-medium rounded-xl hover:bg-neutral-700 dark:hover:bg-neutral-200 transition shadow-sm"
-                    >
-                        Filtrar
-                    </button>
-                </form>
+                <x-filtro-mes :mes="$mes" />
 
                 {{-- BOTÃO NOVA DESPESA --}}
                 <a

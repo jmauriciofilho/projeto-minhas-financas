@@ -248,7 +248,7 @@
             {{-- PAGINAÇÃO --}}
             @if($classificacoes instanceof \Illuminate\Contracts\Pagination\Paginator)
                 <div class="border-t border-neutral-200 dark:border-neutral-800 p-4">
-                    {{ $classificacoes->withQueryString()->links() }}
+                    {{ $classificacoes->withQueryString()->links('partials.pagination') }}
                 </div>
             @endif
 

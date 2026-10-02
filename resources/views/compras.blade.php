@@ -352,9 +352,9 @@
             </div>
 
             {{-- PAGINAÇÃO --}}
-            @if($compras instanceof \Illuminate\Contracts\Pagination\Paginator)
+            @if($classificacoes instanceof \Illuminate\Contracts\Pagination\Paginator)
                 <div class="border-t border-neutral-200 dark:border-neutral-800 p-4">
-                    {{ $compras->withQueryString()->links() }}
+                    {{ $classificacoes->withQueryString()->links('partials.pagination') }}
                 </div>
             @endif
 
