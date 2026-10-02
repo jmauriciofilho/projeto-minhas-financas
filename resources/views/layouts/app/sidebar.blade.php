@@ -4,6 +4,7 @@
         @include('partials.head')
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
+        {{-- SIDEBAR FLUX (DESKTOP & DRAWER MOBILE) --}}
         <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.header>
                 <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
@@ -11,20 +12,25 @@
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Platform')" class="grid">
+                {{-- GRUPO 1: VISÃO GERAL --}}
+                <flux:sidebar.group :heading="__('Visão Geral')" class="grid">
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
                     <flux:sidebar.item icon="calendar-date-range" :href="route('visaoMes')" :current="request()->routeIs('visaoMes')" wire:navigate>
                         {{ __('Visão Mês') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="wallet" :href="route('contas')" :current="request()->routeIs('contas')" wire:navigate>
+                </flux:sidebar.group>
+
+                {{-- GRUPO 2: MOVIMENTAÇÕES & FINANÇAS --}}
+                <flux:sidebar.group :heading="__('Finanças')" class="grid mt-2">
+                    <flux:sidebar.item icon="wallet" :href="route('contas')" :current="request()->routeIs('contas*') || request()->routeIs('*conta*')" wire:navigate>
                         {{ __('Contas') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="banknotes" :href="route('receitas.index')" :current="request()->routeIs('receitas.*')" wire:navigate>
+                    <flux:sidebar.item icon="arrow-trending-up" :href="route('receitas.index')" :current="request()->routeIs('receitas.*')" wire:navigate>
                         {{ __('Receitas') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="banknotes" :href="route('despesas.index')" :current="request()->routeIs('despesas.*')" wire:navigate>
+                    <flux:sidebar.item icon="arrow-trending-down" :href="route('despesas.index')" :current="request()->routeIs('despesas.*')" wire:navigate>
                         {{ __('Despesas') }}
                     </flux:sidebar.item>
                     <flux:sidebar.item icon="credit-card" :href="route('cartoes.index')" :current="request()->routeIs('cartoes.*')" wire:navigate>
@@ -35,28 +41,22 @@
 
             <flux:spacer />
 
+            {{-- GRUPO 3: CADASTROS & DADOS --}}
             <flux:sidebar.nav>
-                {{-- <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                    {{ __('Repository') }}
-                </flux:sidebar.item>
-
-                <flux:sidebar.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                    {{ __('Documentation') }}
-                </flux:sidebar.item> --}}
-
-                <flux:sidebar.item icon="arrow-up-tray" href="{{ route('importacao') }}" :current="request()->routeIs('importacao')" wire:navigate>
-                    {{ __('Importação') }}
-                </flux:sidebar.item>
-                <flux:sidebar.item icon="book-open-text" href="{{ route('classificacoes.index') }}" :current="request()->routeIs('classificacoes.*')" wire:navigate>
-                    {{ __('Classificações') }}
-                </flux:sidebar.item>
+                <flux:sidebar.group :heading="__('Sistema')" class="grid">
+                    <flux:sidebar.item icon="tag" :href="route('classificacoes.index')" :current="request()->routeIs('classificacoes.*')" wire:navigate>
+                        {{ __('Classificações') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="arrow-up-tray" :href="route('importacao')" :current="request()->routeIs('importacao*')" wire:navigate>
+                        {{ __('Importação') }}
+                    </flux:sidebar.item>
+                </flux:sidebar.group>
             </flux:sidebar.nav>
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>
 
-
-        <!-- Mobile User Menu -->
+        <!-- HEADER MOBILE -->
         <flux:header class="lg:hidden">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
@@ -89,7 +89,7 @@
 
                     <flux:menu.radio.group>
                         <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
-                            {{ __('Settings') }}
+                            {{ __('Configurações') }}
                         </flux:menu.item>
                     </flux:menu.radio.group>
 
@@ -101,10 +101,10 @@
                             as="button"
                             type="submit"
                             icon="arrow-right-start-on-rectangle"
-                            class="w-full cursor-pointer"
+                            class="w-full cursor-pointer text-rose-600 dark:text-rose-400"
                             data-test="logout-button"
                         >
-                            {{ __('Log Out') }}
+                            {{ __('Sair') }}
                         </flux:menu.item>
                     </form>
                 </flux:menu>
