@@ -1,21 +1,22 @@
 ---
 name: testes-automatizados
-description: Orienta a criação e expansão de testes automatizados (unitários, integração) seguindo o padrão AAA e isolamento rigoroso de dependências.
+description: Cria e amplia testes automatizados (unitários e de integração) no padrão AAA, com isolamento de dependências e rastreabilidade com os critérios da spec. Use ao criar testes, aumentar cobertura ou cumprir o test_plan.
 ---
 
-# 🧪 Criação de Testes Automatizados
-
-Esta skill é ativada quando a tarefa incluir requisitos de testes (unitários, integração), para aumentar a cobertura de código de um arquivo existente, ou quando o usuário solicitar testes.
+# 🧪 Testes Automatizados
 
 <execution_steps>
-1. **Identificação da Stack:** Identifique o framework de testes configurado no projeto (ex: Jest, Vitest, Pytest).
-2. **Isolamento de Dependências:** Crie mocks/stubs rigorosos para chamadas de rede, I/O e banco de dados em testes unitários.
-3. **Padrão AAA:** Estruture os casos de teste em Arrange (Preparação), Act (Execução) e Assert (Verificação).
-4. **Cobertura Abrangente:** Cubra o caminho feliz (happy path), casos limites (edge cases) e tratamento de erros esperados.
-5. **Execução:** Valide os testes via terminal para garantir que estão passando.
+1. Identifique framework, convenções de nome/localização e utilitários de teste já usados (em `<tech_stack>` e nos testes existentes). Reutilize helpers/fixtures.
+2. Parta do `<test_plan>` da spec: cada AC deve ter ao menos um teste; nomeie os testes de forma que indiquem o AC (ex.: `AC1: retorna 400 para e-mail inválido`).
+3. Estruture em AAA (Arrange, Act, Assert). Um comportamento por teste.
+4. Cubra: caminho feliz, bordas (vazio, limites, nulos), erros esperados e permissões/segurança quando aplicável.
+5. Isole rede, I/O, relógio, aleatoriedade e banco com mocks/stubs/fakes; use bancos em memória ou containers de teste para integração.
+6. Teste comportamento observável, não detalhes de implementação.
+7. Execute a suíte (`verify.sh test`), confirme que passa e que os testes novos FALHAM quando o código é quebrado de propósito (sanidade).
 </execution_steps>
 
 <anti_patterns>
-- NUNCA realize chamadas externas reais ou mutações em banco de dados de produção em testes unitários.
-- NUNCA crie testes dependentes de ordem de execução.
+- NUNCA chamar serviços externos reais nem mutar banco de produção.
+- NUNCA criar testes dependentes de ordem, de horário ou flaky.
+- NUNCA "consertar" um teste falhando alterando a asserção sem entender a causa.
 </anti_patterns>
