@@ -177,7 +177,7 @@ class VisaoMesTest extends TestCase
         ]);
 
         $response->assertSee('Projeção do Mês');
-        $response->assertSee('Saldo Contas');
+        $response->assertSee('Saldo Atual');
         $response->assertSee('A Receber');
         $response->assertSee('Despesas a Pagar');
         $response->assertSee('Faturas a Pagar');
