@@ -41,7 +41,7 @@ return new class extends Migration
             $table->dropForeign(['classificacao_id']);
             $table->dropColumn('classificacao_id');
         });
-        
+
         Schema::table('despesas', function (Blueprint $table) {
             $table->dropForeign(['classificacao_id']);
             $table->dropColumn('classificacao_id');

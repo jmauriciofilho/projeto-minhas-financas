@@ -21,7 +21,7 @@ class Compra extends Model
         'total_parcelas',
         'numero_parcela',
         'fatura_id',
-        'classificacao_id'
+        'classificacao_id',
     ];
 
     public function fatura(): BelongsTo

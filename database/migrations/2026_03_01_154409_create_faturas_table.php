@@ -23,8 +23,8 @@ return new class extends Migration
                 ->constrained()
                 ->nullOnDelete();
             $table->foreignUuid('cartao_id')
-              ->constrained()
-              ->cascadeOnDelete();
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

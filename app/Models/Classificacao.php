@@ -20,7 +20,7 @@ class Classificacao extends Model
         'nome',
         'slug',
         'background_color',
-        'user_id'
+        'user_id',
     ];
 
     public function despesas(): HasMany

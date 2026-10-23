@@ -26,15 +26,15 @@ class StoreContaRequest extends FormRequest
                 'required',
                 'string',
                 'min:3',
-                'max:120'
+                'max:120',
             ],
 
             'tipo' => [
                 'required',
-                'in:CORRENTE,BENEFICIO'
+                'in:CORRENTE,BENEFICIO',
             ],
-            
+
         ];
-        
+
     }
 }

@@ -26,19 +26,19 @@ class UpdateDespesaRequest extends FormRequest
                 'required',
                 'string',
                 'min:3',
-                'max:120'
+                'max:120',
             ],
 
             'valor' => [
                 'required',
                 'numeric',
-                'min:0.01'
+                'min:0.01',
             ],
 
             'conta_id' => [
                 'required',
                 'uuid',
-                'exists:contas,id'
+                'exists:contas,id',
             ],
         ];
     }

@@ -26,7 +26,7 @@ class StoreCompraRequest extends FormRequest
             'data_compra' => 'required|date',
             'valor' => 'required|numeric|min:0',
             'total_parcelas' => 'required|integer|min:1',
-            'numero_parcela' => 'required|integer|min:1|max:' . $this->input('total_parcelas')
+            'numero_parcela' => 'required|integer|min:1|max:'.$this->input('total_parcelas'),
         ];
     }
 }

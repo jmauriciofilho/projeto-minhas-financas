@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -15,13 +15,13 @@ class Receita extends Model
     use HasUuids;
 
     protected $fillable = [
-        "nome",
-        "valor",
-        "mes",
-        "ja_recebido",
-        "data_recebimento",
-        "conta_id",
-        "user_id"
+        'nome',
+        'valor',
+        'mes',
+        'ja_recebido',
+        'data_recebimento',
+        'conta_id',
+        'user_id',
     ];
 
     public function conta(): BelongsTo

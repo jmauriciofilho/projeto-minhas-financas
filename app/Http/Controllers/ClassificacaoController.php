@@ -18,6 +18,7 @@ class ClassificacaoController extends Controller
         $classificacoes = Auth::user()->classificacoes()
             ->paginate(10)
             ->withQueryString();
+
         return view('classificacoes', compact('classificacoes'));
     }
 
@@ -34,7 +35,7 @@ class ClassificacaoController extends Controller
      */
     public function store(StoreClassificacaoRequest $request)
     {
-        $classificacao = new Classificacao();
+        $classificacao = new Classificacao;
         $classificacao->fill($request->validated());
         $classificacao->user_id = Auth::id();
         $classificacao->slug = \Str::slug($request->nome);

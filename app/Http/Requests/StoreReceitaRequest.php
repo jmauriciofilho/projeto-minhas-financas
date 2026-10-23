@@ -26,24 +26,24 @@ class StoreReceitaRequest extends FormRequest
                 'required',
                 'string',
                 'min:3',
-                'max:120'
+                'max:120',
             ],
 
             'valor' => [
                 'required',
                 'numeric',
-                'min:0.01'
+                'min:0.01',
             ],
 
             'mes' => [
                 'required',
-                'date_format:Y-m'
+                'date_format:Y-m',
             ],
 
             'conta_id' => [
                 'required',
                 'uuid',
-                'exists:contas,id'
+                'exists:contas,id',
             ],
         ];
     }

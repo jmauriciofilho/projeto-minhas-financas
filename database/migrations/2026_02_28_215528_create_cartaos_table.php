@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nome');
             $table->string('final_cartao', 4);
             $table->foreignUuid('user_id')
-              ->constrained()
-              ->cascadeOnDelete();
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -24,16 +24,16 @@ class UpdateFaturaRequest extends FormRequest
         return [
             'mes_referencia' => [
                 'required',
-                'date_format:Y-m'
+                'date_format:Y-m',
             ],
             'data_fechamento' => [
                 'required',
-                'date'
+                'date',
             ],
             'data_vencimento' => [
                 'required',
-                'date'
-            ]
+                'date',
+            ],
         ];
     }
 }

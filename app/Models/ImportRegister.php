@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Model;
 
 class ImportRegister extends Model
 {
     use HasUuids;
 
     protected $fillable = [
-        "data_mes",
-        "data_import",
-        "user_id"
+        'data_mes',
+        'data_import',
+        'user_id',
     ];
 
     public function user()

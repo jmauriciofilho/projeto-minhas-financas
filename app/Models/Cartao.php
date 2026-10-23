@@ -15,9 +15,9 @@ class Cartao extends Model
     use HasUuids;
 
     protected $fillable = [
-        "nome",
-        "final_cartao",
-        "user_id"
+        'nome',
+        'final_cartao',
+        'user_id',
     ];
 
     public function faturas(): HasMany

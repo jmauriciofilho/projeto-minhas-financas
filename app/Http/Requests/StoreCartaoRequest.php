@@ -26,14 +26,14 @@ class StoreCartaoRequest extends FormRequest
                 'required',
                 'string',
                 'min:3',
-                'max:120'
+                'max:120',
             ],
 
             'final_cartao' => [
                 'required',
                 'string',
                 'min:4',
-                'max:4'
+                'max:4',
             ],
         ];
     }

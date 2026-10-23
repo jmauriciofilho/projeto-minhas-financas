@@ -16,6 +16,7 @@ class CartaoController extends Controller
     public function index()
     {
         $cartoes = Auth::user()->cartaos;
+
         return view('cartoes', compact('cartoes'));
     }
 
@@ -35,7 +36,7 @@ class CartaoController extends Controller
         Cartao::create([
             'nome' => $request->nome,
             'final_cartao' => $request->final_cartao,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
         ]);
 
         return redirect('/cartoes');
@@ -68,7 +69,7 @@ class CartaoController extends Controller
 
         $cartao->update([
             'nome' => $request->nome,
-            'final_cartao' => $request->final_cartao
+            'final_cartao' => $request->final_cartao,
         ]);
 
         return redirect('/cartoes');

@@ -20,9 +20,9 @@ return new class extends Migration
             $table->char('mes', 7)->index();
             $table->date('data_pagamento')->nullable();
             $table->foreignUuid('user_id')
-              ->constrained()
-              ->cascadeOnDelete();
-             $table->foreignUuid('conta_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->foreignUuid('conta_id')
                 ->nullable()
                 ->constrained('contas')
                 ->cascadeOnDelete();

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->char('mes', 7)->index();
             $table->date('data_recebimento')->nullable();
             $table->foreignUuid('user_id')
-              ->constrained()
-              ->cascadeOnDelete();
+                ->constrained()
+                ->cascadeOnDelete();
             $table->foreignUuid('conta_id')
                 ->nullable()
                 ->constrained('contas')

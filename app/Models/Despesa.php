@@ -15,15 +15,15 @@ class Despesa extends Model
     use HasUuids;
 
     protected $fillable = [
-        "nome",
-        "valor",
-        "mes",
-        "recorrente",
-        "ja_pago",
-        "data_pagamento",
-        "conta_id",
-        "user_id",
-        "classificacao_id"
+        'nome',
+        'valor',
+        'mes',
+        'recorrente',
+        'ja_pago',
+        'data_pagamento',
+        'conta_id',
+        'user_id',
+        'classificacao_id',
     ];
 
     public function conta(): BelongsTo

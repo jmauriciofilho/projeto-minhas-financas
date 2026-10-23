@@ -16,8 +16,8 @@ return new class extends Migration
             $table->char('data_mes', 7)->index();
             $table->json('data_import');
             $table->foreignUuid('user_id')
-              ->constrained()
-              ->cascadeOnDelete();
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

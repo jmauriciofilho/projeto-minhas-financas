@@ -17,8 +17,8 @@ return new class extends Migration
             $table->enum('tipo', ['CORRENTE', 'BENEFICIO']);
             $table->double('saldo', 15, 2)->default(0.00);
             $table->foreignUuid('user_id')
-              ->constrained()
-              ->cascadeOnDelete();
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

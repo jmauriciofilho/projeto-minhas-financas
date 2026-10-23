@@ -63,20 +63,19 @@ Route::patch('/despesas/{despesa}/paga', [DespesaController::class, 'updateStatu
 
 Route::resource('cartoes', CartaoController::class)
     ->parameters([
-        'cartoes' => 'cartao'
+        'cartoes' => 'cartao',
     ])
     ->middleware(['auth', 'verified']);
 
 Route::resource('cartoes.faturas', FaturaController::class)
     ->parameters([
-        'cartoes' => 'cartao'
+        'cartoes' => 'cartao',
     ])
     ->middleware(['auth', 'verified']);
 
 Route::patch('/cartoes/{cartao}/faturas/{fatura}', [FaturaController::class, 'updateStatus'])
     ->middleware(['auth', 'verified'])
     ->name('cartoes.faturas.updateStatus');
-
 
 Route::resource('cartoes.faturas.compras', CompraController::class)
     ->parameters([
@@ -88,7 +87,7 @@ Route::resource('cartoes.faturas.compras', CompraController::class)
 
 Route::resource('classificacoes', ClassificacaoController::class)
     ->parameters([
-        'classificacoes' => 'classificacao'
+        'classificacoes' => 'classificacao',
     ])
     ->middleware(['auth', 'verified']);
 

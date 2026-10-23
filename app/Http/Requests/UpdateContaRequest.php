@@ -26,8 +26,8 @@ class UpdateContaRequest extends FormRequest
                 'required',
                 'string',
                 'min:3',
-                'max:120'
-            ]
+                'max:120',
+            ],
         ];
     }
 }
