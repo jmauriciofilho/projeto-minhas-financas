@@ -20,7 +20,7 @@
     - Testes: PHPUnit 11 (`php artisan test`). Pest NÃO está instalado.
     - Autenticação: Laravel Fortify 1.x
     - Qualidade: Laravel Pint (preset `laravel`), barryvdh/laravel-ide-helper
-    - Ambiente: Docker Compose (`app` php-fpm com node/npm, `nginx` :8000, `db` mysql :3306, `adminer` :8080). PHP/Node NÃO estão instalados no host.
+    - Ambiente: Docker Compose (`app` php-fpm 8.4 com Node 20/npm, `nginx` :8000, `db` mysql :3306, `adminer` :8080). PHP/Node NÃO estão instalados no host.
 </tech_stack>
 
 <commands>
@@ -32,6 +32,9 @@
   - test: docker compose -f docker-compose.yml -f docker-compose.dev.yml exec -T app php artisan test
   - build: docker compose -f docker-compose.yml -f docker-compose.dev.yml exec -T app npm run build
   - dev: docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+  <!-- Extras (não rodam no verify.sh padrão): -->
+  - format: docker compose -f docker-compose.yml -f docker-compose.dev.yml exec -T app composer lint
+  - test-full: docker compose -f docker-compose.yml -f docker-compose.dev.yml exec -T app composer test
 </commands>
 
 <architecture>
@@ -43,7 +46,7 @@
     - `app/Policies/`: Policy por model (propriedade do recurso).
     - `app/Actions/Fortify/`, `app/Concerns/`, `app/Livewire/Actions/`: auth e validação do starter kit.
     - `resources/views/`: views Blade por recurso (+ layouts, components, partials, flux, pages).
-    - `import-files/`: JSONs mensais de exemplo para importação (`financeiro-mes-AAAA-MM.json`).
+    - `import-files/`: JSONs mensais de exemplo para importação (`financeiro-mes-AAAA_MM.json`; nomenclatura inconsistente, ex.: `2027-01` com hífen) + `classificacoes.json`.
     - `docker/`: Dockerfile PHP e config do nginx.
   - **Pontos de entrada:** `routes/web.php` (rotas, todas com `auth` + `verified`), `public/index.php`, `resources/js/app.js` via Vite.
 </architecture>

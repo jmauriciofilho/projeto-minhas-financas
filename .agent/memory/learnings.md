@@ -14,3 +14,5 @@ Categorias: `build`, `test`, `arquitetura`, `convenção`, `armadilha`, `prefer�
 - [2026-10-23] [ambiente] Shell do host é zsh: `$VAR` com lista de arquivos não sofre word-splitting. → Passar listas via `xargs`.
 - [2026-10-23] [armadilha] `User` usa `HasUuids` (id é string), mas código do starter kit assumia `int` (`ProfileValidationRules`). → Tipar ids de User como `string`, nunca `int`.
 - [2026-10-23] [test] Ajustes de layout renomeiam rótulos (ex.: "Saldo Contas" → "Saldo Atual") e quebram `assertSee`. → Ao mudar texto de view, rodar os testes Feature da tela.
+- [2026-10-24] [armadilha] Skill ADA `code-review` conflita com a skill nativa homônima do Claude Code; renomeada para `revisao-codigo`. → Ao criar/renomear skills, checar nomes nativos da ferramenta e atualizar todas as referências (AGENTS.md, commands, outras skills).
+- [2026-10-24] [convenção] `import-files/` usa `financeiro-mes-AAAA_MM.json` (underscore), com exceção `2027-01`. → Não assumir padrão único ao listar/gerar arquivos de importação.
